@@ -1,14 +1,11 @@
 package graph_theory;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Graph {
 List<Edge> edges;
 List<Node> vertices;
-List<List<Node>> adjacenty_list=createadjacentylist();
+List<List<Edge>> adjacenty_list=createadjacentylist();
 
 
 
@@ -20,12 +17,15 @@ public Graph(List<Node> vertex, List<Edge> edge){
     this.edges = edge;
     this.vertices = vertex;
 }
+public Edge getEdge (int i, int j){
 
+   for (Edge n:adjacenty_list.get(i)){
+       if (n.v2.getNumber()==j){
+           return n;
+       }
 
-
-
-public int weight(Edge e){
-    return e.weight;
+   }
+    return null;
 }
 
 public  List<Edge> getEdges(){
@@ -53,24 +53,35 @@ public void removearc(Edge e){
 }
 
 
-public List<List<Node>> createadjacentylist(){
-List<List<Node>> adjacenylist=new ArrayList<>();
+public List<List<Edge>> createadjacentylist(){
+List<List<Edge>> adjacenylist=new ArrayList<>();
    if(this.vertices==null){
        return new ArrayList<>();
    }
+    for (Node v : this.vertices) {
+        adjacenylist.add(incidentEdges(v));
+    }
 
-    for (Node v : this.vertices){
-       adjacenylist.add(neighbors(v));
-   }
+
     return adjacenylist;
 }
 
 
+    public List<Edge> incidentEdges(Node v) {
+        List<Edge> result = new ArrayList<>();
+        for (Edge e : this.edges) {
+            if (e.v1.equals(v)) {
+                result.add(e);
+            }
+        }
+        return result;
+    }
 
 
 
-public List<Node> neighbors(Node v){
-Set<Node> result = new HashSet<Node>();
+
+    public List<Node> neighbors(Node v){
+Set<Node> result = new HashSet<>();
    for(Edge e:this.edges){
       if (e.contains(v)){
       Node vertex = v.equals(e.v1)? e.v2:e.v1;
@@ -89,6 +100,14 @@ public void addEdge(Edge e){
     this.edges.add(e);
     this.edges.add(new Edge(e2,e1));
 }
+public void addEdge(Edge e,int weight){
+    Node e1 = e.v1;
+    Node e2 = e.v2;
+    e.weight=weight;
+    this.edges.add(e);
+    this.edges.add(new Edge(e2,e1,weight));
+    }
+
 public void addVertex(Node v){
     this.vertices.add(v);
 }
@@ -129,6 +148,18 @@ public boolean isadjacent(Node v1, Node v2){
 
 
 
+
+
+
+
+
+
+
+
+    public Graph empty_graph(){
+
+        return new Graph(new ArrayList<>(),new ArrayList<>());
+    }
 
 
 
