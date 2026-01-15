@@ -5,7 +5,9 @@ import java.util.*;
 public class Graph_algothrims {
 
 
-  public void bfs(Graph graph){
+  public void bfs(Graph graph, Edge_interface graphTheoryInterface
+         // ,Vertex_interface vertex_interface
+  ){
 boolean[] visted=new boolean[graph.getVertices().size()];
 Queue<Node> q=new LinkedList<>();
 
@@ -17,8 +19,11 @@ while(!q.isEmpty()){
  List<Node> neighbors = graph.neighbors(polled);
 
     for (Node n:neighbors) {
+
         if(!visted[n.getNumber()]){
-           q.add(n);
+            Edge edge=graph.getEdge(polled.getNumber(),n.getNumber());
+            graphTheoryInterface.onEdgeRelaxed(edge);
+          q.add(n);
            visted[n.getNumber()]=true;
         }
     }
@@ -27,12 +32,14 @@ while(!q.isEmpty()){
 
   }
 
-  public void dfs(Graph graph, boolean[] visted,int node_number){
+  public void dfs(Graph graph, boolean[] visted,int node_number,Edge_interface graphTheoryInterface){
 visted[node_number]=true;
 
 for(Node n:graph.neighbors(graph.getVertices().get(node_number))){
     if(!visted[n.getNumber()]){
-        dfs(graph,visted,n.getNumber());
+        Edge edge=graph.getEdge(graph.getVertices().get(node_number).getNumber(),n.getNumber());
+        graphTheoryInterface.onEdgeRelaxed(edge);
+        dfs(graph,visted,n.getNumber(),graphTheoryInterface);
     }
 }
 
@@ -40,10 +47,18 @@ for(Node n:graph.neighbors(graph.getVertices().get(node_number))){
   }
 
 
-    public int[][] floyd_warshall(int[][] adjacency_matrix,Graph graph){
+    public int[][] floyd_warshall(int[][] adjacency_matrix,Graph graph,Edge_interface graphTheoryInterface){
         for (int k = 0; k < graph.getVertices().size(); k++) {
             for (int i = 0; i < graph.getVertices().size(); i++) {
                 for (int j = 0; j < graph.getVertices().size(); j++) {
+                    Edge edgeij=graph.getEdge(i,j);
+                    Edge edgeik=graph.getEdge(j,k);
+                    Edge edgekj=graph.getEdge(k,j);
+
+graphTheoryInterface.onEdgeRelaxed(edgeij);
+graphTheoryInterface.onEdgeRelaxed(edgeik);
+graphTheoryInterface.onEdgeRelaxed(edgekj);
+
                     adjacency_matrix[i][j] =
                             Math.min(adjacency_matrix[i][j],
                                     adjacency_matrix[i][k]+adjacency_matrix[k][j]);
@@ -121,7 +136,6 @@ for(Node n:graph.neighbors(graph.getVertices().get(node_number))){
       }
         return adjacency_matrix;
     }
-
 
 
 

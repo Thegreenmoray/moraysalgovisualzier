@@ -71,13 +71,13 @@ public class Set_theory_items {
 
 
 
-    public <T> int cardinality(List<T> A){
+    public static <T> int cardinality(List<T> A){
 
         return A.size();
     }
 
 
-    public <T> List<T> symmetric_difference(List<T> A, List<T> subset){
+    public static <T> List<T> symmetric_difference(List<T> A, List<T> subset){
 
 
         return union(difference(A,subset),difference(subset,A));
@@ -92,7 +92,7 @@ public class Set_theory_items {
 
 
 
-    public <T> List<List<T>> powerset(int i,List<T> base_set,List<List<T>> current_subsets,List<T> subset){
+    public static <T> List<List<T>> powerset(int i,List<T> base_set,List<List<T>> current_subsets,List<T> subset){
         if(i==cardinality(base_set)){
             current_subsets.add(new ArrayList<>(subset));
             return current_subsets;

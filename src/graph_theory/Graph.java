@@ -9,14 +9,15 @@ List<List<Edge>> adjacenty_list=createadjacentylist();
 
 
 
-
-
-
-
 public Graph(List<Node> vertex, List<Edge> edge){
     this.edges = edge;
     this.vertices = vertex;
+    adjacenty_list=createadjacentylist();
 }
+
+
+
+
 public Edge getEdge (int i, int j){
 
    for (Edge n:adjacenty_list.get(i)){
