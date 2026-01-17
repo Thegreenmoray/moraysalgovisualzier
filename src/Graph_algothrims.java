@@ -1,17 +1,22 @@
 import graph_theory.*;
+import javafx.animation.Animation;
+import javafx.animation.Timeline;
+import javafx.scene.layout.Pane;
 
 import java.util.*;
+
+
 
 public class Graph_algothrims {
 
 
-  public void bfs(Graph graph, Edge_interface graphTheoryInterface
-         // ,Vertex_interface vertex_interface
-  ){
-boolean[] visted=new boolean[graph.getVertices().size()];
+  public boolean[] bfs(Graph graph, int start, boolean[] visted, Edge_interface graphTheoryInterface
+                       // ,Vertex_interface vertex_interface
+  , Visual_part visualPart) {
+      Queue<EdgeAnimation> timelineQueue = new LinkedList<>();
 Queue<Node> q=new LinkedList<>();
 
-Node node=graph.getVertices().getFirst();
+Node node=graph.getVertices().get(start);
 visted[node.getNumber()]=true;
 q.add(node);
 while(!q.isEmpty()){
@@ -22,23 +27,44 @@ while(!q.isEmpty()){
 
         if(!visted[n.getNumber()]){
             Edge edge=graph.getEdge(polled.getNumber(),n.getNumber());
-            graphTheoryInterface.onEdgeRelaxed(edge);
+           timelineQueue.add(graphTheoryInterface.onEdgesearched(edge));
           q.add(n);
            visted[n.getNumber()]=true;
         }
+
     }
 
 }
+visualPart.playNext((LinkedList<EdgeAnimation>) timelineQueue);
+
+      return visted;
+  }
+
+
+
+  public void dijkstra(Graph graph, int start,boolean[] visted, int[] distance, Visual_part visualPart,ArrayList<Edge> heap) {
+
+      distance[start]=0;
+      visted[start]=true;
+
+
+
+
+
+
 
   }
 
-  public void dfs(Graph graph, boolean[] visted,int node_number,Edge_interface graphTheoryInterface){
+
+
+
+    public void dfs(Graph graph, boolean[] visted,int node_number,Edge_interface graphTheoryInterface){
 visted[node_number]=true;
 
 for(Node n:graph.neighbors(graph.getVertices().get(node_number))){
     if(!visted[n.getNumber()]){
         Edge edge=graph.getEdge(graph.getVertices().get(node_number).getNumber(),n.getNumber());
-        graphTheoryInterface.onEdgeRelaxed(edge);
+        graphTheoryInterface.onEdgesearched(edge);
         dfs(graph,visted,n.getNumber(),graphTheoryInterface);
     }
 }
@@ -55,18 +81,31 @@ for(Node n:graph.neighbors(graph.getVertices().get(node_number))){
                     Edge edgeik=graph.getEdge(j,k);
                     Edge edgekj=graph.getEdge(k,j);
 
-graphTheoryInterface.onEdgeRelaxed(edgeij);
-graphTheoryInterface.onEdgeRelaxed(edgeik);
-graphTheoryInterface.onEdgeRelaxed(edgekj);
+graphTheoryInterface.onEdgesearched(edgeij);
+graphTheoryInterface.onEdgesearched(edgeik);
+graphTheoryInterface.onEdgesearched(edgekj);
 
-                    adjacency_matrix[i][j] =
-                            Math.min(adjacency_matrix[i][j],
-                                    adjacency_matrix[i][k]+adjacency_matrix[k][j]);
+                    adjacency_matrix[i][j] = Math.min(adjacency_matrix[i][j], adjacency_matrix[i][k]+adjacency_matrix[k][j]);
                 }
             }
         }
 
         return adjacency_matrix;
+    }
+
+
+
+
+    public void component_analysis_bfs(Graph graph, Edge_interface graphTheoryInterface,boolean[] visted,Visual_part visualPart)  {
+      ArrayList<Node> node= new ArrayList<>( graph.getVertices());
+
+      for(int i=0;i<node.size();i++){
+          if(!visted[node.get(i).getNumber()]){
+
+             visted=bfs(graph,i,visted,graphTheoryInterface,visualPart);
+          }
+      }
+
     }
 
 

@@ -1,9 +1,9 @@
 import graph_theory.Edge;
-import graph_theory.Node;
+import javafx.animation.Timeline;
 
 public interface Edge_interface {
 
-    void onEdgeRelaxed(Edge e);
+     EdgeAnimation onEdgesearched(Edge e);
 }
 
 

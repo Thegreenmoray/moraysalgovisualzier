@@ -1,7 +1,9 @@
 import graph_theory.*;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
@@ -10,24 +12,20 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import javafx.scene.paint.*;
+import java.util.*;
 
 
-public class Visual_part extends Application implements Edge_interface,Vertex_interface {
+
+
+public class Visual_part  implements Edge_interface,Vertex_interface {
 public static Graph_algothrims graphAlgothrims=new Graph_algothrims();
    static Pane edgeLayer = new Pane();
     static Pane nodeLayer = new Pane();
     static Map<Node,StackPane> corrlate=new HashMap<>();
     static Map<Edge,Line> edgeToStackPane=new HashMap<>();
-    private Pane root;
+    public Pane root;
    static ArrayList<Point2D> mina_distance=new ArrayList<>();
    static double minDist = 40;
 
@@ -35,26 +33,17 @@ public static Graph_algothrims graphAlgothrims=new Graph_algothrims();
         this.root = root;
     }
 
-
-
-    @Override
-    public void start(Stage stage) throws Exception {
-
-        root.setPrefSize(500,500);
-        Graph graph =establish(root);
-
-        graphAlgothrims.bfs(graph, this);
-
-
+    public Pane getRoot() {
+        return root;
     }
 
+    public void setRoot(Pane root) {
+        this.root = root;
+    }
 
-
-
-    public static Graph establish(Pane root) {
-    Graph graph =graphAlgothrims.generate_graph_undirected(10,1,false,false);
+    public  Graph establish(Pane root) {
+    Graph graph =graphAlgothrims.generate_graph_undirected(10,2,false,false);
         root.getChildren().addAll(edgeLayer, nodeLayer);
-
 
 
 
@@ -129,10 +118,9 @@ public static Graph_algothrims graphAlgothrims=new Graph_algothrims();
 
 
 
-    public static void animate_edge(Edge edge, Pane root){
-        edge.setEdgeState(EdgeState.ACTIVE);
-        Circle circle = new Circle(1);
-        //find start node later, for now just start at v1
+    public static EdgeAnimation animate_edge(Edge edge, Pane root){
+        edge.setEdgeState(EdgeState.ACTIVE); //will work on this later
+        Circle circle = new Circle(5);
         Node n1=edge.getV1();
         Node n2=edge.getV2();
         StackPane f =corrlate.get(n1);
@@ -141,26 +129,41 @@ public static Graph_algothrims graphAlgothrims=new Graph_algothrims();
     float targety= (float) (k.getLayoutY()+k.getHeight()/2);
     float startx= (float) (f.getLayoutX()+f.getWidth()/2);
     float starty= (float) (f.getLayoutY()+f.getHeight()/2);
-        float deltax= targetx - startx;
-        float deltay= targety - starty;
 
        root.getChildren().add(circle);
-       double startTime=System.currentTimeMillis();
+//dont ask me how long this took me to figure out
         Timeline timeline=new Timeline(
-                new KeyFrame(Duration.millis(10), ev -> {
+                new KeyFrame(Duration.ZERO,
+                        new KeyValue(circle.translateXProperty(), startx),
+                        new KeyValue(circle.translateYProperty(), starty)
+                ),
+                new KeyFrame(Duration.millis(500),
+                        new KeyValue(circle.translateXProperty(), targetx),
+                        new KeyValue(circle.translateYProperty(), targety)
+                )
 
-                    double progress = (System.currentTimeMillis() - startTime) / 200;
-
-                   double xchange=startx+(deltax*progress);
-                   double ychange=starty+(deltay*progress);
-                   circle.setTranslateX(xchange);
-                   circle.setTranslateY(ychange);
+        );
 
 
-                }));
-   timeline.setCycleCount(1);
-   timeline.play();
 
+
+
+        timeline.setCycleCount(1);
+
+
+
+        return new EdgeAnimation(timeline,circle);
+    }
+    //dont ask me how long this took me to figure out
+    public  void playNext(LinkedList<EdgeAnimation> time) {
+        EdgeAnimation next = time.poll();
+        if (next == null) return;
+        next.timeline.setOnFinished(e -> {
+            root.getChildren().remove(next.circle);
+            playNext(time);
+        });
+
+        next.timeline.play();
 
 
     }
@@ -174,8 +177,9 @@ public static Graph_algothrims graphAlgothrims=new Graph_algothrims();
     }
 
     @Override
-    public void onEdgeRelaxed(Edge edge) {
-        animate_edge(edge, root);
+    public EdgeAnimation onEdgesearched(Edge edge) {
+       return animate_edge(edge, root);
+
     }
 
 
