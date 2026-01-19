@@ -19,7 +19,7 @@ import java.util.*;
 
 
 
-public class Visual_part  implements Edge_interface,Vertex_interface {
+public class Visual_part {
 public static Graph_algothrims graphAlgothrims=new Graph_algothrims();
    static Pane edgeLayer = new Pane();
     static Pane nodeLayer = new Pane();
@@ -168,19 +168,6 @@ public static Graph_algothrims graphAlgothrims=new Graph_algothrims();
 
     }
 
-
-    @Override
-    public void onVertexVisited(Node v) {
-        v.setVertexState(VertexState.VISITED);
-        StackPane f =corrlate.get(v);
-        f.setStyle("-fx-background-color: #ff0000");
-    }
-
-    @Override
-    public EdgeAnimation onEdgesearched(Edge edge) {
-       return animate_edge(edge, root);
-
-    }
 
 
 

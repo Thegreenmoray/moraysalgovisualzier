@@ -1,8 +1,7 @@
-package data_structure;
+package tests.data_structure;
 
 import graph_theory.Edge;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Min_heap {

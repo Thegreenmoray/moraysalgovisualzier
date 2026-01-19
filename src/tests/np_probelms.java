@@ -1,10 +1,9 @@
-import graph_theory.Graph;
+package tests;
+
 import graph_theory.Node;
 import set_theory.Set_theory_items;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class np_probelms {
 

@@ -5,17 +5,18 @@ import graph_theory.Edge;
 import graph_theory.Graph;
 import graph_theory.Node;
 import graph_theory.VertexState;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 
-public class Main extends Application implements Edge_interface,Vertex_interface {
+public class Main extends Application  {
     Pane root = new Pane();
     ArrayList<Edge> Heap;
     @Override
@@ -33,11 +34,31 @@ public class Main extends Application implements Edge_interface,Vertex_interface
     // root.getChildren().addAll(button);
 Scene scene = new Scene(root,800,600);
 stage.setScene(scene);
+        Text codeInput = new Text();
+        codeInput.setText("Paste your algorithm here...");
 
-Visual_part visualPart=new Visual_part(root);
+
+        Visual_part visualPart=new Visual_part(root);
         Graph graph =visualPart.establish(root);
+Edge_interface edgeInterface=new Edge_interface() {
+    @Override
+    public EdgeAnimation onEdgesearched(Edge e) {
+        return Visual_part.animate_edge(e, root);
+    }
 
-        Visual_part.graphAlgothrims.component_analysis_bfs(graph, edge-> onEdgesearched(edge),
+    @Override
+    public void highlightNode(Node u) {
+        u.setVertexState(VertexState.VISITED);
+              StackPane f = Visual_part.corrlate.get(u);
+             f.setStyle("-fx-background-color: #ff0000");
+    }
+
+    @Override
+    public void pause(int ms) {
+
+    }
+};
+        Visual_part.graphAlgothrims.component_analysis_bfs(graph,edgeInterface ,
                 new boolean[graph.getVertices().size()],visualPart);
 
 
@@ -49,17 +70,12 @@ Visual_part visualPart=new Visual_part(root);
     }
 
 
-    @Override
-    public void onVertexVisited(Node v) {
-        v.setVertexState(VertexState.VISITED);
-        StackPane f = Visual_part.corrlate.get(v);
-        f.setStyle("-fx-background-color: #ff0000");
-    }
-
-    @Override
-    public EdgeAnimation onEdgesearched(Edge edge) {
-       return Visual_part.animate_edge(edge, root);
-    }
+    //@Override
+   // public void onVertexVisited(Node v) {
+   //     v.setVertexState(VertexState.VISITED);
+  //      StackPane f = Visual_part.corrlate.get(v);
+   //     f.setStyle("-fx-background-color: #ff0000");
+   // }
 
 
 
