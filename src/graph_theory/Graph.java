@@ -5,22 +5,60 @@ import java.util.*;
 public class Graph {
 List<Edge> edges;
 List<Node> vertices;
-List<List<Edge>> adjacenty_list=createadjacentylist();
-
+List<List<Edge>> indencent_list= createindcendcelist();
+List<List<Node>> adjacencyList;
 
 
 public Graph(List<Node> vertex, List<Edge> edge){
     this.edges = edge;
     this.vertices = vertex;
-    adjacenty_list=createadjacentylist();
+    indencent_list= createindcendcelist();
+    adjacencyList=createadjencylist();
 }
 
+    private List<List<Node>> createadjencylist() {
+        List<List<Node>> adjencylist=new ArrayList<>();
+        if(this.vertices==null){
+            return new ArrayList<>();
+        }
+        for (Node v : this.vertices) {
+             adjencylist.add(adjenctnodes(v));
+        }
 
 
 
-public Edge getEdge (int i, int j){
+        return adjencylist;
 
-   for (Edge n:adjacenty_list.get(i)){
+
+    }
+
+    private List<Node> adjenctnodes(Node v) {
+        Set<Node> result = new HashSet<>();
+        for(Edge e:indencent_list.get(v.number)){
+            Node vertex = v.equals(e.v1)? e.v2:e.v1;
+            result.add(vertex);
+
+         }
+            return new ArrayList<>(result);
+
+}
+
+    private List<List<Edge>> createindcendcelist(){
+        List<List<Edge>> incdencelist=new ArrayList<>();
+        if(this.vertices==null){
+            return new ArrayList<>();
+        }
+        for (Node v : this.vertices) {
+            incdencelist.add(incidentEdges(v));
+        }
+
+
+        return incdencelist;
+    }
+
+    public Edge getEdge (int i, int j){
+
+   for (Edge n:indencent_list.get(i)){
        if (n.v2.getNumber()==j){
            return n;
        }
@@ -54,21 +92,9 @@ public void removearc(Edge e){
 }
 
 
-public List<List<Edge>> createadjacentylist(){
-List<List<Edge>> adjacenylist=new ArrayList<>();
-   if(this.vertices==null){
-       return new ArrayList<>();
-   }
-    for (Node v : this.vertices) {
-        adjacenylist.add(incidentEdges(v));
-    }
 
 
-    return adjacenylist;
-}
-
-
-    public List<Edge> incidentEdges(Node v) {
+    private List<Edge> incidentEdges(Node v) {
         List<Edge> result = new ArrayList<>();
         for (Edge e : this.edges) {
             if (e.v1.equals(v)) {
@@ -82,16 +108,9 @@ List<List<Edge>> adjacenylist=new ArrayList<>();
 
 
     public List<Node> neighbors(Node v){
-Set<Node> result = new HashSet<>();
-   for(Edge e:this.edges){
-      if (e.contains(v)){
-      Node vertex = v.equals(e.v1)? e.v2:e.v1;
-         result.add(vertex);
 
-      }
-   }
-    return new ArrayList<>(result);
-}
+        return adjacencyList.get(v.number);
+    }
 
 
 
@@ -123,14 +142,7 @@ public void removeVertex(Node v){
 }
 
  public int degree(Node v){
-    int degree=0;
-
-    for(Edge e:edges){
-       if(e.containsonly(v)){
-           degree++;
-       }
-    }
-     return degree;
+     return indencent_list.get(v.number).size();
  }
 
 public boolean isadjacent(Node v1, Node v2){
@@ -157,7 +169,7 @@ public boolean isadjacent(Node v1, Node v2){
 
 
 
-    public Graph empty_graph(){
+    public static Graph empty_graph(){
 
         return new Graph(new ArrayList<>(),new ArrayList<>());
     }
