@@ -5,8 +5,8 @@ import javafx.animation.Timeline;
 public interface Edge_interface {
 
      EdgeAnimation onEdgesearched(Edge e);
-     void highlightNode(Node u);
-     void pause(int ms);
+     EdgeAnimation highlightNode(Node u);
+     EdgeAnimation pause(int ms);
 
 
 }

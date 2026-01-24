@@ -41,8 +41,8 @@ public static Graph_algothrims graphAlgothrims=new Graph_algothrims();
         this.root = root;
     }
 
-    public  Graph establish(Pane root) {
-    Graph graph =graphAlgothrims.generate_graph_undirected(10,2,false,false);
+    public  Graph establish(Pane root,int size,int edgechance,boolean isweighted,boolean canbenegative) {
+    Graph graph =graphAlgothrims.generate_graph_undirected(size,edgechance,isweighted,canbenegative);
         root.getChildren().addAll(edgeLayer, nodeLayer);
 
 
@@ -97,7 +97,7 @@ public static Graph_algothrims graphAlgothrims=new Graph_algothrims();
 
            Bounds b = f.getBoundsInParent();
            Bounds c = k.getBoundsInParent();
-         //add text for weighted edges
+
 
            edgeToStackPane.put(edge,line);
 
@@ -106,8 +106,11 @@ public static Graph_algothrims graphAlgothrims=new Graph_algothrims();
            line.setStartY(b.getMinY()+b.getHeight()/2);
            line.setEndX(c.getMinX() +c.getWidth()/2);
            line.setEndY(c.getMinY() +c.getHeight()/2);
-
+             Text text=new Text(""+edge.getWeight());
+             text.setX((b.getMinX()+c.getMinX())/2);
+             text.setY((b.getMinY()+c.getMinY())/2);
            edgeLayer.getChildren().add(line);
+           root.getChildren().add(text);
 
        }
 
@@ -159,7 +162,8 @@ public static Graph_algothrims graphAlgothrims=new Graph_algothrims();
         EdgeAnimation next = time.poll();
         if (next == null) return;
         next.timeline.setOnFinished(e -> {
-            root.getChildren().remove(next.circle);
+            if (next.circle != null) {
+                root.getChildren().remove(next.circle);}
             playNext(time);
         });
 

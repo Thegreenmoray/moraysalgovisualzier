@@ -37,8 +37,13 @@ public static void form_heap(List<Edge> heap) {
 
 
 public static Edge extract_from_heap(List<Edge> edges) {
-Edge edge=edges.remove(0);
+
+
+    Edge edge=edges.remove(0);
+    edges.add(0,edges.get(edges.size()-1));
+    edges.remove(edges.size()-1);
    fix_heap(edges,0);
+
     return edge;
 }
 
@@ -46,18 +51,16 @@ Edge edge=edges.remove(0);
 
 
     public static void fix_heap(List<Edge> edges,int index) {
-     int child=2*index+1;
+     int child;
     while (2*index+1<edges.size()) {
         int left=2*index+1;
-
+            child=left;
       //here to prevent crashes
-      if (left+1 < edges.size()) {
-        if(edges.get(left+1).getWeight()<=edges.size()) { //left+1 otherwise know as the right
+      if (left+1 < edges.size()) {//left+1 otherwise know as the right
              int right=left+1;
              if(edges.get(right).getWeight()<edges.get(left).getWeight()) {
                 child=right;
-             }
-        }}
+             }}
         if (edges.get(child).getWeight()<edges.get(index).getWeight()) {
             Edge temp=edges.get(index);
             edges.set(index,edges.get(child));

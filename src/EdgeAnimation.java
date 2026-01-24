@@ -9,6 +9,13 @@ import javafx.scene.shape.Circle;
             this.timeline = t;
             this.circle = c;
         }
+
+   EdgeAnimation(Timeline timeline) {
+        this.timeline = timeline;
+   }
+
+
+
     }
 
 

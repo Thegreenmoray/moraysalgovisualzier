@@ -19,6 +19,7 @@ Queue<Node> q=new LinkedList<>();
 Node node=graph.getVertices().get(start);
 visted[node.getNumber()]=true;
 q.add(node);
+timelineQueue.add(graphTheoryInterface.highlightNode(node));
 while(!q.isEmpty()){
    Node polled=q.poll();
  List<Node> neighbors = graph.neighbors(polled);
@@ -28,6 +29,7 @@ while(!q.isEmpty()){
         if(!visted[n.getNumber()]){
             Edge edge=graph.getEdge(polled.getNumber(),n.getNumber());
            timelineQueue.add(graphTheoryInterface.onEdgesearched(edge));
+            timelineQueue.add(graphTheoryInterface.highlightNode(n));
           q.add(n);
            visted[n.getNumber()]=true;
         }
