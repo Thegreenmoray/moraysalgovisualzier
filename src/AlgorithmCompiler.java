@@ -1,16 +1,35 @@
 
+import graph_theory.Graph;
+
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class AlgorithmCompiler {
+    public static String modulePath;
+
+    static {
+        try {
+            modulePath = String.valueOf(Paths.get(Graph.class
+                    .getProtectionDomain()
+                    .getCodeSource()
+                    .getLocation()
+                    .toURI()));
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     //code should compile here.
-    public Class<?> compile(String code) throws IOException, ClassNotFoundException {
+    public static Class<?> compile(String code) throws IOException, ClassNotFoundException {
         Path tempDir = Files.createTempDirectory("algovis");
         Path sourceFile = tempDir.resolve("UserAlgorithm.java");
         Files.writeString(sourceFile, code);
@@ -19,9 +38,10 @@ public class AlgorithmCompiler {
 
         int result = compiler.run(
                 null, null, null,
-                sourceFile.toString(),
-                "-classpath", System.getProperty("java.class.path"),
-                "-d", tempDir.toString()
+                "-classpath", System.getProperty("java.class.path")+
+                        File.pathSeparator + modulePath,
+                "-d", tempDir.toString(),sourceFile.toString()
+
         );
 
 
@@ -33,6 +53,11 @@ public class AlgorithmCompiler {
 
 
     }
+
+
+
+
+
 }
 
 

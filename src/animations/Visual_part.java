@@ -1,5 +1,6 @@
+package animations;
+
 import graph_theory.*;
-import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 
@@ -13,6 +14,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import tests.data_structure.Graph_tools;
 
 import java.util.*;
 
@@ -20,10 +22,10 @@ import java.util.*;
 
 
 public class Visual_part {
-public static Graph_algothrims graphAlgothrims=new Graph_algothrims();
+public static Graph_tools graphAlgothrims=new Graph_tools();
    static Pane edgeLayer = new Pane();
     static Pane nodeLayer = new Pane();
-    static Map<Node,StackPane> corrlate=new HashMap<>();
+    public static Map<Node,StackPane> corrlate=new HashMap<>();
     static Map<Edge,Line> edgeToStackPane=new HashMap<>();
     public Pane root;
    static ArrayList<Point2D> mina_distance=new ArrayList<>();

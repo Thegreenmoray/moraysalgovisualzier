@@ -1,7 +1,9 @@
+package animations;
+
 import javafx.animation.Timeline;
 import javafx.scene.shape.Circle;
 
-    class EdgeAnimation {
+    public class EdgeAnimation {
         Timeline timeline;
         Circle circle;
 
@@ -10,7 +12,7 @@ import javafx.scene.shape.Circle;
             this.circle = c;
         }
 
-   EdgeAnimation(Timeline timeline) {
+   public EdgeAnimation(Timeline timeline) {
         this.timeline = timeline;
    }
 
