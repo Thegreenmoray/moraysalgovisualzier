@@ -13,7 +13,7 @@ neighbors-returns the neighbors of a node
 Getedge-extracts specific edge
 
 
-
+Animation funcutions:
 
 
 Set_theory functions for user-
