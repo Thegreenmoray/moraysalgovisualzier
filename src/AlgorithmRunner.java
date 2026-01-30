@@ -29,11 +29,11 @@ private GraphAlgorithm currentAlgorithm;
 
 }
 
-    public void run(Graph g, Edge_interface api, Visual_part part) {
+    public void run( Edge_interface api, Visual_part part) {
         if (currentAlgorithm == null) {
             throw new IllegalStateException("No algorithm loaded. Call setup() first.");
         }
-        currentAlgorithm.run(g, api,part);
+        currentAlgorithm.run( api,part);
 
 
 

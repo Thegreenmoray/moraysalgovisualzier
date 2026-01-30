@@ -22,7 +22,6 @@ import java.util.*;
 
 
 public class Visual_part {
-public static Graph_tools graphAlgothrims=new Graph_tools();
    static Pane edgeLayer = new Pane();
     static Pane nodeLayer = new Pane();
     public static Map<Node,StackPane> corrlate=new HashMap<>();
@@ -43,8 +42,8 @@ public static Graph_tools graphAlgothrims=new Graph_tools();
         this.root = root;
     }
 
-    public  Graph establish(Pane root,int size,int edgechance,boolean isweighted,boolean canbenegative) {
-    Graph graph =graphAlgothrims.generate_graph_undirected(size,edgechance,isweighted,canbenegative);
+    public  Graph establish(int size,int edgechance,boolean isweighted,boolean canbenegative) {
+    Graph graph =Graph_tools.generate_graph_undirected(size,edgechance,isweighted,canbenegative);
         root.getChildren().addAll(edgeLayer, nodeLayer);
 
 

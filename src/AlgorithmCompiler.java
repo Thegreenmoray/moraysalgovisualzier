@@ -14,7 +14,7 @@ import java.nio.file.Paths;
 
 public class AlgorithmCompiler {
     public static String modulePath;
-
+//to ensure this works on any computer
     static {
         try {
             modulePath = String.valueOf(Paths.get(Graph.class

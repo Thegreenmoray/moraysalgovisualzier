@@ -1,0 +1,3 @@
+-ingrate with gradle/maven
+-fix overlapping issues
+-set visuals up for sets/arrays/lists

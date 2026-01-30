@@ -43,13 +43,15 @@ public class Main extends Application  {
             codeInput.setText("import graph_theory.*;\n" +
                     "import animations.*;\n" +
                     "import java.util.*;\n" +
+                    "import tests.*;\n" +
+                    "import set_theory.*;\n" +
                     "public class UserAlgorithm implements GraphAlgorithm {\n" +
                     "\n" +
                     "    // You can add helper methods here\n" +
                     "    // e.g. private void bfs(Graph g, Edge_interface api) { ... }\n" +
                     "\n" +
                     "    @Override\n" +
-                    "    public void run(Graph graph, Edge_interface api,Visual_part part) {\n" +
+                    "    public void run( Edge_interface api,Visual_part part) {\n" +
                     "        // Your algorithm goes here\n" +
                     "    }\n" +
                     "}\n");
@@ -113,11 +115,8 @@ public class Main extends Application  {
 
 
         runButton.setOnAction(e -> {
-            Visual_part visualPart=new Visual_part(root);
-            Graph graph =visualPart.establish(root,10,2,false,false);
-
             try {
-                algorithmRunner.run(graph, edgeInterface,part);
+                algorithmRunner.run( edgeInterface,part);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
