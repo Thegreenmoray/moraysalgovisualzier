@@ -1,34 +1,27 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+package app;
 
-import animations.EdgeAnimation;
-import animations.Edge_interface;
-import animations.Visual_part;
-import graph_theory.Edge;
-import graph_theory.Graph;
-import graph_theory.Node;
-import graph_theory.VertexState;
+import animations.*;
+import graph_theory.*;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.Scene;
 import javafx.util.Duration;
-import tests.Example_probelms;
+
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 
-public class Main extends Application  {
+public class Main extends Application {
     Pane root = new Pane();
     ArrayList<Edge> Heap;
     @Override
@@ -48,7 +41,6 @@ public class Main extends Application  {
                     "public class UserAlgorithm implements GraphAlgorithm {\n" +
                     "\n" +
                     "    // You can add helper methods here\n" +
-                    "    // e.g. private void bfs(Graph g, Edge_interface api) { ... }\n" +
                     "\n" +
                     "    @Override\n" +
                     "    public void run( Edge_interface api,Visual_part part) {\n" +

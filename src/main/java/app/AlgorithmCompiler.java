@@ -1,5 +1,6 @@
+package app;
 
-import graph_theory.Graph;
+import graph_theory.*;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;

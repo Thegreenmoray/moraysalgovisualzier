@@ -1,7 +1,6 @@
-import animations.Edge_interface;
-import animations.GraphAlgorithm;
-import animations.Visual_part;
-import graph_theory.Graph;
+package app;
+
+import animations.*;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
