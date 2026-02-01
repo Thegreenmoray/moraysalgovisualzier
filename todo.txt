@@ -1,3 +1,4 @@
--ingrate with gradle/maven
+-̶i̶n̶g̶r̶a̶t̶e̶ ̶w̶i̶t̶h̶ ̶g̶r̶a̶d̶l̶e̶/̶m̶a̶v̶e̶n̶ //done
+-unit tests
 -fix overlapping issues
 -set visuals up for sets/arrays/lists

@@ -43,7 +43,7 @@ public class Main extends Application {
                     "    // You can add helper methods here\n" +
                     "\n" +
                     "    @Override\n" +
-                    "    public void run( Edge_interface api,Visual_part part) {\n" +
+                    "    public void run(Edge_interface api,Visual_part part) {\n" +
                     "        // Your algorithm goes here\n" +
                     "    }\n" +
                     "}\n");
