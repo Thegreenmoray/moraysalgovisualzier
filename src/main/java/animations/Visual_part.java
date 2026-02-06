@@ -42,12 +42,9 @@ public class Visual_part {
         this.root = root;
     }
 
-    public  Graph establish(int size,int edgechance,boolean isweighted,boolean canbenegative) {
-    Graph graph =Graph_tools.generate_graph_undirected(size,edgechance,isweighted,canbenegative);
+    public  Graph establish(int size,int edgechance,boolean isweighted,boolean canbenegative,boolean isdirected) {
+    Graph graph =isdirected? Graph_tools.generate_graph_directed(size,edgechance,isweighted,canbenegative):Graph_tools.generate_graph_undirected(size,edgechance,isweighted,canbenegative);
         root.getChildren().addAll(edgeLayer, nodeLayer);
-
-
-
 
        for (int i=0;i<graph.getVertices().size();i++) {
           Node node= graph.getVertices().get(i);

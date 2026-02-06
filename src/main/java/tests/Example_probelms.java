@@ -4,6 +4,8 @@ import graph_theory.Edge;
 import graph_theory.Graph;
 import graph_theory.Node;
 import animations.*;
+import tests.data_structure.Min_heap;
+
 import java.util.*;
 
 public class Example_probelms {
@@ -28,21 +30,33 @@ public class Example_probelms {
     }
 
 
-
-    public static  List<Integer> quicksort(List<Integer> e){
+    //wip
+    public static  List<Integer> quicksort(List<Integer> e,int low,int high){
 
         int n=e.size();
 
         if (n<2) return e;
 
 
+        int partition = partition(e, low, high);
+
+        quicksort(e, low, partition - 1);
+        quicksort(e, partition + 1, high);
 
 
         return e;
     }
 
 
-    private static List<Integer> partition(List<Integer> e,int low,int high){
+
+
+
+
+
+
+
+
+    private static int partition(List<Integer> e,int low,int high){
 
         int pivot=e.get(high-1);
         int pivotpoint=-1;
@@ -57,11 +71,11 @@ public class Example_probelms {
         }
 
 
-        return e;
+        return pivotpoint;
     };
 
 
-
+    //wip
     public static int Kadane(List<Integer> e){
         int highest=e.getFirst();
         int current=e.getFirst();
@@ -105,14 +119,15 @@ public class Example_probelms {
 
 
 
-    public void dijkstra(Graph graph, int start, boolean[] visted, int[] distance, Visual_part visualPart, ArrayList<Edge> heap) {
+    private void dijkstra(Graph graph, int start, boolean[] visted, int[] distance, Visual_part visualPart, ArrayList<Edge> heap) {
 
         distance[start]=0;
-        visted[start]=true;
-
-
-
-
+     //   visted[start]=true;
+      for (Edge e:graph.indenctedges(graph.getVertices().get(start))) {
+          Min_heap.add_to_heap(e,heap);
+      }
+   Edge edge =Min_heap.extract_from_heap(heap);
+      int weight=edge.getWeight();
 
 
 
@@ -121,14 +136,18 @@ public class Example_probelms {
 
 
 
-    public static boolean[] dfs(Graph graph, int node_number, boolean[] visted, Edge_interface graphTheoryInterface, Visual_part visualPart) {
-        visted[node_number]=true;
+    private static boolean[] dfs(Graph graph, int node_number, boolean[] visted, Edge_interface graphTheoryInterface, Visual_part visualPart,Queue<EdgeAnimation> timelineQueue) {
+       visted[node_number]=true;
 
         for(Node n:graph.neighbors(graph.getVertices().get(node_number))){
             if(!visted[n.getNumber()]){
                 Edge edge=graph.getEdge(graph.getVertices().get(node_number).getNumber(),n.getNumber());
+
+                timelineQueue.add(graphTheoryInterface.onEdgesearched(edge));
+                timelineQueue.add(graphTheoryInterface.highlightNode(n));
                 graphTheoryInterface.onEdgesearched(edge);
-                dfs(graph,n.getNumber(),visted,graphTheoryInterface,visualPart);
+
+                dfs(graph,n.getNumber(),visted,graphTheoryInterface,visualPart,timelineQueue);
             }
         }
 
@@ -137,11 +156,13 @@ public class Example_probelms {
     }
 
 
-    public float[][] floyd_warshall(float[][] adjacency_matrix, Graph graph, Edge_interface graphTheoryInterface, Visual_part visualPart){
+    public static float[][] floyd_warshall(float[][] adjacency_matrix, Graph graph, Edge_interface graphTheoryInterface, Visual_part visualPart){
+
         Queue<EdgeAnimation> timelineQueue = new LinkedList<>();
         for (int k = 0; k < graph.getVertices().size(); k++) {
             for (int i = 0; i < graph.getVertices().size(); i++) {
                 for (int j = 0; j < graph.getVertices().size(); j++) {
+                  if (visualPart !=null||graphTheoryInterface!=null){
                     Edge edgeij=graph.getEdge(i,j);
                     Edge edgeik=graph.getEdge(i,k);
                     Edge edgekj=graph.getEdge(k,j);
@@ -149,13 +170,16 @@ public class Example_probelms {
 
                     timelineQueue.add(graphTheoryInterface.onEdgesearched(edgeij));
                     timelineQueue.add(graphTheoryInterface.onEdgesearched(edgeik));
-                    timelineQueue.add(graphTheoryInterface.onEdgesearched(edgekj));
+                    timelineQueue.add(graphTheoryInterface.onEdgesearched(edgekj));}
 
                     adjacency_matrix[i][j] = Math.min(adjacency_matrix[i][j], adjacency_matrix[i][k]+adjacency_matrix[k][j]);
                 }
             }
         }
-        visualPart.playNext((LinkedList<EdgeAnimation>) timelineQueue);
+        if (visualPart !=null||graphTheoryInterface!=null){
+        visualPart.playNext((LinkedList<EdgeAnimation>) timelineQueue);}
+
+
         return adjacency_matrix;
     }
 
@@ -164,14 +188,16 @@ public class Example_probelms {
 
     public static void component_analysis(Graph graph, Edge_interface graphTheoryInterface, boolean[] visted, Visual_part visualPart,boolean b_or_d)  {
         ArrayList<Node> node= new ArrayList<>( graph.getVertices());
+        Queue<EdgeAnimation> timelineQueue = new LinkedList<>();//only if dfs
 
         for(int i=0;i<node.size();i++){
             if(!visted[node.get(i).getNumber()]){
 
-              visted= b_or_d ? bfs(graph,i,visted,graphTheoryInterface,visualPart):dfs(graph,i,visted,graphTheoryInterface,visualPart);
+              visted= b_or_d ? bfs(graph,i,visted,graphTheoryInterface,visualPart):dfs(graph,i,visted,graphTheoryInterface,visualPart,timelineQueue);
             }
         }
-
+       if(!b_or_d){ //dfs
+        visualPart.playNext((LinkedList<EdgeAnimation>) timelineQueue);}
     }
 
 
@@ -181,7 +207,7 @@ public class Example_probelms {
 
 
 
-
+    //wip
     public static void independent_set(){
 
     }

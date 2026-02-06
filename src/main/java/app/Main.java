@@ -54,11 +54,6 @@ public class Main extends Application {
         codeInput.setWrapText(true);
 
 
-
-
-
-
-
         Edge_interface edgeInterface=new Edge_interface() {
                 @Override
                 public EdgeAnimation onEdgesearched(Edge e) {
@@ -95,6 +90,10 @@ public class Main extends Application {
             AlgorithmRunner algorithmRunner = new AlgorithmRunner();
         Button compileButton = new Button("Compile");
         Button runButton = new Button("Run");
+        compileButton.setLayoutX(200);
+        runButton.setLayoutX(200);
+        compileButton.setLayoutY(200);
+        runButton.setLayoutY(250);
         root.getChildren().addAll(codeInput,compileButton,runButton);
 
         compileButton.setOnAction(e -> {

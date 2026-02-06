@@ -5,8 +5,8 @@ import java.util.*;
 public class Graph {
 List<Edge> edges;
 List<Node> vertices;
-List<List<Edge>> indencent_list= createindcendcelist();
-List<List<Node>> adjacencyList;
+List<List<Edge>> indencent_list;
+ List<List<Node>> adjacencyList;
 
 
 public Graph(List<Node> vertex, List<Edge> edge){
@@ -84,17 +84,21 @@ public void setVertices(List<Node> vertices) {
 
 public void addarc(Edge e){
     this.edges.add(e);
+    updateincidentedges();
+    updateadjencylist();
 }
 
 
 public void removearc(Edge e){
     this.edges.remove(e);
+    updateincidentedges();
+    updateadjencylist();
 }
 
 
 
 
-    private List<Edge> incidentEdges(Node v) {
+  private List<Edge> incidentEdges(Node v) {
         List<Edge> result = new ArrayList<>();
         for (Edge e : this.edges) {
             if (e.v1.equals(v)) {
@@ -112,20 +116,36 @@ public void removearc(Edge e){
         return adjacencyList.get(v.number);
     }
 
+public List<Edge> indenctedges(Node v){
 
+    return indencent_list.get(v.number);
+}
 
 public void addEdge(Edge e){
    Node e1 = e.v1;
    Node e2 = e.v2;
     this.edges.add(e);
     this.edges.add(new Edge(e2,e1));
+   updateincidentedges();
+   updateadjencylist();
 }
-public void addEdge(Edge e,int weight){
+
+    private void updateadjencylist() {
+   adjacencyList=createadjencylist();
+    }
+
+    private void updateincidentedges() {
+    indencent_list= createindcendcelist();
+    }
+
+    public void addEdge(Edge e,float weight){
     Node e1 = e.v1;
     Node e2 = e.v2;
     e.weight=weight;
     this.edges.add(e);
     this.edges.add(new Edge(e2,e1,weight));
+    updateincidentedges();
+    updateadjencylist();
     }
 
 public void addVertex(Node v){
@@ -136,6 +156,9 @@ public void removeEdge(Edge e){
     Node e2 = e.v2;
     this.edges.remove(e);
     this.edges.remove(new Edge(e2,e1));
+    updateincidentedges();
+    updateadjencylist();
+
 }
 public void removeVertex(Node v){
    this.vertices.remove(v);

@@ -3,7 +3,7 @@ package graph_theory;
 public class Edge {
     Node v1;
     Node v2;
-    int weight;
+    float weight;
     EdgeState edgeState;
     public Edge(Node v1, Node v2) {
         this.v1 = v1;
@@ -12,7 +12,7 @@ public class Edge {
         edgeState=EdgeState.DEFAULT;
     }
 
-    public Edge(Node v1, Node v2, int weight) {
+    public Edge(Node v1, Node v2, float weight) {
         this.v1 = v1;
         this.v2 = v2;
         this.weight = weight;
@@ -42,10 +42,15 @@ public void setEdgeState(EdgeState edgeState) {
     }
 
     public int getWeight() {
+        return (int)weight;
+    }
+
+    public float getWeight_float() {
+
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(float weight) {
         this.weight = weight;
     }
 
