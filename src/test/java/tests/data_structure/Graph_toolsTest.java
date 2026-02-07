@@ -1,4 +1,4 @@
-package tests.datastructure;
+package tests.data_structure;
 
 import graph_theory.Edge;
 import graph_theory.Graph;
@@ -6,14 +6,12 @@ import graph_theory.Node;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import tests.data_structure.Graph_tools;
-
 import java.util.ArrayList;
 
 
 
 
-class Graph_toolsTest {
+ class Graph_toolsTest {
 
     @Test
     void generate_graph_undirected() {
@@ -21,10 +19,6 @@ class Graph_toolsTest {
 
     @Test
     void generate_graph_directed() {
-    }
-
-    @Test
-    void empty_graph() {
     }
 
     @Test
@@ -47,7 +41,7 @@ float[][] testmatrix= {{0,2,-3,5},
         {5,1,2,0}};
 
 
-        float[][] adjency = Graph_tools.adjacency_matrix(new float[graph.getVertices().size()][graph.getVertices().size()],graph);
+        float[][] adjency = Graph_tools.adjacency_matrix(graph);
         for (int i=0;i<adjency.length;i++){
             for (int j=0;j<adjency[i].length;j++){
                 assertEquals(adjency[i][j], testmatrix[i][j]);
@@ -55,4 +49,12 @@ float[][] testmatrix= {{0,2,-3,5},
         }
         //caught an error with the graph class works perfect now.
     }
+
+
+
+
+
+
+
+
 }

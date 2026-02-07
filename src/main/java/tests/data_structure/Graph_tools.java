@@ -98,10 +98,35 @@ public static Graph empty_graph(){
 }
 
 
+public static float[][] arc_incident_matrix(Graph graph){
+    return arc_incident_matrix_creation(new float[graph.getVertices().size()][graph.getEdges().size()],graph);
+}
 
-public static float[][] adjacency_matrix(float[][] adjacency_matrix,Graph graph){
-      for(int i=0;i<graph.getVertices().size();i++){
-          for(int j=0;j<graph.getVertices().size();j++){
+private static float[][] arc_incident_matrix_creation(float[][] arc_incident_matrix,Graph graph){
+    int arcs=graph.getEdges().size();
+        for (int i = 0; i < arcs; i++) {
+    Edge edge=graph.getEdges().get(i);
+    int v1=edge.getV1().getNumber();
+    int v2=edge.getV2().getNumber();
+
+    arc_incident_matrix[v1][i]=edge.getWeight();
+    arc_incident_matrix[v2][i]=-edge.getWeight();
+
+} //still arcs just not stated as such
+
+
+    return arc_incident_matrix;
+}
+
+
+    public static float[][] adjacency_matrix(Graph graph){
+        return adjacency_matrix_creation(new float[graph.getVertices().size()][graph.getVertices().size()],graph);
+    }
+
+private static float[][] adjacency_matrix_creation(float[][] adjacency_matrix,Graph graph){
+     int nodes=graph.getVertices().size();
+      for(int i=0;i<nodes;i++){
+          for(int j=0;j<nodes;j++){
               if (i==j){
                   adjacency_matrix[i][j]=0;
                   continue;

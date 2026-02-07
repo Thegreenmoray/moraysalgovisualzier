@@ -1,14 +1,13 @@
-package tests;
+package tests.data_structure;
 
 import graph_theory.Edge;
 import graph_theory.Graph;
 import graph_theory.Node;
 import animations.*;
-import tests.data_structure.Min_heap;
 
 import java.util.*;
 
-public class Example_probelms {
+public class Example_problems {
 
     public static List<Integer> bubble_sort(List<Integer> e){
 
