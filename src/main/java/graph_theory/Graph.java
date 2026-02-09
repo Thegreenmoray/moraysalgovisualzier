@@ -136,6 +136,14 @@ public void addEdge(Edge e){
    updateadjencylist();
 }
 
+private void deletednodesedges(Node v){
+    for(Edge e:indencent_list.get(v.number)){
+        edges.remove(e);
+    }
+
+}
+
+
     private void updateadjencylist() {
    adjacencyList=createadjencylist();
     }
@@ -167,7 +175,10 @@ public void removeEdge(Edge e){
 
 }
 public void removeVertex(Node v){
+  deletednodesedges(v);
    this.vertices.remove(v);
+  updateadjencylist();
+  updateincidentedges();
 }
 
  public int degree(Node v){
@@ -194,20 +205,6 @@ public boolean isadjacent(Node v1, Node v2){
      return false;
  }
 
-
-
-
-
-
-
-
-
-
-
-    public static Graph empty_graph(){
-
-        return new Graph(new ArrayList<>(),new ArrayList<>());
-    }
 
 
 

@@ -66,7 +66,4 @@ class GraphTest {
     void isincident() {
     }
 
-    @Test
-    void empty_graph() {
-    }
 }
