@@ -119,7 +119,7 @@ private static float[][] arc_incident_matrix_creation(float[][] arc_incident_mat
 }
 
 
-    public static float[][] adjacency_matrix(Graph graph){
+public static float[][] adjacency_matrix(Graph graph){
         return adjacency_matrix_creation(new float[graph.getVertices().size()][graph.getVertices().size()],graph);
     }
 

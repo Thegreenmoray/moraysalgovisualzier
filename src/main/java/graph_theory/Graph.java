@@ -95,6 +95,12 @@ public void removearc(Edge e){
     updateadjencylist();
 }
 
+    public void addarc(Edge e,int weight){
+       e.setWeight(weight);
+        this.edges.add(e);
+        updateincidentedges();
+        updateadjencylist();
+    }
 
 
 
@@ -169,17 +175,23 @@ public void removeVertex(Node v){
  }
 
 public boolean isadjacent(Node v1, Node v2){
-    for (Edge e:edges){
-        if(e.contains(v1)&&e.contains(v2)){
-            return true;
-        }
+    for (Node node:adjacencyList.get(v1.number)){
+      if (node.equals(v2)){
+          return true;
+      }
     }
     return false;
 }
 
- public boolean isincident(Node v, Edge e){
+ public boolean isincident(Node v1, Node v2){
 
-     return e.contains(v);
+    for(Edge e1:indencent_list.get(v1.number)){
+        if (e1.getV2().getNumber()==v2.getNumber()){
+          return true;
+        }
+    }
+
+     return false;
  }
 
 

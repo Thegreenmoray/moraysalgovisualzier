@@ -20,6 +20,39 @@ import java.util.ArrayList;
     @Test
     void generate_graph_directed() {
     }
+    @Test
+    void arc_incident_matrix() {
+        Graph graph=new Graph(new ArrayList<>(),new ArrayList<>());
+        for (int i=0;i<4;i++){
+            graph.addVertex(new Node(i));
+        }
+
+        graph.addarc(new Edge(graph.getVertices().get(0),graph.getVertices().get(1)));
+        graph.addarc(new Edge(graph.getVertices().get(0),graph.getVertices().get(2)));
+        graph.addarc(new Edge(graph.getVertices().get(0),graph.getVertices().get(3)));
+        //no edge for 1,2, infinty
+        graph.addarc(new Edge(graph.getVertices().get(1),graph.getVertices().get(3)));
+        graph.addarc( new Edge(graph.getVertices().get(2),graph.getVertices().get(3)));
+
+        float[][] testmatrix= {
+                {1,1,1,0,0,0,0,0,0,0,0},
+                {-1,0,0,1,0,0,0,0,0,0,0},
+                {0,-1,0,0,1,0,0,0,0,0,0},
+                {0,0,-1,-1,-1,0,0,0,0,0,0,0},
+
+
+
+        };
+
+
+        float[][] indence = Graph_tools.arc_incident_matrix(graph);
+        for (int i=0;i<indence.length;i++){
+            for (int j=0;j<indence[i].length;j++){
+                assertEquals(indence[i][j], testmatrix[i][j]);
+            }
+        }
+    }
+
 
     @Test
     void adjacency_matrix_correct_undirected() {

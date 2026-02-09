@@ -12,6 +12,9 @@ neighbors-returns the neighbors of a node
 
 Getedge-extracts specific edge
 
+IsAdjacent- Checks if the two nodes are adjacent
+IsIncident- checks if an edge exists between two nodes
+
 
 
 
@@ -24,10 +27,15 @@ Intersection- Returns a list containing elements only found in both list A and l
 
 Complement -Compares two lists B and A with taking all elements not in A and returning them
 
+Difference - Compares list A and list B and takes all elements in A, but also not in B
+
 Power Set-Generates all sublists of a list
 
 Extra Functions:
-Edge min-heap: (evaluates edges by weight, useful for algorithms like Prim or Dijkstra)
+Edge min-heap: evaluates edges by weight( useful for algorithms like Prim or Dijkstra)
+Adjacency Matrix Generator
+Arc-Incident Matrix Generator
+Directed and Undirected Graph generators
 
 
 

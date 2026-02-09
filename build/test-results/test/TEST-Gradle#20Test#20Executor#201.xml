@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Gradle Test Executor 5" tests="1" skipped="0" failures="1" errors="0" timestamp="2026-02-07T00:11:26.453Z" hostname="JUSTIN-WORK-SCH" time="0.011">
+<testsuite name="Gradle Test Executor 1" tests="1" skipped="0" failures="1" errors="0" timestamp="2026-02-07T20:57:00.412Z" hostname="JUSTIN-WORK-SCH" time="0.012">
   <properties/>
-  <testcase name="failed to execute tests" classname="Gradle Test Executor 5" time="0.011">
-    <failure message="org.gradle.api.internal.tasks.testing.TestSuiteExecutionException: Could not start Gradle Test Executor 5: Failed to load JUnit Platform.  Please ensure that the JUnit Platform is available on the test runtime classpath." type="org.gradle.api.internal.tasks.testing.TestSuiteExecutionException">org.gradle.api.internal.tasks.testing.TestSuiteExecutionException: Could not start Gradle Test Executor 5: Failed to load JUnit Platform.  Please ensure that the JUnit Platform is available on the test runtime classpath.
+  <testcase name="failed to execute tests" classname="Gradle Test Executor 1" time="0.012">
+    <failure message="org.gradle.api.internal.tasks.testing.TestSuiteExecutionException: Could not start Gradle Test Executor 1: Failed to load JUnit Platform.  Please ensure that the JUnit Platform is available on the test runtime classpath." type="org.gradle.api.internal.tasks.testing.TestSuiteExecutionException">org.gradle.api.internal.tasks.testing.TestSuiteExecutionException: Could not start Gradle Test Executor 1: Failed to load JUnit Platform.  Please ensure that the JUnit Platform is available on the test runtime classpath.
 	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.startProcessing(SuiteTestClassProcessor.java:46)
 	at java.base@21.0.1/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base@21.0.1/java.lang.reflect.Method.invoke(Method.java:580)
