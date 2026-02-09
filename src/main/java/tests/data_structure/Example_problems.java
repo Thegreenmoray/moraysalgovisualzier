@@ -29,7 +29,7 @@ public class Example_problems {
     }
 
 
-    //wip
+    //test
     public static  List<Integer> quicksort(List<Integer> e,int low,int high){
 
         int n=e.size();
@@ -45,13 +45,6 @@ public class Example_problems {
 
         return e;
     }
-
-
-
-
-
-
-
 
 
 
@@ -74,7 +67,7 @@ public class Example_problems {
     };
 
 
-    //wip
+    //test
     public static int Kadane(List<Integer> e){
         int highest=e.getFirst();
         int current=e.getFirst();
@@ -117,25 +110,52 @@ public class Example_problems {
     }
 
 
+//test it
+    private static void Prim(Graph graph,Edge_interface graphTheoryInterface,Queue<EdgeAnimation> timelineQueue, Visual_part visualPart){
+        ArrayList<Edge> heap=new ArrayList<>();
+        Graph mst=Graph_tools.empty_graph();
+        for(Edge e:graph.indenctedges(graph.getVertices().getFirst())){
+            Min_heap.add_to_heap(e,heap);
+        }
 
-    private void dijkstra(Graph graph, int start, boolean[] visted, int[] distance, Visual_part visualPart, ArrayList<Edge> heap) {
 
-        distance[start]=0;
-     //   visted[start]=true;
-      for (Edge e:graph.indenctedges(graph.getVertices().get(start))) {
-          Min_heap.add_to_heap(e,heap);
-      }
-   Edge edge =Min_heap.extract_from_heap(heap);
-      int weight=edge.getWeight();
+       while(!heap.isEmpty()&&mst.getVertices().size()<graph.getVertices().size()){
+            Edge other_edges=Min_heap.extract_from_heap(heap);
+
+            if (Graph_tools.Willcreateacycle(mst,other_edges.getV1(),other_edges.getV2())) {
+                continue;
+            }
+              if (!mst.containsnode(other_edges.getV1())&&!mst.containsnode(other_edges.getV2())) {
+                  continue;
+              }
+                mst.addEdge(other_edges);
+              if (!mst.containsnode(other_edges.getV1())){
+                  mst.addVertex(other_edges.getV1());
+              for (Edge e:graph.indenctedges(other_edges.getV1())) {
+                  if (!mst.containsnode(e.getV2())){
+                  Min_heap.add_to_heap(e,heap);}
+              }
+
+              }
+              else {
+                  mst.addVertex(other_edges.getV2());
+                  for (Edge e:graph.indenctedges(other_edges.getV2())) {
+                      if (!mst.containsnode(e.getV1())){
+                      Min_heap.add_to_heap(e,heap);
+                      }
+                  }
+              }
+
+
+
+        }
+
 
 
 
     }
 
-
-
-
-    private static boolean[] dfs(Graph graph, int node_number, boolean[] visted, Edge_interface graphTheoryInterface, Visual_part visualPart,Queue<EdgeAnimation> timelineQueue) {
+    private static boolean[] dfs(Graph graph, int node_number, boolean[] visted, Edge_interface graphTheoryInterface,Queue<EdgeAnimation> timelineQueue) {
        visted[node_number]=true;
 
         for(Node n:graph.neighbors(graph.getVertices().get(node_number))){
@@ -146,7 +166,7 @@ public class Example_problems {
                 timelineQueue.add(graphTheoryInterface.highlightNode(n));
                 graphTheoryInterface.onEdgesearched(edge);
 
-                dfs(graph,n.getNumber(),visted,graphTheoryInterface,visualPart,timelineQueue);
+                dfs(graph,n.getNumber(),visted,graphTheoryInterface,timelineQueue);
             }
         }
 
@@ -154,8 +174,8 @@ public class Example_problems {
         return visted;
     }
 
-
-    public static float[][] floyd_warshall(float[][] adjacency_matrix, Graph graph, Edge_interface graphTheoryInterface, Visual_part visualPart){
+   //test
+    public static float[][] Floyd_Warshall(float[][] adjacency_matrix, Graph graph, Edge_interface graphTheoryInterface, Visual_part visualPart){
 
         Queue<EdgeAnimation> timelineQueue = new LinkedList<>();
         for (int k = 0; k < graph.getVertices().size(); k++) {
@@ -182,38 +202,27 @@ public class Example_problems {
         return adjacency_matrix;
     }
 
-
-
-
-    public static void component_analysis(Graph graph, Edge_interface graphTheoryInterface, boolean[] visted, Visual_part visualPart,boolean b_or_d)  {
+    //test
+    public static boolean[] component_analysis(Graph graph, Edge_interface graphTheoryInterface, boolean[] visted, Visual_part visualPart,boolean b_or_d)  {
         ArrayList<Node> node= new ArrayList<>( graph.getVertices());
         Queue<EdgeAnimation> timelineQueue = new LinkedList<>();//only if dfs
 
         for(int i=0;i<node.size();i++){
             if(!visted[node.get(i).getNumber()]){
 
-              visted= b_or_d ? bfs(graph,i,visted,graphTheoryInterface,visualPart):dfs(graph,i,visted,graphTheoryInterface,visualPart,timelineQueue);
+              visted= b_or_d ? bfs(graph,i,visted,graphTheoryInterface,visualPart):dfs(graph,i,visted,graphTheoryInterface,timelineQueue);
             }
         }
        if(!b_or_d){ //dfs
         visualPart.playNext((LinkedList<EdgeAnimation>) timelineQueue);}
+        return visted;
     }
-
-
-
-
-
-
-
 
     //wip
-    public static void independent_set(){
+    private static void independent_set(){
 
     }
-
-
-
-
+    //test
     public static void unbounded_knapsack(int[] values,int[] weights,int weight){
 int[] unbounded_knapsack_array=new int[weight+1];
 
@@ -231,12 +240,7 @@ for(int i=1;i<=weight;i++){
 
     }
 
-
-
-
-
-
-
+    //test
     public  static void binary_knapsack(int[] values,int[] weights,int weight){
       int n = weights.length;
    int[][] binary_knapsack_matrix=new int[n+1][weight+1];
@@ -255,39 +259,53 @@ for(int i=1;i<=n;i++){
 
 
     }
-//wip
 
-public static void generalized_sudoku(char[][] sudoku, int n,int k,char[] total_chars,char[] vaild_char_list){
-if (issolved_or_is_vaild_sudoku_board(sudoku)){
+
+//wip
+ private static void generalized_sudoku(char[][] sudoku,char[] total_chars,char[] vaild_char_list){
+        if (!isboardvaild(sudoku)){
+            return;
+            //invaild board!
+        }
+   generalized_sudoku_slover(sudoku,0,0,total_chars,vaild_char_list, sudoku.length);
+    }
+
+    private static boolean isboardvaild(char[][] sudoku){
+        return issolved_or_is_vaild_sudoku_board(sudoku, true);
+    }
+
+//work on this
+private static void generalized_sudoku_slover(char[][] sudoku, int n,int k,char[] total_chars,char[] vaild_char_list,int sudoku_size){
+if (issolved_or_is_vaild_sudoku_board(sudoku,false)){
     return;
 }
 
-for (int i = n; i <sudoku.length ; i++) {
-    for (int j = k; j < sudoku[i].length; j++) {
-        if (sudoku[i][j] != ' ') {
-            continue;
+    if (k ==sudoku_size&&!(n==sudoku_size)) {
+        k=0;
+        n++;
+    }
+
+
+        if (sudoku[n][k] == ' ') {
+          //candidate selector
         }
 
-    }
 
-}
+        k++;
+if (!(n==sudoku_size)) {
+        generalized_sudoku_slover(sudoku,n,k,total_chars,vaild_char_list,sudoku_size);
+    }}
 
-
-
-
-
-    }
-
-    private static boolean issolved_or_is_vaild_sudoku_board(char[][] sudoku) {
+ private static boolean issolved_or_is_vaild_sudoku_board(char[][] sudoku,boolean accepts_blank_characters) {
 
         for(int i=0;i<sudoku.length;i++){
-            if (!valid_row(sudoku,i)){
+            if (!valid_row(sudoku,i,accepts_blank_characters)){
                     return false;
                 }
 
         }
         for(int j=0;j<sudoku[0].length;j++) {
-            if (!vaild_column(sudoku,j)){
+            if (!vaild_column(sudoku,j,accepts_blank_characters)){
                 return false;
             }
         }
@@ -297,7 +315,7 @@ for (int i = n; i <sudoku.length ; i++) {
 
         for(int i=0;i<n_sqrt;i++){
             for(int j=0;j<n_sqrt;j++){
-                if (!vaild_sqrtn_by_sqrtn(sudoku,i*n_sqrt,j*n_sqrt,n_sqrt)){
+                if (!vaild_sqrtn_by_sqrtn(sudoku,i*n_sqrt,j*n_sqrt,n_sqrt,accepts_blank_characters)){
                     return false;
                 }
             }}
@@ -308,11 +326,11 @@ for (int i = n; i <sudoku.length ; i++) {
         return true;
     }
 
-    private static boolean vaild_column(char[][] sudoku, int col) {
+ private static boolean vaild_column(char[][] sudoku, int col,boolean accepts_blank_characters) {
         HashSet<Character> set = new HashSet<>();
         for(int i=0;i<sudoku[col].length;i++){
           char c = sudoku[i][col];
-          if(c==' '){
+          if(c==' '&&!accepts_blank_characters){
               return false;
           }
           if (set.contains(c)){
@@ -325,7 +343,7 @@ for (int i = n; i <sudoku.length ; i++) {
         return true;
     }
 
-    private static boolean vaild_sqrtn_by_sqrtn(char[][] sudoku,int row,int col,int n_sqrt) {
+ private static boolean vaild_sqrtn_by_sqrtn(char[][] sudoku,int row,int col,int n_sqrt,boolean accepts_blank_characters) {
         HashSet<Character> set = new HashSet<>();
 
 
@@ -335,7 +353,7 @@ for (int i = n; i <sudoku.length ; i++) {
         for(int i=0;i<n_sqrt;i++){
             for(int j=0;j<n_sqrt;j++){
               char c =sudoku[i+intdivision_row][j+intdivision_col];
-                if(c==' '){
+                if(c==' '&&!accepts_blank_characters){
                     return false;
                 }
             if (set.contains(c)){
@@ -350,12 +368,12 @@ for (int i = n; i <sudoku.length ; i++) {
         return true;
     }
 
-    private static boolean valid_row(char[][] sudoku,int row) {
+ private static boolean valid_row(char[][] sudoku,int row,boolean accepts_blank_characters) {
 
         HashSet<Character> set = new HashSet<>();
         for (int i=0;i<sudoku.length;i++){
             char c =sudoku[row][i];
-            if (c==' '){
+            if (c==' '&&!accepts_blank_characters){
            return false;
        }
 

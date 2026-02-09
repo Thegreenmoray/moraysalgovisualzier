@@ -91,6 +91,11 @@ public class Graph_tools {
     }
 
 
+    //wip, for prim
+    public static boolean Willcreateacycle(Graph mst,Node n,Node m){
+        return mst.containsnode(n)&&mst.containsnode(m);
+    }
+
 
 public static Graph empty_graph(){
 

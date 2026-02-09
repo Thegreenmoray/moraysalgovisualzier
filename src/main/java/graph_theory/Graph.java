@@ -1,5 +1,7 @@
 package graph_theory;
 
+import set_theory.Set_theory_items;
+
 import java.util.*;
 
 public class Graph {
@@ -83,23 +85,28 @@ public void setVertices(List<Node> vertices) {
 }
 
 public void addarc(Edge e){
+    if (!edges.contains(e)){
     this.edges.add(e);
     updateincidentedges();
-    updateadjencylist();
+    updateadjencylist();}
+
 }
 
 
 public void removearc(Edge e){
+
     this.edges.remove(e);
     updateincidentedges();
     updateadjencylist();
 }
 
     public void addarc(Edge e,int weight){
+    if (!edges.contains(e)){
        e.setWeight(weight);
         this.edges.add(e);
         updateincidentedges();
-        updateadjencylist();
+        updateadjencylist();}
+
     }
 
 
@@ -128,12 +135,16 @@ public List<Edge> indenctedges(Node v){
 }
 
 public void addEdge(Edge e){
+
    Node e1 = e.v1;
    Node e2 = e.v2;
-    this.edges.add(e);
-    this.edges.add(new Edge(e2,e1));
-   updateincidentedges();
-   updateadjencylist();
+
+    if (!edges.contains(getEdge(e1.number,e2.number))&&!edges.contains(getEdge(e2.number,e1.number))) {
+        this.edges.add(e);
+        this.edges.add(new Edge(e2,e1));
+        updateincidentedges();
+        updateadjencylist();
+    }
 }
 
 private void deletednodesedges(Node v){
@@ -156,20 +167,30 @@ private void deletednodesedges(Node v){
     Node e1 = e.v1;
     Node e2 = e.v2;
     e.weight=weight;
-    this.edges.add(e);
-    this.edges.add(new Edge(e2,e1,weight));
-    updateincidentedges();
-    updateadjencylist();
+
+
+        if (!edges.contains(getEdge(e1.number,e2.number))&&!edges.contains(getEdge(e2.number,e1.number))) {
+            this.edges.add(e);
+            this.edges.add(new Edge(e2,e1,weight));
+            updateincidentedges();
+            updateadjencylist();
+        }
+
+
+
+
     }
 
 public void addVertex(Node v){
-    this.vertices.add(v);
+    if (!this.containsnode(v)){
+    this.vertices.add(v);}
+
 }
 public void removeEdge(Edge e){
     Node e1 = e.v1;
     Node e2 = e.v2;
     this.edges.remove(e);
-    this.edges.remove(new Edge(e2,e1));
+    this.edges.remove(getEdge(e2.number,e1.number));
     updateincidentedges();
     updateadjencylist();
 
@@ -206,8 +227,17 @@ public boolean isadjacent(Node v1, Node v2){
  }
 
 
+public boolean containsnode(Node v1){
+for(Node node:this.vertices){
+    if (node.equals(v1)){
+        return true;
+    }
+}
+    return false;
+}
 
 
-
-
+    public boolean containsedge(Edge e) {
+        return getEdge(e.v1.number,e.v2.number)!=null;
+    }
 }

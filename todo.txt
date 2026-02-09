@@ -1,4 +1,5 @@
 -̶i̶n̶g̶r̶a̶t̶e̶ ̶w̶i̶t̶h̶ ̶g̶r̶a̶d̶l̶e̶/̶m̶a̶v̶e̶n̶ //done
--unit tests
+-first round unit tests (testing  ̶G̶r̶a̶p̶h̶ (will do this in second round testing),(except cartiesan product for now)Set theory,Graph_tools,(some parts of) Example probelms, ̶M̶i̶n̶_̶h̶e̶a̶p̶)
+-add functionally for Prim and other simliar algothrims to visualizer
 -fix overlapping issues
 -set visuals up for sets/arrays/lists

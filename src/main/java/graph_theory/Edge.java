@@ -1,5 +1,7 @@
 package graph_theory;
 
+import java.util.Objects;
+
 public class Edge {
     Node v1;
     Node v2;
@@ -58,9 +60,25 @@ public void setEdgeState(EdgeState edgeState) {
     return v1.equals(v) || v2.equals(v);
 }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Edge e = (Edge)obj;
 
-public boolean containsonly(Node v){
+        return weight == e.weight &&
+                v1.equals(e.v1) &&
+                v2.equals(e.v2);
+    }
+
+    public boolean containsonly(Node v){
         return v1.number==v.number;
 }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(v1, v2, weight);
+    }
 
 }

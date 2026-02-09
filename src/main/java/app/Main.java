@@ -86,7 +86,54 @@ public class Main extends Application {
 
 
                 }
-            };
+
+            @Override
+            public EdgeAnimation addNode(Graph graph, Node n, Visual_part part) {
+                return null;
+            }
+
+            @Override
+            public EdgeAnimation removeNode(Graph graph, Node n, Visual_part part) {
+                return null;
+            }
+
+            @Override
+            public EdgeAnimation addEdge(Graph graph, Edge e, Visual_part part) {
+                return null;
+            }
+
+            @Override
+            public EdgeAnimation removeEdge(Graph graph, Edge e, Visual_part part) {
+                return null;
+            }
+
+            @Override
+            public EdgeAnimation setallinvisible(Graph graph, Visual_part part) {
+                return null;
+            }
+
+            @Override
+            public EdgeAnimation makenodevisible(Graph graph, Visual_part part) {
+                return null;
+            }
+
+            @Override
+            public EdgeAnimation makeedgevisible(Graph graph, Visual_part part) {
+                return null;
+            }
+
+            @Override
+            public EdgeAnimation makeedgeinvisible(Graph graph, Visual_part part) {
+                return null;
+            }
+
+            @Override
+            public EdgeAnimation makenodeinvisible(Graph graph, Visual_part part) {
+                return null;
+            }
+
+
+        };
             AlgorithmRunner algorithmRunner = new AlgorithmRunner();
         Button compileButton = new Button("Compile");
         Button runButton = new Button("Run");

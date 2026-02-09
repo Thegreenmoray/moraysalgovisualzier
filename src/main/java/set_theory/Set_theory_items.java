@@ -1,5 +1,6 @@
 package set_theory;
 
+import graph_theory.Edge;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ public class Set_theory_items {
     }
 
     public static <T> List<T> union(List<T> list1,List<T> list2){
+
+
 
         Set<T> list = new HashSet<>(list1);
         list.addAll(list2);
