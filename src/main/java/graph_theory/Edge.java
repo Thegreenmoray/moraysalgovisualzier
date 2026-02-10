@@ -71,6 +71,13 @@ public void setEdgeState(EdgeState edgeState) {
                 v2.equals(e.v2);
     }
 
+
+    public boolean connects(Node a, Node b) {
+        return (v1.equals(a) && v2.equals(b)) ||
+                (v1.equals(b) && v2.equals(a));
+    }
+
+
     public boolean containsonly(Node v){
         return v1.number==v.number;
 }

@@ -55,3 +55,4 @@ empty_graph-Generates empty graph
 Other notes:
 Edges are always "weighted" unweighted edges just have a weight of 1.
 Example code will be added to help show the user how to visualize your code
+For algothrims like prim use addarcs, otherwise it will count it twice

@@ -15,10 +15,27 @@ import java.util.ArrayList;
 
     @Test
     void generate_graph_undirected() {
+                                 //one in two
+   Graph graph=Graph_tools.generate_graph_undirected(4,2,false,false);
+
+    for (Edge e:graph.getEdges()){
+        assertEquals(1, e.getWeight());
+    }
+
+   assertEquals(4,graph.getVertices().size());
+
+
     }
 
     @Test
     void generate_graph_directed() {
+        Graph graph=Graph_tools.generate_graph_directed(4,2,false,false);
+
+        for (Edge e:graph.getEdges()){
+            assertEquals(1, e.getWeight());
+        }
+
+        assertEquals(4,graph.getVertices().size());
     }
     @Test
     void arc_incident_matrix() {

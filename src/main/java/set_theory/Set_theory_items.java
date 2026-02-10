@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Set_theory_items {
-
+private Set_theory_items(){}
 
     public static <T> boolean isSubset(List<T> A, List<T> B) {
         return B.containsAll(A);

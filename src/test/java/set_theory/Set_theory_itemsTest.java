@@ -9,13 +9,25 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class Set_theory_itemsTest {
-
+//done
     @Test
     void isSubset() {
+    List<Integer> e = new ArrayList<>();
+    List<Integer> a = new ArrayList<>();
+    a.add(1);
+    boolean r=Set_theory_items.isSubset(e,a);
+    assertTrue(r);
     }
 
     @Test
     void isProperSubset() {
+        List<Integer> e = new ArrayList<>();
+        List<Integer> a = new ArrayList<>();
+        List<Integer> b = new ArrayList<>();
+        a.add(1);
+        boolean r=Set_theory_items.isProperSubset(e,a);
+        assertTrue(r);
+        assertFalse(Set_theory_items.isProperSubset(b,e));
     }
 
     @Test
@@ -61,18 +73,78 @@ class Set_theory_itemsTest {
 
     @Test
     void complement() {
+        List<Character> U = new ArrayList<>();
+        U.add('a');
+        U.add('b');
+        U.add('r');
+        U.add('j');
+        U.add('c');
+        U.add('d');
+        List<Character> A = new ArrayList<>();
+        A.add('a');
+        A.add('b');
+
+        List<Character> Actual=Set_theory_items.complement(U,A);
+        List<Character> expected = new ArrayList<>();
+        expected.add('r');
+        expected.add('c');
+        expected.add('d');
+        expected.add('j');
+      assertEquals(expected,Actual);
+
     }
 
     @Test
     void cardinality() {
+        ArrayList<Character> A = new ArrayList<>();
+        A.add('a');
+        A.add('b');
+        A.add('r');
+        A.add('j');
+        int actaul=Set_theory_items.cardinality(A);
+        assertEquals(4,actaul);
+
     }
 
     @Test
     void symmetric_difference() {
+        ArrayList<Character> A = new ArrayList<>();
+        A.add('a');
+        A.add('b');
+        A.add('r');
+        ArrayList<Character> B = new ArrayList<>();
+        B.add('a');
+        B.add('r');
+        B.add('j');
+        B.add('c');
+        List<Character> actual= Set_theory_items.symmetric_difference(B,A);
+        List<Character> expected = new ArrayList<>();
+        expected.add('b');
+        expected.add('c');
+        expected.add('j');
+        assertEquals(expected,actual);
     }
 
     @Test
     void difference() {
+        List<Character> U = new ArrayList<>();
+        U.add('a');
+        U.add('b');
+        U.add('r');
+        U.add('j');
+        U.add('c');
+        U.add('d');
+        List<Character> A = new ArrayList<>();
+        A.add('a');
+        A.add('b');
+
+        List<Character> Actual=Set_theory_items.difference(U,A);
+        List<Character> expected = new ArrayList<>();
+        expected.add('r');
+        expected.add('c');
+        expected.add('d');
+        expected.add('j');
+        assertEquals(expected,Actual);
     }
 
     @Test

@@ -8,7 +8,7 @@ import java.util.*;
 
 public class Graph_tools {
     
-
+private Graph_tools(){};
 
     public static Graph generate_graph_undirected(int size,int edge_chance,boolean isweighted,boolean can_be_negative_weight){
         LinkedList<Node> nodes = new LinkedList<>();

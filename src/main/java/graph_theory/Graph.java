@@ -35,8 +35,9 @@ public Graph(List<Node> vertex, List<Edge> edge){
     }
 
     private List<Node> adjenctnodes(Node v) {
+        int idx = vertices.indexOf(v);
         Set<Node> result = new HashSet<>();
-        for(Edge e:indencent_list.get(v.number)){
+        for(Edge e:indencent_list.get(idx)){
             Node vertex = v.equals(e.v1)? e.v2:e.v1;
             result.add(vertex);
 
@@ -59,13 +60,14 @@ public Graph(List<Node> vertex, List<Edge> edge){
     }
 
     public Edge getEdge (int i, int j){
+if (indencent_list.isEmpty()){
+    return null;
+}
 
    for (Edge n:indencent_list.get(i)){
        if (n.v2.getNumber()==j){
-           return n;
-       }
+           return n;}}
 
-   }
     return null;
 }
 
@@ -136,15 +138,26 @@ public List<Edge> indenctedges(Node v){
 
 public void addEdge(Edge e){
 
-   Node e1 = e.v1;
-   Node e2 = e.v2;
+    Node v1 = e.v1;
+    Node v2 = e.v2;
 
-    if (!edges.contains(getEdge(e1.number,e2.number))&&!edges.contains(getEdge(e2.number,e1.number))) {
-        this.edges.add(e);
-        this.edges.add(new Edge(e2,e1));
-        updateincidentedges();
-        updateadjencylist();
+    // Ensure vertices exist
+    if (!vertices.contains(v1)) addVertex(v1);
+    if (!vertices.contains(v2)) addVertex(v2);
+
+    // Prevent duplicates without indexing
+    for (Edge existing : edges) {
+        if (existing.connects(v1, v2)) {
+            return;
+        }
     }
+
+    edges.add(e);
+    edges.add(new Edge(v2, v1));
+
+    updateincidentedges();
+    updateadjencylist();
+
 }
 
 private void deletednodesedges(Node v){
@@ -164,24 +177,38 @@ private void deletednodesedges(Node v){
     }
 
     public void addEdge(Edge e,float weight){
-    Node e1 = e.v1;
-    Node e2 = e.v2;
-    e.weight=weight;
 
+        Node v1 = e.v1;
+        Node v2 = e.v2;
+        e.weight = weight;
 
-        if (!edges.contains(getEdge(e1.number,e2.number))&&!edges.contains(getEdge(e2.number,e1.number))) {
-            this.edges.add(e);
-            this.edges.add(new Edge(e2,e1,weight));
-            updateincidentedges();
-            updateadjencylist();
+        // Ensure vertices exist
+        if (!vertices.contains(v1)) addVertex(v1);
+        if (!vertices.contains(v2)) addVertex(v2);
+
+        // Prevent duplicates without indexing
+        for (Edge existing : edges) {
+            if (existing.connects(v1, v2)) {
+                return;
+            }
         }
 
+        edges.add(e);
+        edges.add(new Edge(v2, v1, weight));
 
+        updateincidentedges();
+        updateadjencylist();
 
 
     }
 
-public void addVertex(Node v){
+
+
+
+
+
+
+    public void addVertex(Node v){
     if (!this.containsnode(v)){
     this.vertices.add(v);}
 

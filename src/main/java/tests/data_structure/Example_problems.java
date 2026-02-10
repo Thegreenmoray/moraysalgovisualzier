@@ -29,7 +29,7 @@ public class Example_problems {
     }
 
 
-    //test
+    //round two
     public static  List<Integer> quicksort(List<Integer> e,int low,int high){
 
         int n=e.size();
@@ -67,7 +67,7 @@ public class Example_problems {
     };
 
 
-    //test
+    //round two
     public static int Kadane(List<Integer> e){
         int highest=e.getFirst();
         int current=e.getFirst();
@@ -86,17 +86,20 @@ public class Example_problems {
         Node node=graph.getVertices().get(start);
         visted[node.getNumber()]=true;
         q.add(node);
-        timelineQueue.add(graphTheoryInterface.highlightNode(node));
+        if (graphTheoryInterface !=null&&visualPart!=null){
+        timelineQueue.add(graphTheoryInterface.highlightNode(node));}
         while(!q.isEmpty()){
             Node polled=q.poll();
             List<Node> neighbors = graph.neighbors(polled);
 
             for (Node n:neighbors) {
 
-                if(!visted[n.getNumber()]){
-                    Edge edge=graph.getEdge(polled.getNumber(),n.getNumber());
+                if(!visted[n.getNumber()]) {
+
+                    if (graphTheoryInterface !=null&&visualPart!=null){Edge edge = graph.getEdge(polled.getNumber(), n.getNumber());
                     timelineQueue.add(graphTheoryInterface.onEdgesearched(edge));
                     timelineQueue.add(graphTheoryInterface.highlightNode(n));
+                }
                     q.add(n);
                     visted[n.getNumber()]=true;
                 }
@@ -104,21 +107,22 @@ public class Example_problems {
             }
 
         }
-        visualPart.playNext((LinkedList<EdgeAnimation>) timelineQueue);
-
+        if (graphTheoryInterface !=null&&visualPart!=null) {
+            visualPart.playNext((LinkedList<EdgeAnimation>) timelineQueue);
+        }
         return visted;
     }
 
 
 //test it
-    private static void Prim(Graph graph,Edge_interface graphTheoryInterface,Queue<EdgeAnimation> timelineQueue, Visual_part visualPart){
+    public static Graph Prim(Graph graph,Edge_interface graphTheoryInterface, Visual_part visualPart){
+        Queue<EdgeAnimation> timelineQueue=new LinkedList<>();
         ArrayList<Edge> heap=new ArrayList<>();
         Graph mst=Graph_tools.empty_graph();
         for(Edge e:graph.indenctedges(graph.getVertices().getFirst())){
             Min_heap.add_to_heap(e,heap);
         }
-
-
+        mst.addVertex(graph.getVertices().getFirst());
        while(!heap.isEmpty()&&mst.getVertices().size()<graph.getVertices().size()){
             Edge other_edges=Min_heap.extract_from_heap(heap);
 
@@ -128,21 +132,21 @@ public class Example_problems {
               if (!mst.containsnode(other_edges.getV1())&&!mst.containsnode(other_edges.getV2())) {
                   continue;
               }
-                mst.addEdge(other_edges);
+
               if (!mst.containsnode(other_edges.getV1())){
                   mst.addVertex(other_edges.getV1());
+                  mst.addarc(other_edges,other_edges.getWeight());
+
               for (Edge e:graph.indenctedges(other_edges.getV1())) {
-                  if (!mst.containsnode(e.getV2())){
                   Min_heap.add_to_heap(e,heap);}
               }
-
-              }
-              else {
+              if (!mst.containsnode(other_edges.getV2())) {
                   mst.addVertex(other_edges.getV2());
+                  mst.addarc(other_edges,other_edges.getWeight());
+
                   for (Edge e:graph.indenctedges(other_edges.getV2())) {
-                      if (!mst.containsnode(e.getV1())){
                       Min_heap.add_to_heap(e,heap);
-                      }
+
                   }
               }
 
@@ -151,8 +155,7 @@ public class Example_problems {
         }
 
 
-
-
+        return mst;
     }
 
     private static boolean[] dfs(Graph graph, int node_number, boolean[] visted, Edge_interface graphTheoryInterface,Queue<EdgeAnimation> timelineQueue) {
@@ -160,11 +163,12 @@ public class Example_problems {
 
         for(Node n:graph.neighbors(graph.getVertices().get(node_number))){
             if(!visted[n.getNumber()]){
+                if (graphTheoryInterface !=null){
                 Edge edge=graph.getEdge(graph.getVertices().get(node_number).getNumber(),n.getNumber());
 
                 timelineQueue.add(graphTheoryInterface.onEdgesearched(edge));
                 timelineQueue.add(graphTheoryInterface.highlightNode(n));
-                graphTheoryInterface.onEdgesearched(edge);
+                graphTheoryInterface.onEdgesearched(edge);}
 
                 dfs(graph,n.getNumber(),visted,graphTheoryInterface,timelineQueue);
             }
@@ -214,15 +218,18 @@ public class Example_problems {
             }
         }
        if(!b_or_d){ //dfs
-        visualPart.playNext((LinkedList<EdgeAnimation>) timelineQueue);}
+           if (graphTheoryInterface !=null&&visualPart!=null) {
+               visualPart.playNext((LinkedList<EdgeAnimation>) timelineQueue);
+           }
+       }
         return visted;
     }
 
-    //wip
+    //round 2 (1.5)?
     private static void independent_set(){
 
     }
-    //test
+    //round two
     public static void unbounded_knapsack(int[] values,int[] weights,int weight){
 int[] unbounded_knapsack_array=new int[weight+1];
 
@@ -240,7 +247,7 @@ for(int i=1;i<=weight;i++){
 
     }
 
-    //test
+    //round two
     public  static void binary_knapsack(int[] values,int[] weights,int weight){
       int n = weights.length;
    int[][] binary_knapsack_matrix=new int[n+1][weight+1];
@@ -261,7 +268,7 @@ for(int i=1;i<=n;i++){
     }
 
 
-//wip
+    //round two
  private static void generalized_sudoku(char[][] sudoku,char[] total_chars,char[] vaild_char_list){
         if (!isboardvaild(sudoku)){
             return;
@@ -270,7 +277,7 @@ for(int i=1;i<=n;i++){
    generalized_sudoku_slover(sudoku,0,0,total_chars,vaild_char_list, sudoku.length);
     }
 
-    private static boolean isboardvaild(char[][] sudoku){
+ private static boolean isboardvaild(char[][] sudoku){
         return issolved_or_is_vaild_sudoku_board(sudoku, true);
     }
 

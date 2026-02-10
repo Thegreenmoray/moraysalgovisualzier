@@ -1,5 +1,16 @@
 -̶i̶n̶g̶r̶a̶t̶e̶ ̶w̶i̶t̶h̶ ̶g̶r̶a̶d̶l̶e̶/̶m̶a̶v̶e̶n̶ //done
--first round unit tests (testing  ̶G̶r̶a̶p̶h̶ (will do this in second round testing),(except cartiesan product for now)Set theory,Graph_tools,(some parts of) Example probelms, ̶M̶i̶n̶_̶h̶e̶a̶p̶)
+ ̶-̶f̶i̶r̶s̶t̶ ̶r̶o̶u̶n̶d̶ ̶u̶n̶i̶t̶ ̶t̶e̶s̶t̶s̶ ̶(̶ ̶ ̶̶̶G̶̶̶r̶̶̶a̶̶̶p̶̶̶h̶̶̶ ̶(̶w̶i̶l̶l̶ ̶d̶o̶ ̶t̶h̶i̶s̶ ̶i̶n̶ ̶s̶e̶c̶o̶n̶d̶ ̶r̶o̶u̶n̶d̶ ̶t̶e̶s̶t̶i̶n̶g̶)̶,̶ ̶̶̶(̶̶̶e̶̶̶x̶̶̶c̶̶̶e̶̶̶p̶̶̶t̶̶̶ ̶̶̶c̶̶̶a̶̶̶r̶̶̶t̶̶̶i̶̶̶e̶̶̶s̶̶̶a̶̶̶n̶̶̶ ̶̶̶p̶̶̶r̶̶̶o̶̶̶d̶̶̶u̶̶̶c̶̶̶t̶̶̶ ̶̶̶f̶̶̶o̶̶̶r̶̶̶ ̶̶̶n̶̶̶o̶̶̶w̶̶̶)̶̶̶S̶̶̶e̶̶̶t̶̶̶ ̶̶̶t̶̶̶h̶̶̶e̶̶̶o̶̶̶r̶̶̶y̶̶̶,̶ ̶̶̶G̶̶̶r̶̶̶a̶̶̶p̶̶̶h̶̶̶_̶̶̶t̶̶̶o̶̶̶o̶̶̶l̶̶̶s̶̶̶,̶(̶s̶o̶m̶e̶ ̶p̶a̶r̶t̶s̶ ̶o̶f̶)̶ ̶E̶x̶a̶m̶p̶l̶e̶ ̶p̶r̶o̶b̶e̶l̶m̶s̶,̶ ̶̶̶M̶̶̶i̶̶̶n̶̶̶_̶̶̶h̶̶̶e̶̶̶a̶̶̶p̶̶̶)̶//done
 -add functionally for Prim and other simliar algothrims to visualizer
 -fix overlapping issues
+-compelte independent set algothrim unit test it (1.5)
+-Add check if graph is a tree, Add colorbility(?) to nodes
+-second round unit tests(Graph, Edge, Node, Carteasian Product,Istree(future),Edge Interface,Visualpart)
 -set visuals up for sets/arrays/lists
+-compelte set based algothrims (Kanade, Bsort, Qsort, Both DP knapsacks, Sudoku) (radix sort?)
+-build chromomatic color algo unit test it (2.5)
+-Third round unit tests(Edge Interface,Visualpart,ExampleProbelms)
+-Maybe add more dp algothrims?
+-Maybe add some common interview probelms?
+-Improve background more instead just being a white screen?
+-Security?
+-something else?
