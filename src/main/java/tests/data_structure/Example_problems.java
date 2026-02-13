@@ -9,6 +9,9 @@ import java.util.*;
 
 public class Example_problems {
 
+
+    //-----------------Sorting-------------------------------
+
     public static List<Integer> bubble_sort(List<Integer> e){
 
 
@@ -30,7 +33,7 @@ public class Example_problems {
 
 
     //round two
-    public static  List<Integer> quicksort(List<Integer> e,int low,int high){
+    private static  List<Integer> quicksort(List<Integer> e,int low,int high){
 
         int n=e.size();
 
@@ -67,16 +70,13 @@ public class Example_problems {
     };
 
 
-    //round two
-    public static int Kadane(List<Integer> e){
-        int highest=e.getFirst();
-        int current=e.getFirst();
-        for (int i=1;i<e.size();i++){
-            current = Math.max(e.get(i), current + e.get(i));
-            highest=Math.max(highest,current);
-        }
-        return highest;
+    private static <K> List<List<K>> radixsort(List<List<K>> e){
+
+        return e;
     }
+
+
+
 
 
     private static boolean[] bfs(Graph graph, int start, boolean[] visted, Edge_interface graphTheoryInterface, Visual_part visualPart) {
@@ -114,7 +114,7 @@ public class Example_problems {
     }
 
 
-//test it
+
     public static Graph Prim(Graph graph,Edge_interface graphTheoryInterface, Visual_part visualPart){
         Queue<EdgeAnimation> timelineQueue=new LinkedList<>();
         ArrayList<Edge> heap=new ArrayList<>();
@@ -225,10 +225,130 @@ public class Example_problems {
         return visted;
     }
 
-    //round 2 (1.5)?
-    private static void independent_set(){
 
+    //-------------miscellaneous----------------------
+
+
+
+    private static int Kadane(List<Integer> e){
+        int highest=e.getFirst();
+        int current=e.getFirst();
+        for (int i=1;i<e.size();i++){
+            current = Math.max(e.get(i), current + e.get(i));
+            highest=Math.max(highest,current);
+        }
+        return highest;
     }
+
+    private static boolean binarysearch(List<Integer> list, int e){
+       Arrays.sort(new List[]{list});
+
+        return actualbinarysearch(list,e);
+    }
+
+    private static boolean actualbinarysearch(List<Integer> list, int e) {
+        int start = 0;
+        int end=list.size();
+        while(start<end){
+            int mid=(start+end)/2;
+            int element=list.get(mid);
+            if(element==e){
+                return true;
+            }
+            else if(element>e){
+                end=mid-1;
+            }
+            else{
+                start=mid+1;
+            }
+        }
+
+
+        return false;
+    }
+
+    private static int gcd(int a,int b){
+         if(b==0) return a;
+         if (a==0) return b;
+
+
+        return gcd(b,a%b);
+    }
+
+    private static float[][] naive_matrix_multiplication(float[][] matrix1, float[][] matrix2){
+ int rows1=matrix1.length;
+ int cols1=matrix1[0].length;
+ int rows2=matrix2.length;
+ int cols2=matrix2[0].length;
+      if(cols1!=rows2){
+          return null;//send note to user that that was not vaild combination
+      }
+ float[][] product_matrix=new float[rows1][cols2];
+      int l=product_matrix.length;
+      for(int i=0;i<rows1;i++){
+          for(int j=0;j<cols2;j++){
+              for(int k=0;k<l;k++){
+                  product_matrix[i][j]+=matrix1[i][k]*matrix2[k][j];
+              }
+          }
+      }
+
+
+
+
+        return product_matrix;
+    }
+    //--------------------NP-Hard---------------------------
+    // (1.5)
+    public static List<Node> independent_set(Graph graph,List<Node> best_set,List<Node> current_set,List<Node> candidates){
+
+        if(current_set.isEmpty()){
+            candidates=  graph.getVertices();
+        }else {
+            candidates=  node_candidates(graph,current_set,candidates);
+        }
+
+        if(current_set.size() + candidates.size() <= best_set.size()){
+           return best_set;
+        }
+
+        for(Node n:candidates){
+           current_set.add(n);
+            if (current_set.size()>best_set.size()) {
+           ArrayList<Node> copy_of_current_set=new ArrayList<>(current_set);
+                best_set=copy_of_current_set;
+            }
+            best_set=independent_set(graph,best_set,current_set,candidates);
+           current_set.remove(n);
+        }
+
+
+        return best_set;
+    }
+
+    private static List<Node> node_candidates( Graph graph,List<Node> currentSet,List<Node> candidates) {
+    boolean isvaild;
+        List<Node> vaild_candidates=new ArrayList<>();
+        for(Node candidate :candidates){
+        isvaild=true;
+            for (Node node : currentSet) {
+                if (graph.isadjacent(node, candidate)) {
+                    isvaild = false;
+                    break;
+                }
+
+            }
+
+        if(isvaild){
+            vaild_candidates.add(candidate);
+        }
+
+        }
+
+
+        return vaild_candidates;
+    }
+
     //round two
     public static void unbounded_knapsack(int[] values,int[] weights,int weight){
 int[] unbounded_knapsack_array=new int[weight+1];
@@ -267,7 +387,9 @@ for(int i=1;i<=n;i++){
 
     }
 
+private static void chromomatic_color(){
 
+}
     //round two
  private static void generalized_sudoku(char[][] sudoku,char[] total_chars,char[] vaild_char_list){
         if (!isboardvaild(sudoku)){

@@ -12,7 +12,7 @@ public interface Edge_interface {
      EdgeAnimation addNode(Graph graph,Node n, Visual_part part);
      EdgeAnimation removeNode(Graph graph,Node n,Visual_part part);
      EdgeAnimation addEdge(Graph graph,Edge e,Visual_part part);
-     EdgeAnimation removeEdge(Graph graph,Edge e,Visual_part part);
+     void removeEdge(Graph graph,Edge e,Visual_part part);
      EdgeAnimation setallinvisible(Graph graph,Visual_part part);
      EdgeAnimation makenodevisible(Graph graph,Visual_part part);
      EdgeAnimation makeedgevisible(Graph graph,Visual_part part);

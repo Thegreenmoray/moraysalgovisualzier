@@ -10,6 +10,9 @@ public class Graph_tools {
     
 private Graph_tools(){};
 
+
+
+
     public static Graph generate_graph_undirected(int size,int edge_chance,boolean isweighted,boolean can_be_negative_weight){
         LinkedList<Node> nodes = new LinkedList<>();
         LinkedList<Edge> edges = new LinkedList<>();
@@ -91,7 +94,7 @@ private Graph_tools(){};
     }
 
 
-    //wip, for prim
+
     public static boolean Willcreateacycle(Graph mst,Node n,Node m){
         return mst.containsnode(n)&&mst.containsnode(m);
     }
@@ -104,6 +107,10 @@ public static Graph empty_graph(){
 
 
 public static float[][] arc_incident_matrix(Graph graph){
+   if (graph.getVertices().isEmpty()||graph.getEdges().isEmpty()){
+      //not valid let user know
+       return null;
+   }
     return arc_incident_matrix_creation(new float[graph.getVertices().size()][graph.getEdges().size()],graph);
 }
 
@@ -125,6 +132,10 @@ private static float[][] arc_incident_matrix_creation(float[][] arc_incident_mat
 
 
 public static float[][] adjacency_matrix(Graph graph){
+    if (graph.getVertices().isEmpty()){
+        //not valid let user know
+        return null;
+    }
         return adjacency_matrix_creation(new float[graph.getVertices().size()][graph.getVertices().size()],graph);
     }
 
@@ -149,6 +160,135 @@ private static float[][] adjacency_matrix_creation(float[][] adjacency_matrix,Gr
         return adjacency_matrix;
     }
 
+    private static boolean is_tree(Graph graph){
+    //run a modifed dfs
+   boolean istree=true;
+       istree= dfs_treechecker(graph,graph.getVertices().getFirst(),null,new boolean[graph.getVertices().size()],istree);
 
+
+
+    return istree;
+}
+
+    private static boolean dfs_treechecker(Graph graph, Node start,Node parent, boolean[] visted,boolean istree) {
+        visted[start.getNumber()]=true;
+
+
+
+        for(Node n:graph.neighbors(graph.getVertices().get(start.getNumber()))){
+
+            if (!istree){
+                break;
+            }
+
+
+            if ((parent!=null&&!n.equals(parent)&&istree)){
+
+                return false;
+                //stop searching its not a tree
+            }
+
+
+            if(!visted[n.getNumber()]&&istree){
+
+               istree= dfs_treechecker(graph,n,start,visted,istree);
+            }
+        }
+
+
+        return istree;
+
+    }
+
+private static boolean is_complete(Graph graph){
+   int amount_of_nodes=graph.getVertices().size();
+
+   for (Node n:graph.getVertices()) {
+       if (graph.degree(n)!=amount_of_nodes-1){
+         return false;
+       }
+
+   }
+
+    return true;
+}
+
+ private static boolean isbipartite(Graph graph){
+    String cyan="#00FFFF";
+    String magenta="#FF00FF";
+    String yellow="#FF0000"; //defualt
+
+        if (graph.getVertices().isEmpty()||graph.getEdges().isEmpty()||graph.getVertices().size()==1){
+            return false;
+        }
+      int nodes=graph.getVertices().size();
+Graph copy_of_graph=graph;
+//^here to prevent "contamination" of graph
+for(Node n:copy_of_graph.getVertices()){
+    n.setHexcode_color(yellow);
+}
+   boolean[] lists =new boolean[nodes];
+    Color_package booleanPackage = new Color_package(true, lists);
+for(int i=0;i<nodes;i++) {
+
+
+    if (!lists[i]&&booleanPackage.isBool()) {
+        copy_of_graph.getVertices().get(i).setHexcode_color(cyan);
+        booleanPackage = bfs_bipartite(copy_of_graph, i, lists, yellow, magenta, cyan);
+        lists = booleanPackage.getLists();
+    }
+
+
+}
+
+
+
+
+    return booleanPackage.isBool();
+}
+
+
+    private static Color_package bfs_bipartite(Graph graph, int start, boolean[] visted, String defualt_color, String magenta, String cyan) {
+        Queue<Node> q=new LinkedList<>();
+
+        Node node=graph.getVertices().get(start);
+        visted[node.getNumber()]=true;
+        q.add(node);
+        boolean isbipartite=true;
+        while(!q.isEmpty()&&isbipartite){
+            Node polled=q.poll();
+            List<Node> neighbors = graph.neighbors(polled);
+
+            for (Node n:neighbors) {
+
+              if (isbipartite) {
+                  isbipartite=coloring(polled,n,magenta,cyan,defualt_color);
+              }else {
+             break;
+              }
+
+
+                if(!visted[n.getNumber()]) {
+                    q.add(n);
+                    visted[n.getNumber()]=true;
+                }
+
+            }
+
+        }
+
+        return new Color_package(isbipartite,visted);
+    }
+
+private static boolean coloring(Node start,Node neighbor,String color1,String color2,String defualt_color) {
+if (start.getHexcode_color().equals(neighbor.getHexcode_color())
+        &&!neighbor.getHexcode_color().equals(defualt_color)&&!start.getHexcode_color().equals(defualt_color)) {
+return false;
+}
+
+neighbor.setHexcode_color(start.getHexcode_color().equals(defualt_color) ? color1: start.getHexcode_color().equals(color1) ? color2:color1);
+
+    return true;
+}
 
 }

@@ -1,25 +1,48 @@
 package graph_theory;
 
-import javafx.scene.layout.StackPane;
-
-import java.util.HashMap;
-
 public class Node {
 int number;
 int weight;
 VertexState vertexState;
+String hexcode_color;
 
-public Node(int number) {
+    public String getHexcode_color() {
+        return hexcode_color;
+    }
+
+    public void setHexcode_color(String hexcode_color) {
+        this.hexcode_color = hexcode_color;
+    }
+
+    public Node(int number) {
     this.number = number;
     vertexState=VertexState.DEFAULT;
+    hexcode_color="#000000";
+
 }
 
     public Node(int number, int weight) {
         this.number = number;
         this.weight = weight;
         vertexState=VertexState.DEFAULT;
+        hexcode_color="#000000";
+    }
+    public Node(int number, int weight,String hexcode_color) {
+        this.number = number;
+        this.weight = weight;
+        vertexState=VertexState.DEFAULT;
+        this.hexcode_color = hexcode_color;
+    }
+    public Node(int number,String hexcode_color) {
+        this.number = number;
+        vertexState=VertexState.DEFAULT;
+        this.hexcode_color = hexcode_color;
     }
 
+    //wip, if it is invalid default to black and alert user
+    private boolean isvaildhexcode(String hexcode_color) {
+        return false;
+    }
 
     public VertexState getVertexState() {
         return vertexState;

@@ -1,5 +1,5 @@
 package tests.data_structure;
-/*
+
 public class Math_stuff {
 
     private static long factorial(int n) {
@@ -17,5 +17,24 @@ return factorial(n); }
         return  (Math.sqrt(2*Math.PI*n)*Math.pow(n/Math.E,n));
     }
 
-might be useful later
-}*/
+
+
+
+   public static class statistics{
+
+        
+
+
+
+
+
+
+
+
+    }
+
+
+
+//might be useful later, maybe add this for statistics testing for neral network or whatever?
+//and other similar things?
+}

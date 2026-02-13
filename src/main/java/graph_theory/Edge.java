@@ -71,6 +71,11 @@ public void setEdgeState(EdgeState edgeState) {
                 v2.equals(e.v2);
     }
 
+    public boolean isoppsitedirection(Edge e) {
+
+        return v1.equals(e.v2) && v2.equals(e.v1);
+    }
+
 
     public boolean connects(Node a, Node b) {
         return (v1.equals(a) && v2.equals(b)) ||

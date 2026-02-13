@@ -25,8 +25,8 @@ public class Visual_part {
    static Pane edgeLayer = new Pane();
     static Pane nodeLayer = new Pane();
     public static Map<Node,StackPane> corrlate=new HashMap<>();
-    static Map<Edge,Line> edgeToStackPane=new HashMap<>();
-    public Pane root;
+    static Map<Edge,Line> edgeToLine =new HashMap<>();
+    public  Pane root;
    static ArrayList<Point2D> mina_distance=new ArrayList<>();
    static double minDist = 40;
 
@@ -42,6 +42,8 @@ public class Visual_part {
         this.root = root;
     }
 
+
+    //modify this later..
     public  Graph establish(int size,int edgechance,boolean isweighted,boolean canbenegative,boolean isdirected) {
     Graph graph =isdirected? Graph_tools.generate_graph_directed(size,edgechance,isweighted,canbenegative):Graph_tools.generate_graph_undirected(size,edgechance,isweighted,canbenegative);
         root.getChildren().addAll(edgeLayer, nodeLayer);
@@ -49,7 +51,7 @@ public class Visual_part {
        for (int i=0;i<graph.getVertices().size();i++) {
           Node node= graph.getVertices().get(i);
          Circle circle = new Circle(10);
-           circle.setFill(Color.GREEN);
+           circle.setFill(Color.BLACK);
 
            Text text=new Text(""+node.getNumber());
          StackPane pane = new StackPane(circle,text);
@@ -97,7 +99,7 @@ public class Visual_part {
            Bounds c = k.getBoundsInParent();
 
 
-           edgeToStackPane.put(edge,line);
+           edgeToLine.put(edge,line);
 
 
            line.setStartX(b.getMinX()+b.getWidth()/2);
@@ -115,6 +117,21 @@ public class Visual_part {
 
         return graph;
     }
+
+
+
+    public  void remove_edge(Edge edge,Graph graph) {
+     Edge edge1 =graph.getEdge(edge.getV1().getNumber(),edge.getV2().getNumber());
+
+     if(edge1!=null){
+       Line line = edgeToLine.get(edge1);
+       root.getChildren().remove(line);
+       edgeToLine.remove(edge1);
+
+     }
+    }
+
+
 
 
 

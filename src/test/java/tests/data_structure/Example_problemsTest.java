@@ -88,7 +88,6 @@ import static org.junit.jupiter.api.Assertions.*;
              assertEquals(adjency[i][j], testmatrix[i][j]);
           }
        }
-       //caught an error with the graph class works perfect now.
 
     }
 

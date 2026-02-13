@@ -86,7 +86,7 @@ public class Main extends Application {
 
 
                 }
-
+//these might not need EdgeAnimation, keep it for now but in the future, may have to change it
             @Override
             public EdgeAnimation addNode(Graph graph, Node n, Visual_part part) {
                 return null;
@@ -103,8 +103,8 @@ public class Main extends Application {
             }
 
             @Override
-            public EdgeAnimation removeEdge(Graph graph, Edge e, Visual_part part) {
-                return null;
+            public void removeEdge(Graph graph, Edge e, Visual_part part) {
+               part.remove_edge(e, graph);
             }
 
             @Override
@@ -159,13 +159,6 @@ public class Main extends Application {
                 ex.printStackTrace();
             }
         });
-
-
-
-
-        //as an example
-        //Example_probelms.component_analysis(graph,edgeInterface ,
-        //        new boolean[graph.getVertices().size()],visualPart,true);
 
 
         stage.show();
