@@ -1,6 +1,4 @@
-package tests.data_structure;
-
-import graph_theory.Edge;
+package graph_theory;
 
 import java.util.List;
 

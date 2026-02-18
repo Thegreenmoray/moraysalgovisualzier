@@ -1,6 +1,7 @@
-package graph_theory;
+package animations;
 
-import set_theory.Set_theory_items;
+import graph_theory.Edge;
+import graph_theory.Node;
 
 import java.util.*;
 
@@ -38,7 +39,7 @@ public Graph(List<Node> vertex, List<Edge> edge){
         int idx = vertices.indexOf(v);
         Set<Node> result = new HashSet<>();
         for(Edge e:indencent_list.get(idx)){
-            Node vertex = v.equals(e.v1)? e.v2:e.v1;
+            Node vertex = v.equals(e.getV1())? e.getV2() : e.getV1();
             result.add(vertex);
 
          }
@@ -65,24 +66,24 @@ if (indencent_list.isEmpty()){
 }
 
    for (Edge n:indencent_list.get(i)){
-       if (n.v2.getNumber()==j){
+       if (n.getV2().getNumber()==j){
            return n;}}
 
     return null;
 }
 
-public  List<Edge> getEdges(){
+public    List<Edge> getEdges(){
     return this.edges;
 }
 public List<Node> getVertices(){
     return this.vertices;
 }
 
-public void setEdges(List<Edge> edges) {
+protected void setEdges(List<Edge> edges) {
     this.edges = edges;
 }
 
-public void setVertices(List<Node> vertices) {
+protected void setVertices(List<Node> vertices) {
     this.vertices = vertices;
 }
 
@@ -116,7 +117,7 @@ public void removearc(Edge e){
   private List<Edge> incidentEdges(Node v) {
         List<Edge> result = new ArrayList<>();
         for (Edge e : this.edges) {
-            if (e.v1.equals(v)) {
+            if (e.getV1().equals(v)) {
                 result.add(e);
             }
         }
@@ -128,18 +129,18 @@ public void removearc(Edge e){
 
     public List<Node> neighbors(Node v){
 
-        return adjacencyList.get(v.number);
+        return adjacencyList.get(v.getNumber());
     }
 
 public List<Edge> indenctedges(Node v){
 
-    return indencent_list.get(v.number);
+    return indencent_list.get(v.getNumber());
 }
 
 public void addEdge(Edge e){
 
-    Node v1 = e.v1;
-    Node v2 = e.v2;
+    Node v1 = e.getV1();
+    Node v2 = e.getV2();
 
     // Ensure vertices exist
     if (!vertices.contains(v1)) addVertex(v1);
@@ -161,7 +162,7 @@ public void addEdge(Edge e){
 }
 
 private void deletednodesedges(Node v){
-    for(Edge e:indencent_list.get(v.number)){
+    for(Edge e:indencent_list.get(v.getNumber())){
         edges.remove(e);
     }
 
@@ -176,16 +177,28 @@ private void deletednodesedges(Node v){
     indencent_list= createindcendcelist();
     }
 
-    public void addEdge(Edge e,float weight){
+    public void addEdge(Edge e,float weight,boolean allowdulipcates,int pointer){
 
-        Node v1 = e.v1;
-        Node v2 = e.v2;
-        e.weight = weight;
+        Node v1 = e.getV1();
+        Node v2 = e.getV2();
+        e.setWeight(weight);
 
         // Ensure vertices exist
         if (!vertices.contains(v1)) addVertex(v1);
         if (!vertices.contains(v2)) addVertex(v2);
 
+
+       if (allowdulipcates){
+        //should you need a multigraph here it is
+           for (Edge existing : edges) {
+        if (existing.connects(v1, v2)){
+
+            edges.add(new Edge(v1, v2,weight,pointer));
+            edges.add(new Edge(v2, v1, weight,pointer));
+            updateincidentedges();
+            updateadjencylist();
+            return;
+        }}}
         // Prevent duplicates without indexing
         for (Edge existing : edges) {
             if (existing.connects(v1, v2)) {
@@ -193,8 +206,8 @@ private void deletednodesedges(Node v){
             }
         }
 
-        edges.add(e);
-        edges.add(new Edge(v2, v1, weight));
+        edges.add(new Edge(v1, v2, weight,pointer));
+        edges.add(new Edge(v2, v1, weight,pointer));
 
         updateincidentedges();
         updateadjencylist();
@@ -214,10 +227,10 @@ private void deletednodesedges(Node v){
 
 }
 public void removeEdge(Edge e){
-    Node e1 = e.v1;
-    Node e2 = e.v2;
+    Node e1 = e.getV1();
+    Node e2 = e.getV2();
     this.edges.remove(e);
-    this.edges.remove(getEdge(e2.number,e1.number));
+    this.edges.remove(getEdge(e2.getNumber(), e1.getNumber()));
     updateincidentedges();
     updateadjencylist();
 
@@ -230,11 +243,11 @@ public void removeVertex(Node v){
 }
 
  public int degree(Node v){
-     return indencent_list.get(v.number).size();
+     return indencent_list.get(v.getNumber()).size();
  }
 
 public boolean isadjacent(Node v1, Node v2){
-    for (Node node:adjacencyList.get(v1.number)){
+    for (Node node:adjacencyList.get(v1.getNumber())){
       if (node.equals(v2)){
           return true;
       }
@@ -244,7 +257,7 @@ public boolean isadjacent(Node v1, Node v2){
 
  public boolean isincident(Node v1, Node v2){
 
-    for(Edge e1:indencent_list.get(v1.number)){
+    for(Edge e1:indencent_list.get(v1.getNumber())){
         if (e1.getV2().getNumber()==v2.getNumber()){
           return true;
         }
@@ -265,6 +278,6 @@ for(Node node:this.vertices){
 
 
     public boolean containsedge(Edge e) {
-        return getEdge(e.v1.number,e.v2.number)!=null;
+        return getEdge(e.getV1().getNumber(), e.getV2().getNumber())!=null;
     }
 }

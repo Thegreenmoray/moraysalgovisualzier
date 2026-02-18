@@ -1,5 +1,6 @@
 package tests.data_structure;
 
+import animations.Graph;
 import graph_theory.*;
 
 import java.util.*;
@@ -11,91 +12,7 @@ public class Graph_tools {
 private Graph_tools(){};
 
 
-
-
-    public static Graph generate_graph_undirected(int size,int edge_chance,boolean isweighted,boolean can_be_negative_weight){
-        LinkedList<Node> nodes = new LinkedList<>();
-        LinkedList<Edge> edges = new LinkedList<>();
-
-        if (size <=0){
-            size = 1;
-        }
-
-        if(edge_chance <= 0){
-            edge_chance = 1;
-        }
-
-        Random rand = new Random();
-
-        for(int i=0;i<size;i++){
-            nodes.add(new Node(i));
-        }
-
-        for(int i=0;i<size;i++){
-            for(int j=i+1;j<size;j++){
-                if(rand.nextInt(edge_chance)==0){
-                    int c=rand.nextInt(20)+2;
-                    if (isweighted)
-                    {
-                     int v=can_be_negative_weight&&rand.nextBoolean()?-1:1;
-                        edges.add(new Edge(nodes.get(i), nodes.get(j), v*c));
-                        edges.add(new Edge(nodes.get(j), nodes.get(i), v*c));
-                    }
-                    else
-                    {
-                        edges.add(new Edge(nodes.get(i), nodes.get(j)));
-                        edges.add(new Edge(nodes.get(j), nodes.get(i)));
-                    }
-
-                }
-            }
-        }
-
-        return new Graph(nodes,edges);
-    }
-
-
-    public static Graph generate_graph_directed(int size,int edge_chance,boolean isweighted,boolean can_be_negative_weight){
-        LinkedList<Node> nodes = new LinkedList<>();
-        LinkedList<Edge> edges = new LinkedList<>();
-
-        if (size <=0){
-            size = 1;
-        }
-
-        if(edge_chance <= 0){
-            edge_chance = 1;
-        }
-
-        Random rand = new Random();
-
-        for(int i=0;i<size;i++){
-            nodes.add(new Node(i));
-        }
-
-        for(int i=0;i<size;i++) {
-            for (int j = 0; j < size; j++) {
-                if (i==j) {continue;}
-
-                    if (rand.nextInt(edge_chance) == 0) {
-                        int c = rand.nextInt(20) + 2;
-                        if (isweighted) {
-                            int v = can_be_negative_weight && rand.nextBoolean() ? -1 : 1;
-                            edges.add(new Edge(nodes.get(i), nodes.get(j), v * c));
-                        } else {
-                            edges.add(new Edge(nodes.get(i), nodes.get(j)));
-                        }
-
-                    }
-
-            }
-        }
-        return new Graph(nodes,edges);
-    }
-
-
-
-    public static boolean Willcreateacycle(Graph mst,Node n,Node m){
+    public static boolean Willcreateacycle(Graph mst, Node n, Node m){
         return mst.containsnode(n)&&mst.containsnode(m);
     }
 
@@ -200,10 +117,11 @@ private static float[][] adjacency_matrix_creation(float[][] adjacency_matrix,Gr
 
     }
 
-private static boolean is_complete(Graph graph){
+public static boolean is_complete(Graph graph){
    int amount_of_nodes=graph.getVertices().size();
 
    for (Node n:graph.getVertices()) {
+       //by defintion all nodes in a compelte graph have n-1 edges
        if (graph.degree(n)!=amount_of_nodes-1){
          return false;
        }

@@ -12,9 +12,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import tests.data_structure.Graph_tools;
 
 import java.util.*;
 
@@ -22,13 +22,13 @@ import java.util.*;
 
 
 public class Visual_part {
-   static Pane edgeLayer = new Pane();
-    static Pane nodeLayer = new Pane();
-    public static Map<Node,StackPane> corrlate=new HashMap<>();
-    static Map<Edge,Line> edgeToLine =new HashMap<>();
-    public  Pane root;
-   static ArrayList<Point2D> mina_distance=new ArrayList<>();
-   static double minDist = 40;
+  private static Pane edgeLayer = new Pane();
+   private static Pane nodeLayer = new Pane();
+    private static Map<Node,StackPane> corrlate=new HashMap<>();
+   private static Map<Edge,Line> edgeToLine =new HashMap<>();
+    private Pane root;
+   private static ArrayList<Point2D> mina_distance=new ArrayList<>();
+  private static double minDist = 40;
 
     public Visual_part(Pane root) {
         this.root = root;
@@ -38,14 +38,14 @@ public class Visual_part {
         return root;
     }
 
-    public void setRoot(Pane root) {
+    private void setRoot(Pane root) {
         this.root = root;
     }
 
 
     //modify this later..
     public  Graph establish(int size,int edgechance,boolean isweighted,boolean canbenegative,boolean isdirected) {
-    Graph graph =isdirected? Graph_tools.generate_graph_directed(size,edgechance,isweighted,canbenegative):Graph_tools.generate_graph_undirected(size,edgechance,isweighted,canbenegative);
+    Graph graph =isdirected? generate_graph_directed(size,edgechance,isweighted,canbenegative):generate_graph_undirected(size,edgechance,isweighted,canbenegative);
         root.getChildren().addAll(edgeLayer, nodeLayer);
 
        for (int i=0;i<graph.getVertices().size();i++) {
@@ -85,6 +85,12 @@ public class Visual_part {
        for (int i=0;i<graph.getEdges().size();i++) {
            Edge edge= graph.getEdges().get(i);
            Line line = new Line();
+           Arrow arrow=null;
+           if(isdirected){
+             arrow=new Arrow(line,new Polygon());
+           }
+
+
 
          Node n1=edge.getV1();
          Node n2=edge.getV2();
@@ -125,14 +131,154 @@ public class Visual_part {
 
      if(edge1!=null){
        Line line = edgeToLine.get(edge1);
-       root.getChildren().remove(line);
+         edgeLayer.getChildren().remove(line);
        edgeToLine.remove(edge1);
+       graph.removeEdge(edge);
 
      }
     }
 
+    public void removenode(Graph graph, Node n) {
+   Node noodle=graph.getVertices().get(n.getNumber());
+   if (noodle!=null){
+       StackPane f =corrlate.get(noodle);
+       nodeLayer.getChildren().remove(f);
+       for (Edge edge:graph.indenctedges(noodle)){
+           if(edge!=null){
+               Line line = edgeToLine.get(edge);
+               root.getChildren().remove(line);
+               edgeToLine.remove(edge);
+               graph.removeEdge(edge);
+
+           }
+       }
+       corrlate.remove(noodle);
+       graph.removeVertex(noodle);
+   }
+    }
+
+    public void addedge(Graph graph, Edge e) {
+        Line line = new Line();
 
 
+
+        Node n1=e.getV1();
+        Node n2=e.getV2();
+
+        root.applyCss();
+        root.layout();
+
+        StackPane f =corrlate.get(n1);
+        StackPane k =corrlate.get(n2);
+
+        Bounds b = f.getBoundsInParent();
+        Bounds c = k.getBoundsInParent();
+
+
+        edgeToLine.put(e,line);
+
+
+        line.setStartX(b.getMinX()+b.getWidth()/2);
+        line.setStartY(b.getMinY()+b.getHeight()/2);
+        line.setEndX(c.getMinX() +c.getWidth()/2);
+        line.setEndY(c.getMinY() +c.getHeight()/2);
+        Text text=new Text(""+e.getWeight());
+        text.setX((b.getMinX()+c.getMinX())/2);
+        text.setY((b.getMinY()+c.getMinY())/2);
+        edgeLayer.getChildren().add(line);
+        graph.addEdge(e);
+        root.getChildren().add(text);
+
+
+    }
+
+    public void addedge(Graph graph, Edge e,float weight) {
+        Line line = new Line();
+
+
+
+        Node n1=e.getV1();
+        Node n2=e.getV2();
+
+        root.applyCss();
+        root.layout();
+
+        StackPane f =corrlate.get(n1);
+        StackPane k =corrlate.get(n2);
+
+        Bounds b = f.getBoundsInParent();
+        Bounds c = k.getBoundsInParent();
+
+
+        edgeToLine.put(e,line);
+
+
+        line.setStartX(b.getMinX()+b.getWidth()/2);
+        line.setStartY(b.getMinY()+b.getHeight()/2);
+        line.setEndX(c.getMinX() +c.getWidth()/2);
+        line.setEndY(c.getMinY() +c.getHeight()/2);
+        Text text=new Text(""+weight);
+        text.setX((b.getMinX()+c.getMinX())/2);
+        text.setY((b.getMinY()+c.getMinY())/2);
+        edgeLayer.getChildren().add(line);
+        graph.addEdge(e);
+        root.getChildren().add(text);
+
+
+    }
+
+    public void addnode(Graph graph, Node n) {
+        Circle circle = new Circle(10);
+        circle.setFill(Color.BLACK);
+
+        Text text=new Text(""+n.getNumber());
+        StackPane pane = new StackPane(circle,text);
+        Random random=new Random();
+        int distance_X;
+        int distance_Y;
+        boolean good;
+        int max_attempts=100;
+        int current_attempts=0;
+        do{
+            good=true;
+            distance_X=random.nextInt(500)+100;
+            distance_Y=random.nextInt(500)+100;
+
+            for (Point2D p : mina_distance) {
+                if (p.distance(distance_X, distance_Y) < minDist) {
+                    current_attempts++;
+                    good = false;
+                    break;
+                }
+            }
+
+        }while (!good&&current_attempts<max_attempts); /*we do not want this looping forever!*/
+        mina_distance.add(new Point2D(distance_X,distance_Y));
+        pane.relocate(distance_X,distance_Y);
+        corrlate.put(n, pane);
+        graph.addVertex(n);
+        nodeLayer.getChildren().add(pane);
+
+
+    }
+
+    public static EdgeAnimation highlightNode(Node u) {
+
+        StackPane f = Visual_part.corrlate.get(u);
+        f.setStyle("-fx-background-color: #ff0000");
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        e -> f.setStyle("-fx-background-color: #00ff00")
+                ),
+                new KeyFrame(Duration.millis(200),
+                        e -> f.setStyle("-fx-background-color: #ff0000")
+
+
+
+                ));
+        return new EdgeAnimation(timeline);
+    }
 
 
 
@@ -172,6 +318,53 @@ public class Visual_part {
 
         return new EdgeAnimation(timeline,circle);
     }
+
+
+
+    public void makeallofgraphinvisible() {
+     edgeLayer.setVisible(false);
+     nodeLayer.setVisible(false);
+    }
+
+    public void makeallofgraphvisible() {
+        edgeLayer.setVisible(true);
+        nodeLayer.setVisible(true);
+    }
+
+
+
+    public void make_node_visible(Graph graph,Node node) {
+    if(graph.containsnode(node)){
+        corrlate.get(node).setVisible(true);
+        for (Edge e : graph.indenctedges(node)) {
+            if(corrlate.get(e.getV2()).isVisible()){
+            edgeToLine.get(e).setVisible(true);}
+
+        }
+    }
+    }
+    public void make_node_invisible(Graph graph,Node node) {
+        if(graph.containsnode(node)){
+            corrlate.get(node).setVisible(false);
+            for (Edge e : graph.indenctedges(node)) {
+                edgeToLine.get(e).setVisible(false);}
+
+
+        }
+    }
+
+    public void make_edge_visible(Graph graph, Edge edge) {
+  if (graph.containsedge(edge)) {
+       edgeToLine.get(edge).setVisible(true);}
+    }
+
+    public void make_edge_invisible(Graph graph, Edge e) {
+   if (graph.containsedge(e)) {
+       edgeToLine.get(e).setVisible(false);
+   }
+    }
+
+
     //dont ask me how long this took me to figure out
     public  void playNext(LinkedList<EdgeAnimation> time) {
         EdgeAnimation next = time.poll();
@@ -187,6 +380,87 @@ public class Visual_part {
 
     }
 
+
+
+    private static Graph generate_graph_undirected(int size,int edge_chance,boolean isweighted,boolean can_be_negative_weight){
+        LinkedList<Node> nodes = new LinkedList<>();
+        LinkedList<Edge> edges = new LinkedList<>();
+
+        if (size <=0){
+            size = 1;
+        }
+
+        if(edge_chance <= 0){
+            edge_chance = 1;
+        }
+
+        Random rand = new Random();
+
+        for(int i=0;i<size;i++){
+            nodes.add(new Node(i));
+        }
+
+        for(int i=0;i<size;i++){
+            for(int j=i+1;j<size;j++){
+                if(rand.nextInt(edge_chance)==0){
+                    int c=rand.nextInt(20)+2;
+                    if (isweighted)
+                    {
+                        int v=can_be_negative_weight&&rand.nextBoolean()?-1:1;
+                        edges.add(new Edge(nodes.get(i), nodes.get(j), v*c));
+                        edges.add(new Edge(nodes.get(j), nodes.get(i), v*c));
+                    }
+                    else
+                    {
+                        edges.add(new Edge(nodes.get(i), nodes.get(j)));
+                        edges.add(new Edge(nodes.get(j), nodes.get(i)));
+                    }
+
+                }
+            }
+        }
+
+        return new Graph(nodes,edges);
+    }
+
+
+    private static Graph generate_graph_directed(int size,int edge_chance,boolean isweighted,boolean can_be_negative_weight){
+        LinkedList<Node> nodes = new LinkedList<>();
+        LinkedList<Edge> edges = new LinkedList<>();
+
+        if (size <=0){
+            size = 1;
+        }
+
+        if(edge_chance <= 0){
+            edge_chance = 1;
+        }
+
+        Random rand = new Random();
+
+        for(int i=0;i<size;i++){
+            nodes.add(new Node(i));
+        }
+
+        for(int i=0;i<size;i++) {
+            for (int j = 0; j < size; j++) {
+                if (i==j) {continue;}
+
+                if (rand.nextInt(edge_chance) == 0) {
+                    int c = rand.nextInt(20) + 2;
+                    if (isweighted) {
+                        int v = can_be_negative_weight && rand.nextBoolean() ? -1 : 1;
+                        edges.add(new Edge(nodes.get(i), nodes.get(j), v * c));
+                    } else {
+                        edges.add(new Edge(nodes.get(i), nodes.get(j)));
+                    }
+
+                }
+
+            }
+        }
+        return new Graph(nodes,edges);
+    }
 
 
 

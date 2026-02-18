@@ -1,6 +1,6 @@
 package app;
 
-import graph_theory.*;
+import animations.Graph;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;

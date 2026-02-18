@@ -1,20 +1,22 @@
 -̶i̶n̶g̶r̶a̶t̶e̶ ̶w̶i̶t̶h̶ ̶g̶r̶a̶d̶l̶e̶/̶m̶a̶v̶e̶n̶ //done
  ̶-̶f̶i̶r̶s̶t̶ ̶r̶o̶u̶n̶d̶ ̶u̶n̶i̶t̶ ̶t̶e̶s̶t̶s̶ ̶(̶ ̶ ̶̶̶G̶̶̶r̶̶̶a̶̶̶p̶̶̶h̶̶̶ ̶(̶w̶i̶l̶l̶ ̶d̶o̶ ̶t̶h̶i̶s̶ ̶i̶n̶ ̶s̶e̶c̶o̶n̶d̶ ̶r̶o̶u̶n̶d̶ ̶t̶e̶s̶t̶i̶n̶g̶)̶,̶ ̶̶̶(̶̶̶e̶̶̶x̶̶̶c̶̶̶e̶̶̶p̶̶̶t̶̶̶ ̶̶̶c̶̶̶a̶̶̶r̶̶̶t̶̶̶i̶̶̶e̶̶̶s̶̶̶a̶̶̶n̶̶̶ ̶̶̶p̶̶̶r̶̶̶o̶̶̶d̶̶̶u̶̶̶c̶̶̶t̶̶̶ ̶̶̶f̶̶̶o̶̶̶r̶̶̶ ̶̶̶n̶̶̶o̶̶̶w̶̶̶)̶̶̶S̶̶̶e̶̶̶t̶̶̶ ̶̶̶t̶̶̶h̶̶̶e̶̶̶o̶̶̶r̶̶̶y̶̶̶,̶ ̶̶̶G̶̶̶r̶̶̶a̶̶̶p̶̶̶h̶̶̶_̶̶̶t̶̶̶o̶̶̶o̶̶̶l̶̶̶s̶̶̶,̶(̶s̶o̶m̶e̶ ̶p̶a̶r̶t̶s̶ ̶o̶f̶)̶ ̶E̶x̶a̶m̶p̶l̶e̶ ̶p̶r̶o̶b̶e̶l̶m̶s̶,̶ ̶̶̶M̶̶̶i̶̶̶n̶̶̶_̶̶̶h̶̶̶e̶̶̶a̶̶̶p̶̶̶)̶//done
  ̶-̶A̶d̶d̶ ̶c̶h̶e̶c̶k̶ ̶i̶f̶ ̶g̶r̶a̶p̶h̶ ̶i̶s̶ ̶a̶ ̶t̶r̶e̶e̶,̶ ̶A̶d̶d̶ ̶n̶o̶d̶e̶ ̶c̶o̶l̶o̶r̶i̶n̶g̶ ̶/̶ ̶c̶o̶l̶o̶r̶a̶b̶i̶l̶i̶t̶y̶ ̶t̶o̶ ̶n̶o̶d̶e̶s̶ ̶(̶i̶s̶b̶i̶p̶a̶r̶t̶i̶t̶e̶)̶//done
+ ̶-̶a̶d̶d̶ ̶f̶u̶n̶c̶t̶i̶o̶n̶a̶l̶l̶y̶ ̶f̶o̶r̶ ̶P̶r̶i̶m̶ ̶a̶n̶d̶ ̶o̶t̶h̶e̶r̶ ̶s̶i̶m̶l̶i̶a̶r̶ ̶a̶l̶g̶o̶t̶h̶r̶i̶m̶s̶ ̶t̶o̶ ̶v̶i̶s̶u̶a̶l̶i̶z̶e̶r̶ //done but
+ still need to add visual differences between arcs and edges
 -compelte independent set algorithm (done) and unit test it (1.5)
--add functionally for Prim and other simliar algothrims to visualizer
 -implement the visualizers into the example code
 -second round unit tests(Graph, Edge, Node, Carteasian Product,Istree,isbipartite,iscompelte,Edge Interface,Visualpart)
 -set visuals up for sets/arrays/lists/matricies
 -build and test generalized Sudoku and test it(2.5)
--build chromomatic color algo unit test it (2.5)
+-build chromatic color algo unit test it (2.5)
 -third round unit tests(All prevoius tests but more edge cases, first round was rather shallow)
 -compelte set based algothrims (Kanade, Bsort, Qsort, Both DP knapsacks, Sudoku) (radix sort?)
 -fix overlapping issues
 -fourth round unit tests(Edge Interface,Visualpart,ExampleProbelms)
--Maybe add more dp algothrims?
--Maybe add some common interview probelms?
+-Maybe add more dp algorithms?
+-Maybe add some common interview problems?
+-Maybe add greedy approximations like nearest neighbor?
 -Improve background more instead just being a white screen?
--Maybe more tests?
+-Maybe more unit tests?
 -Security?
 -something else?

@@ -1,7 +1,7 @@
 package tests.data_structure;
 
 import graph_theory.Edge;
-import graph_theory.Graph;
+import animations.Graph;
 import graph_theory.Node;
 import org.junit.jupiter.api.Test;
 
@@ -55,7 +55,7 @@ import static org.junit.jupiter.api.Assertions.*;
        graph.addEdge(new Edge(graph.getVertices().get(3),graph.getVertices().get(4)),20);
 
 
-      Graph prim=Example_problems.Prim(graph,null,null);
+      Graph prim=Example_problems.Prim(graph,null,null, true);
       int expected=60;
       int total=0;
       for(int i=0;i<prim.getEdges().size();i++){

@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -18,12 +17,10 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 
 
 public class Main extends Application {
     Pane root = new Pane();
-    ArrayList<Edge> Heap;
     @Override
     public void start(Stage stage) throws InterruptedException, IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
             stage.setTitle("Moray's Algo visualizer");
@@ -63,21 +60,8 @@ public class Main extends Application {
                 @Override
                 public EdgeAnimation highlightNode(Node u) {
                     u.setVertexState(VertexState.VISITED);
-                    StackPane f = Visual_part.corrlate.get(u);
-                    f.setStyle("-fx-background-color: #ff0000");
 
-                    Timeline timeline = new Timeline(
-                            new KeyFrame(Duration.ZERO,
-                                    e -> f.setStyle("-fx-background-color: #00ff00")
-                            ),
-                            new KeyFrame(Duration.millis(200),
-                                    e -> f.setStyle("-fx-background-color: #ff0000")
-
-
-
-                            ));
-                    return new EdgeAnimation(timeline);
-                }
+                return Visual_part.highlightNode(u);}
 
                 @Override
                 public EdgeAnimation pause(int ms) {
@@ -86,20 +70,19 @@ public class Main extends Application {
 
 
                 }
-//these might not need EdgeAnimation, keep it for now but in the future, may have to change it
-            @Override
-            public EdgeAnimation addNode(Graph graph, Node n, Visual_part part) {
-                return null;
+                @Override
+            public void addNode(Graph graph, Node n, Visual_part part) {
+                part.addnode(graph,n);
             }
 
             @Override
-            public EdgeAnimation removeNode(Graph graph, Node n, Visual_part part) {
-                return null;
+            public void removeNode(Graph graph, Node n, Visual_part part) {
+                part.removenode(graph,n);
             }
 
             @Override
-            public EdgeAnimation addEdge(Graph graph, Edge e, Visual_part part) {
-                return null;
+            public void addEdge(Graph graph, Edge e, Visual_part part) {
+                 part.addedge(graph,e);
             }
 
             @Override
@@ -108,32 +91,40 @@ public class Main extends Application {
             }
 
             @Override
-            public EdgeAnimation setallinvisible(Graph graph, Visual_part part) {
-                return null;
+            public void setallinvisible( Visual_part part) {
+              part.makeallofgraphinvisible();
             }
 
             @Override
-            public EdgeAnimation makenodevisible(Graph graph, Visual_part part) {
-                return null;
+            public void setallvisible(Visual_part part) {
+                part.makeallofgraphvisible();
             }
 
             @Override
-            public EdgeAnimation makeedgevisible(Graph graph, Visual_part part) {
-                return null;
+            public void makenodevisible(Graph graph,Node node, Visual_part part) {
+             part.make_node_visible(graph,node);
             }
 
             @Override
-            public EdgeAnimation makeedgeinvisible(Graph graph, Visual_part part) {
-                return null;
+            public void makeedgevisible(Graph graph,Edge edge, Visual_part part) {
+           part.make_edge_visible(graph,edge);
             }
 
             @Override
-            public EdgeAnimation makenodeinvisible(Graph graph, Visual_part part) {
-                return null;
+            public void makeedgeinvisible(Graph graph,Edge e, Visual_part part) {
+           part.make_edge_invisible(graph,e);
+            }
+
+            @Override
+            public void makenodeinvisible(Graph graph,Node node, Visual_part part) {
+          part.make_node_invisible(graph,node);
             }
 
 
         };
+        //eventally add arcs
+
+
             AlgorithmRunner algorithmRunner = new AlgorithmRunner();
         Button compileButton = new Button("Compile");
         Button runButton = new Button("Run");

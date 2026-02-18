@@ -6,12 +6,21 @@ public class Edge {
     Node v1;
     Node v2;
     float weight;
+
+
+
+
     EdgeState edgeState;
+    int pointer;
+
+
+
     public Edge(Node v1, Node v2) {
         this.v1 = v1;
         this.v2 = v2;
         this.weight = 1;
         edgeState=EdgeState.DEFAULT;
+
     }
 
     public Edge(Node v1, Node v2, float weight) {
@@ -19,7 +28,22 @@ public class Edge {
         this.v2 = v2;
         this.weight = weight;
         edgeState=EdgeState.DEFAULT;
+
     }
+
+    public Edge(Node v1, Node v2, float weight, int pointer) {
+        this.v1 = v1;
+        this.v2 = v2;
+        this.weight = weight;
+        this.edgeState=EdgeState.DEFAULT;
+        this.pointer=pointer;
+    }
+
+    public int getPointer() {
+        return pointer;
+    }
+
+
 
     public EdgeState getEdgeState() {
         return edgeState;
@@ -59,6 +83,8 @@ public void setEdgeState(EdgeState edgeState) {
     public boolean contains(Node v){
     return v1.equals(v) || v2.equals(v);
 }
+
+
 
     @Override
     public boolean equals(Object obj) {
