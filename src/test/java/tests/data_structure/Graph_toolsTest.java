@@ -16,7 +16,7 @@ import java.util.ArrayList;
     @Test
     void generate_graph_undirected() {
                                  //one in two
-   Graph graph=Graph_tools.generate_graph_undirected(4,2,false,false);
+   Graph graph=GraphTestHelper.generate_graph_undirected(4,2,false,false);
 
     for (Edge e:graph.getEdges()){
         assertEquals(1, e.getWeight());
@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
     @Test
     void generate_graph_directed() {
-        Graph graph=Graph_tools.generate_graph_directed(4,2,false,false);
+        Graph graph=GraphTestHelper.generate_graph_directed(4,2,false,false);
 
         for (Edge e:graph.getEdges()){
             assertEquals(1, e.getWeight());
@@ -78,12 +78,12 @@ import java.util.ArrayList;
             graph.addVertex(new Node(i));
         }
 
-        graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(1)),2);
-        graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(2)),-3);
-        graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(3)),5);
+        graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(1)),2,false);
+        graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(2)),-3,false);
+        graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(3)),5,false);
         //no edge for 1,2, infinty
-        graph.addEdge(new Edge(graph.getVertices().get(1),graph.getVertices().get(3)),1);
-        graph.addEdge( new Edge(graph.getVertices().get(2),graph.getVertices().get(3)),2);
+        graph.addEdge(new Edge(graph.getVertices().get(1),graph.getVertices().get(3)),1,false);
+        graph.addEdge( new Edge(graph.getVertices().get(2),graph.getVertices().get(3)),2,false);
 
 float[][] testmatrix= {{0,2,-3,5},
         {2,0,Float.POSITIVE_INFINITY,1},
@@ -91,7 +91,7 @@ float[][] testmatrix= {{0,2,-3,5},
         {5,1,2,0}};
 
 
-        float[][] adjency = Graph_tools.adjacency_matrix(graph);
+        float[][] adjency = Graph_tools.adjacency_matrix(graph,false);
         for (int i=0;i<adjency.length;i++){
             for (int j=0;j<adjency[i].length;j++){
                 assertEquals(adjency[i][j], testmatrix[i][j]);

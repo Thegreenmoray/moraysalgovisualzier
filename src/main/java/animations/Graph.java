@@ -215,6 +215,43 @@ private void deletednodesedges(Node v){
 
     }
 
+    public void addEdge(Edge e,float weight,boolean allowdulipcates){
+
+        Node v1 = e.getV1();
+        Node v2 = e.getV2();
+        e.setWeight(weight);
+
+        // Ensure vertices exist
+        if (!vertices.contains(v1)) addVertex(v1);
+        if (!vertices.contains(v2)) addVertex(v2);
+
+
+        if (allowdulipcates){
+            //should you need a multigraph here it is
+            for (Edge existing : edges) {
+                if (existing.connects(v1, v2)){
+
+                    edges.add(new Edge(v1, v2,weight));
+                    edges.add(new Edge(v2, v1, weight));
+                    updateincidentedges();
+                    updateadjencylist();
+                    return;
+                }}}
+        // Prevent duplicates without indexing
+        for (Edge existing : edges) {
+            if (existing.connects(v1, v2)) {
+                return;
+            }
+        }
+
+        edges.add(new Edge(v1, v2, weight));
+        edges.add(new Edge(v2, v1, weight));
+
+        updateincidentedges();
+        updateadjencylist();
+
+
+    }
 
 
 

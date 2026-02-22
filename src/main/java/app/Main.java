@@ -33,7 +33,7 @@ public class Main extends Application {
             codeInput.setText("import graph_theory.*;\n" +
                     "import animations.*;\n" +
                     "import java.util.*;\n" +
-                    "import tests.*;\n" +
+                    "import tests.data_structure.*;\n" +
                     "import set_theory.*;\n" +
                     "public class UserAlgorithm implements GraphAlgorithm {\n" +
                     "\n" +
@@ -42,6 +42,7 @@ public class Main extends Application {
                     "    @Override\n" +
                     "    public void run(Edge_interface api,Visual_part part) {\n" +
                     "        // Your algorithm goes here\n" +
+                    " part.establish(4,3,true,false,true);\n" +
                     "    }\n" +
                     "}\n");
 
@@ -86,6 +87,11 @@ public class Main extends Application {
             }
 
             @Override
+            public void addEdge(Graph graph, Edge e, Visual_part part,float weight) {
+                part.addedge(graph,e,weight);
+            }
+
+            @Override
             public void removeEdge(Graph graph, Edge e, Visual_part part) {
                part.remove_edge(e, graph);
             }
@@ -120,6 +126,21 @@ public class Main extends Application {
           part.make_node_invisible(graph,node);
             }
 
+            @Override
+            public void addarc(Graph graph, Edge e, Visual_part part) {
+                part.addarc(graph,e);
+            }
+
+            @Override
+            public void removearc(Graph graph, Edge e, Visual_part part) {
+
+            }
+
+            @Override
+            public void makarcinvisible(Graph graph, Edge edge, Visual_part part) {
+
+            }
+
 
         };
         //eventally add arcs
@@ -132,7 +153,12 @@ public class Main extends Application {
         runButton.setLayoutX(200);
         compileButton.setLayoutY(200);
         runButton.setLayoutY(250);
-        root.getChildren().addAll(codeInput,compileButton,runButton);
+
+        Button clearButton = new Button("Clear");
+
+        clearButton.setLayoutX(200);
+        clearButton.setLayoutY(300);
+        root.getChildren().addAll(codeInput,compileButton,runButton,clearButton);
 
         compileButton.setOnAction(e -> {
             try {
@@ -150,7 +176,9 @@ public class Main extends Application {
                 ex.printStackTrace();
             }
         });
-
+       clearButton.setOnAction(e -> {
+          part.clearboard();
+       });
 
         stage.show();
     }

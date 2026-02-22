@@ -18,6 +18,11 @@ public interface Edge_interface {
      void makeedgevisible(Graph graph,Edge edge,Visual_part part);
      void makeedgeinvisible(Graph graph,Edge edge,Visual_part part);
      void makenodeinvisible(Graph graph,Node node,Visual_part part);
+     void addarc(Graph graph,Edge e,Visual_part part);
+     void removearc(Graph graph,Edge e,Visual_part part);
+     void makarcinvisible(Graph graph,Edge edge,Visual_part part);
+    void addEdge(Graph graph,Edge e,Visual_part part,float weight);
+
 }
 
 

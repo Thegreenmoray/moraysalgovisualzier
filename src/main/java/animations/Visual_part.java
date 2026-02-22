@@ -5,6 +5,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
@@ -24,8 +25,9 @@ import java.util.*;
 public class Visual_part {
   private static Pane edgeLayer = new Pane();
    private static Pane nodeLayer = new Pane();
+   private static Pane textLayer = new Pane();
     private static Map<Node,StackPane> corrlate=new HashMap<>();
-   private static Map<Edge,Line> edgeToLine =new HashMap<>();
+   private static Map<Edge, javafx.scene.Node> edgeToLine =new HashMap<>();
     private Pane root;
    private static ArrayList<Point2D> mina_distance=new ArrayList<>();
   private static double minDist = 40;
@@ -46,9 +48,10 @@ public class Visual_part {
     //modify this later..
     public  Graph establish(int size,int edgechance,boolean isweighted,boolean canbenegative,boolean isdirected) {
     Graph graph =isdirected? generate_graph_directed(size,edgechance,isweighted,canbenegative):generate_graph_undirected(size,edgechance,isweighted,canbenegative);
-        root.getChildren().addAll(edgeLayer, nodeLayer);
-
-       for (int i=0;i<graph.getVertices().size();i++) {
+        root.getChildren().addAll(edgeLayer, nodeLayer,textLayer);
+        edgeLayer.setMouseTransparent(true);
+        nodeLayer.setMouseTransparent(true);
+        for (int i=0;i<graph.getVertices().size();i++) {
           Node node= graph.getVertices().get(i);
          Circle circle = new Circle(10);
            circle.setFill(Color.BLACK);
@@ -81,13 +84,19 @@ public class Visual_part {
          nodeLayer.getChildren().add(pane);
        }
 
+        Platform.runLater(() -> {
 
        for (int i=0;i<graph.getEdges().size();i++) {
            Edge edge= graph.getEdges().get(i);
-           Line line = new Line();
+
+
+           Line line = null;
+
            Arrow arrow=null;
            if(isdirected){
-             arrow=new Arrow(line,new Polygon());
+             arrow=new Arrow();
+           }else {
+               line=new Line();
            }
 
 
@@ -95,33 +104,42 @@ public class Visual_part {
          Node n1=edge.getV1();
          Node n2=edge.getV2();
 
-           root.applyCss();
-           root.layout();
-
            StackPane f =corrlate.get(n1);
          StackPane k =corrlate.get(n2);
 
            Bounds b = f.getBoundsInParent();
            Bounds c = k.getBoundsInParent();
 
+if (isdirected) {
+           edgeToLine.put(edge,arrow);}else {
+    edgeToLine.put(edge,line);
+}
 
-           edgeToLine.put(edge,line);
-
-
+           if (arrow==null){
            line.setStartX(b.getMinX()+b.getWidth()/2);
            line.setStartY(b.getMinY()+b.getHeight()/2);
            line.setEndX(c.getMinX() +c.getWidth()/2);
-           line.setEndY(c.getMinY() +c.getHeight()/2);
+           line.setEndY(c.getMinY() +c.getHeight()/2);}
+           else {
+           arrow.start((float) (b.getMinX()+b.getWidth()/2), (float) (b.getMinY()+b.getHeight()/2));
+arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeight()/2));
+
+           }
+            if(isweighted){
              Text text=new Text(""+edge.getWeight());
              text.setX((b.getMinX()+c.getMinX())/2);
              text.setY((b.getMinY()+c.getMinY())/2);
+             textLayer.getChildren().add(text);}
+          if (isdirected) {
+           edgeLayer.getChildren().add(arrow);}else{
            edgeLayer.getChildren().add(line);
-           root.getChildren().add(text);
+          }
+
 
        }
 
-
-        return graph;
+        })
+        ;return graph;
     }
 
 
@@ -130,7 +148,7 @@ public class Visual_part {
      Edge edge1 =graph.getEdge(edge.getV1().getNumber(),edge.getV2().getNumber());
 
      if(edge1!=null){
-       Line line = edgeToLine.get(edge1);
+       Line line = (Line) edgeToLine.get(edge1);
          edgeLayer.getChildren().remove(line);
        edgeToLine.remove(edge1);
        graph.removeEdge(edge);
@@ -145,7 +163,7 @@ public class Visual_part {
        nodeLayer.getChildren().remove(f);
        for (Edge edge:graph.indenctedges(noodle)){
            if(edge!=null){
-               Line line = edgeToLine.get(edge);
+               Line line = (Line) edgeToLine.get(edge);
                root.getChildren().remove(line);
                edgeToLine.remove(edge);
                graph.removeEdge(edge);
@@ -182,12 +200,9 @@ public class Visual_part {
         line.setStartY(b.getMinY()+b.getHeight()/2);
         line.setEndX(c.getMinX() +c.getWidth()/2);
         line.setEndY(c.getMinY() +c.getHeight()/2);
-        Text text=new Text(""+e.getWeight());
-        text.setX((b.getMinX()+c.getMinX())/2);
-        text.setY((b.getMinY()+c.getMinY())/2);
         edgeLayer.getChildren().add(line);
         graph.addEdge(e);
-        root.getChildren().add(text);
+
 
 
     }
@@ -280,8 +295,6 @@ public class Visual_part {
         return new EdgeAnimation(timeline);
     }
 
-
-
     public static EdgeAnimation animate_edge(Edge edge, Pane root){
         edge.setEdgeState(EdgeState.ACTIVE); //will work on this later
         Circle circle = new Circle(5);
@@ -318,8 +331,6 @@ public class Visual_part {
 
         return new EdgeAnimation(timeline,circle);
     }
-
-
 
     public void makeallofgraphinvisible() {
      edgeLayer.setVisible(false);
@@ -362,6 +373,11 @@ public class Visual_part {
    if (graph.containsedge(e)) {
        edgeToLine.get(e).setVisible(false);
    }
+    }
+
+
+    public void addarc(Graph graph, Edge e) {
+
     }
 
 
@@ -463,5 +479,12 @@ public class Visual_part {
     }
 
 
+    public void clearboard() {
+   edgeLayer.getChildren().clear();
+   nodeLayer.getChildren().clear();
+   corrlate.clear();
+   edgeToLine.clear();
+   textLayer.getChildren().clear();
 
+    }
 }

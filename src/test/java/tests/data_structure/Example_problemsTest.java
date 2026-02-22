@@ -2,6 +2,7 @@ package tests.data_structure;
 
 import graph_theory.Edge;
 import animations.Graph;
+import graph_theory.GraphTestHelper;
 import graph_theory.Node;
 import org.junit.jupiter.api.Test;
 
@@ -46,13 +47,13 @@ import static org.junit.jupiter.api.Assertions.*;
        for (int i=0;i<5;i++){
           graph.addVertex(new Node(i));
        }
-       graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(1)),10);
-       graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(2)),20);
-       graph.addEdge(new Edge(graph.getVertices().get(1),graph.getVertices().get(4)),10);
-       graph.addEdge(new Edge(graph.getVertices().get(1),graph.getVertices().get(3)),50);
-       graph.addEdge(new Edge(graph.getVertices().get(2),graph.getVertices().get(4)),33);
-       graph.addEdge(new Edge(graph.getVertices().get(2),graph.getVertices().get(3)),20);
-       graph.addEdge(new Edge(graph.getVertices().get(3),graph.getVertices().get(4)),20);
+       graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(1)),10,false);
+       graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(2)),20,false);
+       graph.addEdge(new Edge(graph.getVertices().get(1),graph.getVertices().get(4)),10,false);
+       graph.addEdge(new Edge(graph.getVertices().get(1),graph.getVertices().get(3)),50,false);
+       graph.addEdge(new Edge(graph.getVertices().get(2),graph.getVertices().get(4)),33,false);
+       graph.addEdge(new Edge(graph.getVertices().get(2),graph.getVertices().get(3)),20,false);
+       graph.addEdge(new Edge(graph.getVertices().get(3),graph.getVertices().get(4)),20,false);
 
 
       Graph prim=Example_problems.Prim(graph,null,null, true);
@@ -73,8 +74,8 @@ import static org.junit.jupiter.api.Assertions.*;
           graph.addVertex(new Node(i));
        }
 
-       graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(1)),2);
-       graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(2)),3);
+       graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(1)),2,false,0);
+       graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(2)),3,false,1);
        //no edge for 1,2, infinty
 
        float[][] testmatrix= {{0,2,3},
@@ -82,7 +83,7 @@ import static org.junit.jupiter.api.Assertions.*;
                {3,5,0}};
 
 
-       float[][] adjency = Example_problems.Floyd_Warshall(Graph_tools.adjacency_matrix(graph),graph,null,null);
+       float[][] adjency = Example_problems.Floyd_Warshall(Graph_tools.adjacency_matrix(graph,false),graph,null,null);
        for (int i=0;i<adjency.length;i++){
           for (int j=0;j<adjency[i].length;j++){
              assertEquals(adjency[i][j], testmatrix[i][j]);
@@ -93,7 +94,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
     @Test
     void component_analysis() {
-   Graph graph=Graph_tools.generate_graph_undirected(4,1,false,false);
+   Graph graph= GraphTestHelper.generate_graph_undirected(4,1,false,false);
    boolean[] visited=new boolean[graph.getVertices().size()];
         Arrays.fill(visited, true);
 

@@ -248,7 +248,13 @@ public class Example_problems {
 
     //-------------miscellaneous----------------------------------------------------------
 
+    private static Graph blossom(Graph graph){
+    float[][] adj=Graph_tools.adjacency_matrix(graph,true);
 
+
+
+        return null;
+    }
 
     private static boolean binarysearch(List<Integer> list, int e){
        Arrays.sort(new List[]{list});
@@ -345,7 +351,7 @@ for (int i=0;i<odd_degree.size();i++){
  //from our variant of the MST.
 int countining_the_pointer=near_neighbor.getEdges().getLast().getPointer();
     while (!odd_degree.isEmpty()&& !edges.isEmpty()){
-        // this is the super greedy approach (n^2 log n), slightly less accurate than the optimal n^3 that  will be done later
+        // this is the super greedy approach (n^2 log n), slightly less accurate than the optimal n^3 blossom that will be done later
         Edge edge=Min_heap.extract_from_heap(edges);
         if (odd_degree.contains(edge.getV1())&&odd_degree.contains(edge.getV2())){
 
@@ -454,21 +460,18 @@ private static <G> ArrayList<List<G>> bin_packing_best_fit_offline_approximation
 
 private static List<Integer>  greedy_coin_change(List<Integer> coins,int intinal_amount){
        //assume coins are sorted
-        boolean didnt_count=false;
+
         List<Integer> coin_list=new ArrayList<>();
-        while (!didnt_count&&intinal_amount>0){
-          didnt_count=true;
+
             for(int i=coins.size()-1;i>=0;i--){
-                if(coins.get(i)<=intinal_amount){
-                didnt_count=false;
+            while (coins.get(i)<=intinal_amount){
                 intinal_amount=intinal_amount-coins.get(i);
                 coin_list.add(coins.get(i));
-                 break;
-                }
+
             }
         }
-//you can do better then O(amount*coins) but this is fine for example purposes
-if(didnt_count){
+
+if(intinal_amount>0){
     coin_list.clear();
 }
 

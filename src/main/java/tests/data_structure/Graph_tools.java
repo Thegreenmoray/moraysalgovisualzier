@@ -48,15 +48,15 @@ private static float[][] arc_incident_matrix_creation(float[][] arc_incident_mat
 }
 
 
-public static float[][] adjacency_matrix(Graph graph){
+public static float[][] adjacency_matrix(Graph graph,boolean negated){
     if (graph.getVertices().isEmpty()){
         //not valid let user know
         return null;
     }
-        return adjacency_matrix_creation(new float[graph.getVertices().size()][graph.getVertices().size()],graph);
+        return adjacency_matrix_creation(new float[graph.getVertices().size()][graph.getVertices().size()],graph,negated);
     }
 
-private static float[][] adjacency_matrix_creation(float[][] adjacency_matrix,Graph graph){
+private static float[][] adjacency_matrix_creation(float[][] adjacency_matrix,Graph graph,boolean negated){
      int nodes=graph.getVertices().size();
       for(int i=0;i<nodes;i++){
           for(int j=0;j<nodes;j++){
@@ -66,7 +66,7 @@ private static float[][] adjacency_matrix_creation(float[][] adjacency_matrix,Gr
               }
              Edge edge=graph.getEdge(i,j);
          if (edge!=null){
-             adjacency_matrix[i][j]=edge.getWeight();
+             adjacency_matrix[i][j]=(negated ? -1:1)*edge.getWeight();
              continue;
          }
           adjacency_matrix[i][j]=Float.POSITIVE_INFINITY;
