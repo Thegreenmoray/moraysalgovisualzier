@@ -68,7 +68,10 @@ public void setVertexState(VertexState vertexState) {
 
 
 
+   public boolean issamecolor(Node node) {
 
+       return node.getHexcode_color().equals(hexcode_color);
+   }
 
     @Override
     public boolean equals(Object obj) {

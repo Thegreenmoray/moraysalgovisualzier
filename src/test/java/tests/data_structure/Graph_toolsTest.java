@@ -91,7 +91,7 @@ float[][] testmatrix= {{0,2,-3,5},
         {5,1,2,0}};
 
 
-        float[][] adjency = Graph_tools.adjacency_matrix(graph,false);
+        float[][] adjency = Graph_tools.adjacency_matrix(graph);
         for (int i=0;i<adjency.length;i++){
             for (int j=0;j<adjency[i].length;j++){
                 assertEquals(adjency[i][j], testmatrix[i][j]);

@@ -42,7 +42,7 @@ public class Main extends Application {
                     "    @Override\n" +
                     "    public void run(Edge_interface api,Visual_part part) {\n" +
                     "        // Your algorithm goes here\n" +
-                    " part.establish(4,3,true,false,true);\n" +
+                  //  " part.establish(4,3,true,false,true);\n" +
                     "    }\n" +
                     "}\n");
 
@@ -92,6 +92,11 @@ public class Main extends Application {
             }
 
             @Override
+            public void addarc(Graph graph, Edge e, Visual_part part, float weight) {
+
+            }
+
+            @Override
             public void removeEdge(Graph graph, Edge e, Visual_part part) {
                part.remove_edge(e, graph);
             }
@@ -133,17 +138,22 @@ public class Main extends Application {
 
             @Override
             public void removearc(Graph graph, Edge e, Visual_part part) {
-
+               part.removearc(graph,e);
             }
 
             @Override
             public void makarcinvisible(Graph graph, Edge edge, Visual_part part) {
+              part.makearcinvisible(edge);
+            }
 
+            @Override
+            public void makearcvisible(Graph graph, Edge edge, Visual_part part) {
+                part.makearcvisible(edge);
             }
 
 
         };
-        //eventally add arcs
+
 
 
             AlgorithmRunner algorithmRunner = new AlgorithmRunner();

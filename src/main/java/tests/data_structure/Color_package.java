@@ -1,7 +1,7 @@
 package tests.data_structure;
 
 
-//to allows you to store list of colors good for bipartite and chromatic color
+//to allows you to store list of colors good for bipartite,greedy, and chromatic color
 public class Color_package {
     boolean bool;
     boolean[] lists;
@@ -14,7 +14,7 @@ public class Color_package {
         this.lists = lists;
         this.colors = null;
     }
-public  Color_package(boolean bool, String[] colors) {
+public Color_package(boolean bool, String[] colors) {
         this.bool = bool;
         this.colors = colors;
         this.lists = null;

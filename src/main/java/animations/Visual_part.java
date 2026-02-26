@@ -1,5 +1,6 @@
 package animations;
 
+import app.EdgeAnimation;
 import graph_theory.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -13,7 +14,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -28,6 +28,7 @@ public class Visual_part {
    private static Pane textLayer = new Pane();
     private static Map<Node,StackPane> corrlate=new HashMap<>();
    private static Map<Edge, javafx.scene.Node> edgeToLine =new HashMap<>();
+   private static Map<Edge, Text> edgeToText =new HashMap<>();
     private Pane root;
    private static ArrayList<Point2D> mina_distance=new ArrayList<>();
   private static double minDist = 40;
@@ -36,7 +37,7 @@ public class Visual_part {
         this.root = root;
     }
 
-    public Pane getRoot() {
+    private Pane getRoot() {
         return root;
     }
 
@@ -45,12 +46,14 @@ public class Visual_part {
     }
 
 
-    //modify this later..
-    public  Graph establish(int size,int edgechance,boolean isweighted,boolean canbenegative,boolean isdirected) {
+
+    public Graph establish(int size, int edgechance, boolean isweighted, boolean canbenegative, boolean isdirected) {
     Graph graph =isdirected? generate_graph_directed(size,edgechance,isweighted,canbenegative):generate_graph_undirected(size,edgechance,isweighted,canbenegative);
-        root.getChildren().addAll(edgeLayer, nodeLayer,textLayer);
+     if (!root.getChildren().contains(edgeLayer)) {
+        root.getChildren().addAll(edgeLayer, nodeLayer,textLayer);}
         edgeLayer.setMouseTransparent(true);
         nodeLayer.setMouseTransparent(true);
+        textLayer.setMouseTransparent(true);
         for (int i=0;i<graph.getVertices().size();i++) {
           Node node= graph.getVertices().get(i);
          Circle circle = new Circle(10);
@@ -129,7 +132,9 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
              Text text=new Text(""+edge.getWeight());
              text.setX((b.getMinX()+c.getMinX())/2);
              text.setY((b.getMinY()+c.getMinY())/2);
-             textLayer.getChildren().add(text);}
+             textLayer.getChildren().add(text);
+             edgeToText.put(edge,text);
+            }
           if (isdirected) {
            edgeLayer.getChildren().add(arrow);}else{
            edgeLayer.getChildren().add(line);
@@ -144,7 +149,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
 
 
-    public  void remove_edge(Edge edge,Graph graph) {
+    public void remove_edge(Edge edge, Graph graph) {
      Edge edge1 =graph.getEdge(edge.getV1().getNumber(),edge.getV2().getNumber());
 
      if(edge1!=null){
@@ -183,9 +188,6 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         Node n1=e.getV1();
         Node n2=e.getV2();
 
-        root.applyCss();
-        root.layout();
-
         StackPane f =corrlate.get(n1);
         StackPane k =corrlate.get(n2);
 
@@ -207,7 +209,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
     }
 
-    public void addedge(Graph graph, Edge e,float weight) {
+    public void addedge(Graph graph, Edge e, float weight) {
         Line line = new Line();
 
 
@@ -344,7 +346,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
 
 
-    public void make_node_visible(Graph graph,Node node) {
+    public void make_node_visible(Graph graph, Node node) {
     if(graph.containsnode(node)){
         corrlate.get(node).setVisible(true);
         for (Edge e : graph.indenctedges(node)) {
@@ -354,7 +356,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         }
     }
     }
-    public void make_node_invisible(Graph graph,Node node) {
+    public void make_node_invisible(Graph graph, Node node) {
         if(graph.containsnode(node)){
             corrlate.get(node).setVisible(false);
             for (Edge e : graph.indenctedges(node)) {
@@ -377,8 +379,43 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
 
     public void addarc(Graph graph, Edge e) {
+        Arrow arrow=new Arrow();
+        Node n1=e.getV1();
+        Node n2=e.getV2();
+               if (e.getV1()==null||e.getV2()==null){
+                   return;
+               }
+        StackPane f =corrlate.get(n1);
+        StackPane k =corrlate.get(n2);
+
+        Bounds b = f.getBoundsInParent();
+        Bounds c = k.getBoundsInParent();
+        edgeToLine.put(e,arrow);
+
+        arrow.start((float) (b.getMinX()+b.getWidth()/2), (float) (b.getMinY()+b.getHeight()/2));
+        arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeight()/2));
+        Text text=new Text(""+e.getWeight());
+        text.setX((b.getMinX()+c.getMinX())/2);
+        text.setY((b.getMinY()+c.getMinY())/2);
+        textLayer.getChildren().add(text);
+        edgeLayer.getChildren().add(arrow);
+        graph.addarc(e);
+    }
+
+    public void removearc(Graph graph, Edge e) {
+   if (!edgeToText.containsKey(e)){
+       edgeToLine.remove(e);
+       graph.removearc(e);
+
+       return ;
+   }
+  Text text= edgeToText.get(e);
+   textLayer.getChildren().remove(text);
+   edgeToLine.remove(e);
+   graph.removearc(e);
 
     }
+
 
 
     //dont ask me how long this took me to figure out
@@ -403,7 +440,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         LinkedList<Edge> edges = new LinkedList<>();
 
         if (size <=0){
-            size = 1;
+            size = 0;
         }
 
         if(edge_chance <= 0){
@@ -445,7 +482,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         LinkedList<Edge> edges = new LinkedList<>();
 
         if (size <=0){
-            size = 1;
+            size = 0;
         }
 
         if(edge_chance <= 0){
@@ -484,7 +521,38 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
    nodeLayer.getChildren().clear();
    corrlate.clear();
    edgeToLine.clear();
+   edgeToText.clear();
    textLayer.getChildren().clear();
+
+
+    }
+
+
+    public void makearcinvisible(Edge edge) {
+    if (!edgeToLine.containsKey(edge)) {
+        return;
+    }
+    if (edgeToText.containsKey(edge)) {
+        edgeToText.get(edge).setVisible(false);
+    }
+    edgeToLine.get(edge).setVisible(false);
+
+
+
+    }
+
+    public void makearcvisible(Edge edge) {
+        if (!edgeToLine.containsKey(edge)) {
+            return;
+        }
+
+        if (edgeToText.containsKey(edge)) {
+            edgeToText.get(edge).setVisible(true);
+        }
+
+        edgeToLine.get(edge).setVisible(true);
+
+
 
     }
 }

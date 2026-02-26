@@ -1,10 +1,13 @@
 package tests.data_structure;
 
+import app.EdgeAnimation;
+import animations.Visual_part;
 import graph_theory.Edge;
 import animations.Graph;
 import graph_theory.Min_heap;
 import graph_theory.Node;
 import animations.*;
+import set_theory.Set_theory_items;
 
 import java.util.*;
 
@@ -14,6 +17,41 @@ import java.util.*;
   with the compiler. */
 
 public class Example_problems {
+
+//------------------------------To start------------------------------
+
+public static void Adding_and_removing_nodes(Visual_part part,Edge_interface api){
+    Graph g=part.establish(4,3,true,false,true);
+    Node node=new Node(6);
+api.addNode(g,node,part);
+            api.removeNode(g,g.getVertices().get(2),part);
+api.removeNode(g,node,part);}
+
+public static void Adding_and_removing_edges(Visual_part part,Edge_interface api){
+        Graph g=part.establish(4,3,true,false,true);
+        Node node=new Node(6);
+        api.addNode(g,node,part);
+        Edge edge=new Edge(g.getVertices().get(3),node);
+        Edge edge2=new Edge(g.getVertices().get(2),node);
+        api.addEdge(g,edge,part);
+        api.addEdge(g,edge2,part);
+        api.removeEdge(g,edge2,part);}
+
+
+    public static void Adding_and_removing_arcs(Visual_part part,Edge_interface api){
+        Graph g=part.establish(4,3,true,false,true);
+        Node node=new Node(6);
+        api.addNode(g,node,part);
+        Edge edge=new Edge(g.getVertices().get(3),node);
+        Edge edge2=new Edge(g.getVertices().get(2),node);
+        api.addarc(g,edge,part);
+        api.addarc(g,edge2,part);
+        api.removearc(g,edge2,part);}
+
+
+
+
+
 
 
 //-----------------Sorting--------------------------------------------
@@ -83,7 +121,7 @@ public class Example_problems {
 
 
 
-//--------------------------Graph probelms----------------------------
+//--------------------------Graph problems----------------------------
 
     private static boolean[] bfs(Graph graph, int start, boolean[] visted, Edge_interface graphTheoryInterface, Visual_part visualPart) {
         Queue<EdgeAnimation> timelineQueue = new LinkedList<>();
@@ -137,9 +175,11 @@ public class Example_problems {
             if (Graph_tools.Willcreateacycle(mst,other_edges.getV1(),other_edges.getV2())) {
                 continue;
             }
-              if (!mst.containsnode(other_edges.getV1())&&!mst.containsnode(other_edges.getV2())) {
-                  continue;
-              }
+
+
+            if (mst.containsnode(other_edges.getV1())&&mst.containsnode(other_edges.getV2())) {
+                continue;
+            }
 
               if (!mst.containsnode(other_edges.getV1())){
                   mst.addVertex(other_edges.getV1());
@@ -149,20 +189,21 @@ public class Example_problems {
                       //determine the highest pointer at this point
                       pointer=pointer+1;
                    mst.addEdge(other_edges,other_edges.getWeight(),false,pointer);
-                  }//this is for Christofides
+                  }//only relevant for Christofides
 
               for (Edge e:graph.indenctedges(other_edges.getV1())) {
                   Min_heap.add_to_heap(e,heap);}
               }
               if (!mst.containsnode(other_edges.getV2())) {
                   mst.addVertex(other_edges.getV2());
+
                   if (arcs_or_edges){
                       mst.addarc(other_edges,other_edges.getWeight());}
                   else {
                       //determine the highest pointer at this point
                       pointer=pointer+1;
                       mst.addEdge(other_edges,other_edges.getWeight(),false,pointer);
-                  }//this is for Christofides
+                  }//only relevant for Christofides
 
                   for (Edge e:graph.indenctedges(other_edges.getV2())) {
                       Min_heap.add_to_heap(e,heap);
@@ -200,12 +241,14 @@ public class Example_problems {
 
 
     public static float[][] Floyd_Warshall(float[][] adjacency_matrix, Graph graph, Edge_interface graphTheoryInterface, Visual_part visualPart){
-
+// searching the all pairs of shortest paths,
+// good for finding the diameter on smaller graphs
         Queue<EdgeAnimation> timelineQueue = new LinkedList<>();
         for (int k = 0; k < graph.getVertices().size(); k++) {
             for (int i = 0; i < graph.getVertices().size(); i++) {
                 for (int j = 0; j < graph.getVertices().size(); j++) {
-                  if (visualPart !=null||graphTheoryInterface!=null){
+                //these parts only exist for unit tests ignore these
+                  if (visualPart !=null&&graphTheoryInterface!=null){
                     Edge edgeij=graph.getEdge(i,j);
                     Edge edgeik=graph.getEdge(i,k);
                     Edge edgekj=graph.getEdge(k,j);
@@ -218,8 +261,8 @@ public class Example_problems {
                     adjacency_matrix[i][j] = Math.min(adjacency_matrix[i][j], adjacency_matrix[i][k]+adjacency_matrix[k][j]);
                 }
             }
-        }
-        if (visualPart !=null||graphTheoryInterface!=null){
+        }//these parts only exist for unit tests ignore these
+        if (visualPart !=null&&graphTheoryInterface!=null){
         visualPart.playNext((LinkedList<EdgeAnimation>) timelineQueue);}
 
 
@@ -245,16 +288,50 @@ public class Example_problems {
         return visted;
     }
 
-
-    //-------------miscellaneous----------------------------------------------------------
-
-    private static Graph blossom(Graph graph){
-    float[][] adj=Graph_tools.adjacency_matrix(graph,true);
+    private static Graph maxium_blossom(Graph graph){
+        float[][] adj=Graph_tools.adjacency_matrix(graph);
+        float[][] minadj=min_adj(adj);
 
 
 
         return null;
     }
+
+    private static float[][] min_adj(float[][] adj) {
+
+        float max=adj[0][0];
+        for (int i = 0; i < adj.length; i++) {
+            for (int j = 0; j < adj[i].length; j++) {
+                max=Math.max(max,adj[i][j]);
+            }
+        }
+
+      for (int i = 0; i < adj.length; i++) {
+          for (int j = 0; j < adj[i].length; j++) {
+              adj[i][j]=max-adj[i][j];
+          }
+      }
+
+
+
+
+
+
+        return adj;
+    }
+ //-----------------Actual normal greedy algorithms (greedy is always optimal)-----------
+
+private static float Fractional_knapsack(List<Integer> items,List<Integer> weights,int W){
+
+    return 0;
+}
+
+
+
+
+
+
+    //-------------miscellaneous----------------------------------------------------------
 
     private static boolean binarysearch(List<Integer> list, int e){
        Arrays.sort(new List[]{list});
@@ -316,7 +393,17 @@ public class Example_problems {
     }
 
 //------------NP-Approximation algorithms (heuristics)----------------------------
-//need to test this
+
+    private static String shortest_superstring_approximation(){
+
+        return "";
+    }
+
+
+
+
+
+    //need to test this
     private static Graph Christofides_approximation(Graph graph, Visual_part visualPart, Edge_interface graphTheoryInterface){
 
       if (!Graph_tools.is_complete(graph)) {
@@ -443,22 +530,66 @@ nodeorder=euleriantour(near_neighbor,edges.getFirst(),edges.getFirst().getPointe
     }
 
 
+    private static Graph Greedy_coloring(Graph graph){
+    if (graph.getVertices().isEmpty()) {return graph;}
+       ArrayList<String> list = (ArrayList<String>) Graph_tools.random_unique_colors(graph);
+    if (list == null) {return graph;}
 
+    for (Node n1:graph.getVertices()) {
 
+        HashSet<String> no_no_colors=new HashSet<>();
+            for (Node node : graph.neighbors(n1)){
+                no_no_colors.add(node.getHexcode_color());
+        }
 
-    private static Graph Greedy_coloring(Graph graph,String[] color_list){
+       for (String color:list){
+           if (!no_no_colors.contains(color)){
+               n1.setHexcode_color(color);
+               break;
+           }
+
+       }
+
+    }
 
     return graph;
 }
 
 
-private static <G> ArrayList<List<G>> bin_packing_best_fit_offline_approximation(ArrayList<List<G>> bins
-,int capcaity_of_bins){ //need a way to return bin cost that isn't O(n)
-    return null;
+
+   private static List<Node> Greedy_vertex_cover(Graph graph){
+        LinkedList<Node> cover=new LinkedList<>();
+       graph.getVertices().sort(Comparator.comparingInt(graph::degree).reversed());
+       HashSet<Edge> current_edge_collection=new HashSet<>();
+
+       for (Node n:graph.getVertices()){
+
+           if (Set_theory_items.complement(graph.getEdges(),current_edge_collection).isEmpty()){
+               break;
+           }
+
+           cover.add(n);
+           for (Edge e:graph.indenctedges(n)){
+               current_edge_collection.add(e);
+           }
+
+       }
+
+        return cover;
+   }
+
+
+    private static <G> ArrayList<List<G>> bin_packing_best_fit_offline_approximation(
+int capcaity_of_bins,List<Integer> items){ //need a way to return bin cost that isn't O(n)
+  ArrayList<List<G>> best_fit_offline_approximation=new ArrayList<>(items.size()); //theorically you would need as many bins as items so long as the items are less than the bin
+    items.sort(Collections.reverseOrder());
+
+
+        return best_fit_offline_approximation;
 }
 
 
-private static List<Integer>  greedy_coin_change(List<Integer> coins,int intinal_amount){
+private static List<Integer> Greedy_coin_change(List<Integer> coins,int intinal_amount){
        //assume coins are sorted
 
         List<Integer> coin_list=new ArrayList<>();
@@ -517,8 +648,80 @@ int largest=0;
 
 
 
+private static int Chain_Matrix_multiplication(int[] dimesions){
+//note does not multiply matrices but matrix dimensions
+    //this is asking what is most efficient way to multiply matrices since
+    //matrices are associative but not communicative
 
 
+    return 0;
+}
+
+private static List<Integer> subsetsum(int sum,int[] listed){
+int n=listed.length;
+boolean[][] subset=new boolean[n+1][sum+1];
+ArrayList<Integer> reconstructed=new ArrayList<>();
+
+subset[0][0]=true;
+for(int i=1;i<=sum;i++){
+    subset[0][i]=false;
+}
+
+
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=sum;j++){
+        if(listed[i-1]==j){
+            subset[i][j]=true;
+        } else if (listed[i-1]>j) {
+            subset[i][j]=subset[i-1][j];
+        }else {
+
+            subset[i][j] = subset[i - 1][j]
+                    || subset[i - 1][j - listed[i - 1]];
+        }
+
+    }
+}
+
+    if(!subset[n][sum]){
+       return reconstructed;  //only case if a subset sum to T does not exist
+        //this is here to prevent an infinite loop
+    }
+
+
+    int i=n;
+    int j=sum;
+    while(j>0){
+        if (!subset[i - 1][j]) {
+            reconstructed.add(listed[i - 1]);
+            j -= listed[i - 1];
+        }
+        i--;
+
+
+    }
+
+
+    return reconstructed;
+}
+
+    private static float[] general_minium_coin_change(int amount,List<Integer> coins){
+    float[] coins_list=new float[amount+1];
+    for(int i=1;i<=amount;i++){
+        coins_list[i]=Float.POSITIVE_INFINITY;
+    }
+
+    for(int i=1;i<=amount;i++){
+        for(int coin:coins){
+            if (amount-coin>=0){
+            coins_list[i]=Math.min(coins_list[i],coins_list[amount-coin]+1);
+            }
+        }
+    }
+
+
+        return coins_list;
+    }
 
 
     //--------------Some Interview problems--------------------------------
@@ -568,13 +771,21 @@ private static int number_of_ways_to_return_change(){
 }
 
 
+
+
+
+
+
 private static List<Integer> two_partition(){
     return List.of();
 }
 
 
 
-    //--------------------NP-Hard---------------------------
+
+
+
+    //--------------------NP-Hard--------------------------------------------------
     // (1.5)
     public static List<Node> independent_set(Graph graph,List<Node> best_set,List<Node> current_set,List<Node> candidates){
 
@@ -665,9 +876,27 @@ for(int i=1;i<=n;i++){
 
     }
 
-private static void chromomatic_color(){
+
+private static void Matrix_Permanent_of_zero(){
 
 }
+
+
+private static void chromatic_number(){
+
+}
+
+
+
+private static <G> List<List<G>> set_cover(){
+
+    return List.of();
+}
+
+
+
+
+
     //round two
  private static void generalized_sudoku(char[][] sudoku,char[] total_chars,char[] vaild_char_list){
         if (!isboardvaild(sudoku)){

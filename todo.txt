@@ -14,7 +14,7 @@
 -fourth round unit tests(Edge Interface,Visualpart,ExampleProbelms)
 -Maybe add more dp algorithms?
 -Maybe add some common interview problems?
--Maybe add greedy approximations like nearest neighbor?
+-Maybe add more greedy approximations?
 -Improve background more instead just being a white screen?
 -Maybe more unit tests?
 -Security?

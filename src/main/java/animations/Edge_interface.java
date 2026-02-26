@@ -1,5 +1,6 @@
 package animations;
 
+import app.EdgeAnimation;
 import graph_theory.Edge;
 import graph_theory.Node;
 
@@ -21,8 +22,9 @@ public interface Edge_interface {
      void addarc(Graph graph,Edge e,Visual_part part);
      void removearc(Graph graph,Edge e,Visual_part part);
      void makarcinvisible(Graph graph,Edge edge,Visual_part part);
+     void makearcvisible(Graph graph, Edge edge, Visual_part part);
     void addEdge(Graph graph,Edge e,Visual_part part,float weight);
-
+    void addarc(Graph graph,Edge e,Visual_part part,float weight);
 }
 
 

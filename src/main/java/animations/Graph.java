@@ -314,7 +314,14 @@ for(Node node:this.vertices){
 }
 
 
+
+
+
+
+
     public boolean containsedge(Edge e) {
         return getEdge(e.getV1().getNumber(), e.getV2().getNumber())!=null;
     }
+
+
 }

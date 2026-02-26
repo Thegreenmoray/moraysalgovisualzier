@@ -12,8 +12,10 @@ public class Graph_tools {
 private Graph_tools(){};
 
 
-    public static boolean Willcreateacycle(Graph mst, Node n, Node m){
-        return mst.containsnode(n)&&mst.containsnode(m);
+public static boolean Willcreateacycle(Graph mst, Node n, Node m){
+
+
+        return (!mst.containsnode(n)&&!mst.containsnode(m));
     }
 
 
@@ -22,6 +24,23 @@ public static Graph empty_graph(){
     return new Graph(new ArrayList<>(),new ArrayList<>());
 }
 
+
+public static int[][] degree_matrix(Graph graph){
+    if (graph.getVertices().isEmpty()){
+        //not valid let user know
+        return null;
+    }
+    return degree_matrix_creation(graph,new int[graph.getVertices().size()][graph.getVertices().size()]);
+}
+
+private static int[][] degree_matrix_creation(Graph graph,int[][] matrix){
+
+        for (int i = 0; i<graph.getVertices().size(); i++){
+          matrix[i][i]=graph.degree(graph.getVertices().get(i));
+        }
+
+    return matrix;
+}
 
 public static float[][] arc_incident_matrix(Graph graph){
    if (graph.getVertices().isEmpty()||graph.getEdges().isEmpty()){
@@ -48,15 +67,15 @@ private static float[][] arc_incident_matrix_creation(float[][] arc_incident_mat
 }
 
 
-public static float[][] adjacency_matrix(Graph graph,boolean negated){
+public static float[][] adjacency_matrix(Graph graph){
     if (graph.getVertices().isEmpty()){
         //not valid let user know
         return null;
     }
-        return adjacency_matrix_creation(new float[graph.getVertices().size()][graph.getVertices().size()],graph,negated);
+        return adjacency_matrix_creation(new float[graph.getVertices().size()][graph.getVertices().size()],graph);
     }
 
-private static float[][] adjacency_matrix_creation(float[][] adjacency_matrix,Graph graph,boolean negated){
+private static float[][] adjacency_matrix_creation(float[][] adjacency_matrix,Graph graph){
      int nodes=graph.getVertices().size();
       for(int i=0;i<nodes;i++){
           for(int j=0;j<nodes;j++){
@@ -66,7 +85,7 @@ private static float[][] adjacency_matrix_creation(float[][] adjacency_matrix,Gr
               }
              Edge edge=graph.getEdge(i,j);
          if (edge!=null){
-             adjacency_matrix[i][j]=(negated ? -1:1)*edge.getWeight();
+             adjacency_matrix[i][j]=edge.getWeight();
              continue;
          }
           adjacency_matrix[i][j]=Float.POSITIVE_INFINITY;
@@ -77,9 +96,10 @@ private static float[][] adjacency_matrix_creation(float[][] adjacency_matrix,Gr
         return adjacency_matrix;
     }
 
-    private static boolean is_tree(Graph graph){
+private static boolean is_tree(Graph graph){
     //run a modifed dfs
    boolean istree=true;
+   //assume graph is connected
        istree= dfs_treechecker(graph,graph.getVertices().getFirst(),null,new boolean[graph.getVertices().size()],istree);
 
 
@@ -87,7 +107,7 @@ private static float[][] adjacency_matrix_creation(float[][] adjacency_matrix,Gr
     return istree;
 }
 
-    private static boolean dfs_treechecker(Graph graph, Node start,Node parent, boolean[] visted,boolean istree) {
+private static boolean dfs_treechecker(Graph graph, Node start,Node parent, boolean[] visted,boolean istree) {
         visted[start.getNumber()]=true;
 
 
@@ -131,13 +151,35 @@ public static boolean is_complete(Graph graph){
     return true;
 }
 
+
+public static List<String> random_unique_colors(Graph graph){
+    HashSet<String> color_packages=new HashSet<>();
+        Random rand=new Random();
+        for (int i=0;i<graph.getVertices().size();i++) {
+
+            if (color_packages.size() >= 0xFFFFFF) {
+                return null; //too full.
+            }
+            String colors;
+
+            do {
+                int index = rand.nextInt(0xFFFFFF);
+                colors = String.format("#%06X", index);
+            } while (color_packages.contains(colors));
+            color_packages.add(colors);
+        }
+
+    return new ArrayList<>(color_packages);
+}
+
+
  private static boolean isbipartite(Graph graph){
     String cyan="#00FFFF";
     String magenta="#FF00FF";
     String yellow="#FF0000"; //defualt
 
         if (graph.getVertices().isEmpty()||graph.getEdges().isEmpty()||graph.getVertices().size()==1){
-            return false;
+            return true;
         }
       int nodes=graph.getVertices().size();
 Graph copy_of_graph=graph;
@@ -166,7 +208,7 @@ for(int i=0;i<nodes;i++) {
 }
 
 
-    private static Color_package bfs_bipartite(Graph graph, int start, boolean[] visted, String defualt_color, String magenta, String cyan) {
+private static Color_package bfs_bipartite(Graph graph, int start, boolean[] visted, String defualt_color, String magenta, String cyan) {
         Queue<Node> q=new LinkedList<>();
 
         Node node=graph.getVertices().get(start);
@@ -199,13 +241,13 @@ for(int i=0;i<nodes;i++) {
     }
 
 private static boolean coloring(Node start,Node neighbor,String color1,String color2,String defualt_color) {
-if (start.getHexcode_color().equals(neighbor.getHexcode_color())
-        &&!neighbor.getHexcode_color().equals(defualt_color)&&!start.getHexcode_color().equals(defualt_color)) {
-return false;
-}
+
 
 neighbor.setHexcode_color(start.getHexcode_color().equals(defualt_color) ? color1: start.getHexcode_color().equals(color1) ? color2:color1);
-
+    if (start.getHexcode_color().equals(neighbor.getHexcode_color())
+            &&!neighbor.getHexcode_color().equals(defualt_color)&&!start.getHexcode_color().equals(defualt_color)) {
+        return false;
+    }
     return true;
 }
 

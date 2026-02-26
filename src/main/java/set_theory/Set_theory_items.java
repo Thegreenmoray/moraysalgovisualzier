@@ -64,6 +64,17 @@ private Set_theory_items(){}
         return new ArrayList<>(list);
     }
 
+
+    public static <T> List<T> complement(List<T> U,HashSet<T> A) {
+        //can also be used as difference
+        Set<T> list = new HashSet<>(U);
+
+        list.removeAll(A);
+
+        return new ArrayList<>(list);
+    }
+
+
     public static <T> int cardinality(List<T> A){
 
         return A.size();

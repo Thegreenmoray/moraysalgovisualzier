@@ -11,7 +11,7 @@ public class GraphTestHelper {
         LinkedList<Edge> edges = new LinkedList<>();
 
         if (size <=0){
-            size = 1;
+            size = 0;
         }
 
         if(edge_chance <= 0){
@@ -53,7 +53,7 @@ public class GraphTestHelper {
         LinkedList<Edge> edges = new LinkedList<>();
 
         if (size <=0){
-            size = 1;
+            size = 0;
         }
 
         if(edge_chance <= 0){

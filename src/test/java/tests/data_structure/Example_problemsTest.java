@@ -83,7 +83,7 @@ import static org.junit.jupiter.api.Assertions.*;
                {3,5,0}};
 
 
-       float[][] adjency = Example_problems.Floyd_Warshall(Graph_tools.adjacency_matrix(graph,false),graph,null,null);
+       float[][] adjency = Example_problems.Floyd_Warshall(Graph_tools.adjacency_matrix(graph),graph,null,null);
        for (int i=0;i<adjency.length;i++){
           for (int j=0;j<adjency[i].length;j++){
              assertEquals(adjency[i][j], testmatrix[i][j]);
@@ -113,5 +113,10 @@ assertArrayEquals(dfs_test,visited);
 
     @Test
     void binary_knapsack() {
+    }
+
+    @Test
+     void indepedent_set(){
+
     }
 }
