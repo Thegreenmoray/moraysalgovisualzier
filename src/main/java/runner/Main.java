@@ -60,7 +60,7 @@ public class Main extends Application {
 
                 @Override
                 public EdgeAnimation highlightNode(Node u) {
-                    u.setVertexState(VertexState.VISITED);
+//                    u.setVertexState(VertexState.VISITED);
 
                 return Visual_part.highlightNode(u);}
 

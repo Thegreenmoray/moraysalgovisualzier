@@ -61,7 +61,7 @@ public class AlgorithmCompiler {
         ); //yes order does matter, it causes weird things to happen otherwise
 
 
-        //Note: Use JDK not JDE for this, it will crash otherwise
+        //Note: Use JDK not JDE for this, it crash otherwise
 
 
 //if it's not 0 something went wrong

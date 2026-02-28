@@ -43,12 +43,12 @@ System.setSecurityManager(new SandboxSecurityManager());
 
     System.out.println("Algorithm attempted to call unathorized operations. ACCESS DENIED.");
 } finally {
-    // Restore original security manager
-    System.setSecurityManager(Returntonormal);
+   System.setSecurityManager(Returntonormal);
 }
 
 
 
 
-    }}
+    }
+}
 
