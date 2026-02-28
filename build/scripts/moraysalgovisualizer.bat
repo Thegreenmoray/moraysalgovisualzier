@@ -74,7 +74,7 @@ set CLASSPATH=%APP_HOME%\lib\moraysalgovisualizer.jar;%APP_HOME%\lib\javafx-fxml
 
 
 @rem Execute moraysalgovisualizer
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %MORAYSALGOVISUALIZER_OPTS%  -classpath "%CLASSPATH%" app.Main %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %MORAYSALGOVISUALIZER_OPTS%  -classpath "%CLASSPATH%" runner.Main %*
 
 :end
 @rem End local scope for the variables with windows NT shell
