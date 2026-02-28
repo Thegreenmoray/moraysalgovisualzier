@@ -58,3 +58,4 @@ Other notes:
 Edges are always "weighted" unweighted edges just have a weight of 1.
 Example code will be added to help show the user how to visualize your code
 For algothrims like prim use addarcs not addedges, otherwise it will count it twice
+Keep to this version other versions are unsecure!

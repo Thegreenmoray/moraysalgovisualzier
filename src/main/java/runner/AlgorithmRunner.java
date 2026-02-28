@@ -4,6 +4,7 @@ import animations.*;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.security.Permission;
 
 public class AlgorithmRunner {
 
@@ -32,12 +33,22 @@ private GraphAlgorithm currentAlgorithm;
         if (currentAlgorithm == null) {
             throw new IllegalStateException("No algorithm loaded. Call setup() first.");
         }
-        currentAlgorithm.run( api,part);
+        SecurityManager Returntonormal = System.getSecurityManager();
+
+        //more secure measures will be added later this will do for now
+try {
+System.setSecurityManager(new SandboxSecurityManager());
+    currentAlgorithm.run(api, part);
+}catch (SecurityException se) {
+
+    System.out.println("Algorithm attempted to call unathorized operations. ACCESS DENIED.");
+} finally {
+    // Restore original security manager
+    System.setSecurityManager(Returntonormal);
+}
 
 
 
 
     }}
-
-
 
