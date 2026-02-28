@@ -114,7 +114,7 @@ case "$( uname )" in                #(
   NONSTOP* )        nonstop=true ;;
 esac
 
-CLASSPATH=$APP_HOME/lib/moraysalgovisualizer.jar:$APP_HOME/lib/javafx-fxml-23-win.jar:$APP_HOME/lib/javafx-controls-23-win.jar:$APP_HOME/lib/javafx-controls-23.jar:$APP_HOME/lib/javafx-graphics-23-win.jar:$APP_HOME/lib/javafx-graphics-23.jar:$APP_HOME/lib/javafx-base-23-win.jar:$APP_HOME/lib/javafx-base-23.jar
+CLASSPATH=$APP_HOME/lib/moraysalgovisualizer.jar:$APP_HOME/lib/javafx-fxml-21-win.jar:$APP_HOME/lib/javafx-controls-21-win.jar:$APP_HOME/lib/javafx-controls-21.jar:$APP_HOME/lib/javafx-graphics-21-win.jar:$APP_HOME/lib/javafx-graphics-21.jar:$APP_HOME/lib/javafx-base-21-win.jar:$APP_HOME/lib/javafx-base-21.jar
 
 
 # Determine the Java command to use to start the JVM.
@@ -202,7 +202,7 @@ fi
 
 
 # Add default JVM options here. You can also use JAVA_OPTS and MORAYSALGOVISUALIZER_OPTS to pass JVM options to this script.
-DEFAULT_JVM_OPTS=""
+DEFAULT_JVM_OPTS='"--enable-native-access=javafx.graphics" "-Djava.security.manager=allow"'
 
 # Collect all arguments for the java command:
 #   * DEFAULT_JVM_OPTS, JAVA_OPTS, and optsEnvironmentVar are not allowed to contain shell fragments,

@@ -36,7 +36,7 @@ set APP_HOME=%DIRNAME%..
 for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
 
 @rem Add default JVM options here. You can also use JAVA_OPTS and MORAYSALGOVISUALIZER_OPTS to pass JVM options to this script.
-set DEFAULT_JVM_OPTS=
+set DEFAULT_JVM_OPTS="--enable-native-access=javafx.graphics" "-Djava.security.manager=allow"
 
 @rem Find java.exe
 if defined JAVA_HOME goto findJavaFromJavaHome
@@ -70,7 +70,7 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\moraysalgovisualizer.jar;%APP_HOME%\lib\javafx-fxml-23-win.jar;%APP_HOME%\lib\javafx-controls-23-win.jar;%APP_HOME%\lib\javafx-controls-23.jar;%APP_HOME%\lib\javafx-graphics-23-win.jar;%APP_HOME%\lib\javafx-graphics-23.jar;%APP_HOME%\lib\javafx-base-23-win.jar;%APP_HOME%\lib\javafx-base-23.jar
+set CLASSPATH=%APP_HOME%\lib\moraysalgovisualizer.jar;%APP_HOME%\lib\javafx-fxml-21-win.jar;%APP_HOME%\lib\javafx-controls-21-win.jar;%APP_HOME%\lib\javafx-controls-21.jar;%APP_HOME%\lib\javafx-graphics-21-win.jar;%APP_HOME%\lib\javafx-graphics-21.jar;%APP_HOME%\lib\javafx-base-21-win.jar;%APP_HOME%\lib\javafx-base-21.jar
 
 
 @rem Execute moraysalgovisualizer
