@@ -1,6 +1,5 @@
 package animations;
 
-import app.EdgeAnimation;
 import graph_theory.Edge;
 import graph_theory.Node;
 

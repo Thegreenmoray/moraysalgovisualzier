@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -117,6 +118,28 @@ assertArrayEquals(dfs_test,visited);
 
     @Test
      void indepedent_set(){
+
+        List<Edge> edges=new ArrayList<>();
+        List<Node> nodes=new ArrayList<>();
+
+        nodes.add(new Node(0));
+        nodes.add(new Node(1));
+        nodes.add(new Node(2));
+        nodes.add(new Node(3));
+        nodes.add(new Node(4));
+        edges.add(new Edge(nodes.get(0),nodes.get(1)));
+        edges.add(new Edge(nodes.get(0),nodes.get(3)));
+        edges.add(new Edge(nodes.get(1),nodes.get(4)));
+        edges.add(new Edge(nodes.get(2),nodes.get(3)));
+        edges.add(new Edge(nodes.get(3),nodes.get(4)));
+
+
+        Graph graph=new Graph(nodes,edges);
+
+
+        ArrayList<Node> nodes1= (ArrayList<Node>) Example_problems.independent_set(graph,new ArrayList<>(),new ArrayList<>(),new ArrayList<>());
+      assertEquals(3,nodes1.size());
+
 
     }
 }

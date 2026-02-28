@@ -1,6 +1,5 @@
 package animations;
 
-import app.EdgeAnimation;
 import graph_theory.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -47,7 +46,7 @@ public class Visual_part {
 
 
 
-    public Graph establish(int size, int edgechance, boolean isweighted, boolean canbenegative, boolean isdirected) {
+    public Graph randomgraph_establish(int size, int edgechance, boolean isweighted, boolean canbenegative, boolean isdirected) {
     Graph graph =isdirected? generate_graph_directed(size,edgechance,isweighted,canbenegative):generate_graph_undirected(size,edgechance,isweighted,canbenegative);
      if (!root.getChildren().contains(edgeLayer)) {
         root.getChildren().addAll(edgeLayer, nodeLayer,textLayer);}
@@ -148,6 +147,113 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
     }
 
 
+    public Graph establish(Graph graph,boolean isdirected,boolean isweighted) {
+      if (!root.getChildren().contains(edgeLayer)) {
+        root.getChildren().addAll(edgeLayer, nodeLayer,textLayer);}
+
+        edgeLayer.setMouseTransparent(true);
+        nodeLayer.setMouseTransparent(true);
+        textLayer.setMouseTransparent(true);
+        for (int i=0;i<graph.getVertices().size();i++) {
+            Node node= graph.getVertices().get(i);
+            Circle circle = new Circle(10);
+            circle.setFill(Color.BLACK);
+
+            Text text=new Text(""+node.getNumber());
+            StackPane pane = new StackPane(circle,text);
+            Random random=new Random();
+            int distance_X;
+            int distance_Y;
+            boolean good;
+            int max_attempts=100;
+            int current_attempts=0;
+            do{
+                good=true;
+                distance_X=random.nextInt(500)+100;
+                distance_Y=random.nextInt(500)+100;
+
+                for (Point2D p : mina_distance) {
+                    if (p.distance(distance_X, distance_Y) < minDist) {
+                        current_attempts++;
+                        good = false;
+                        break;
+                    }
+                }
+
+            }while (!good&&current_attempts<max_attempts); /*we do not want this looping forever!*/
+            mina_distance.add(new Point2D(distance_X,distance_Y));
+            pane.relocate(distance_X,distance_Y);
+            corrlate.put(node, pane);
+            nodeLayer.getChildren().add(pane);
+        }
+
+        Platform.runLater(() -> {
+
+            for (int i=0;i<graph.getEdges().size();i++) {
+                Edge edge= graph.getEdges().get(i);
+
+
+                Line line = null;
+
+                Arrow arrow=null;
+                if(isdirected){
+                    arrow=new Arrow();
+                }else {
+                    line=new Line();
+                }
+
+
+
+                Node n1=edge.getV1();
+                Node n2=edge.getV2();
+
+                StackPane f =corrlate.get(n1);
+                StackPane k =corrlate.get(n2);
+
+                Bounds b = f.getBoundsInParent();
+                Bounds c = k.getBoundsInParent();
+
+                if (isdirected) {
+                    edgeToLine.put(edge,arrow);}else {
+                    edgeToLine.put(edge,line);
+                }
+
+                if (arrow==null){
+                    line.setStartX(b.getMinX()+b.getWidth()/2);
+                    line.setStartY(b.getMinY()+b.getHeight()/2);
+                    line.setEndX(c.getMinX() +c.getWidth()/2);
+                    line.setEndY(c.getMinY() +c.getHeight()/2);}
+                else {
+                    arrow.start((float) (b.getMinX()+b.getWidth()/2), (float) (b.getMinY()+b.getHeight()/2));
+                    arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeight()/2));
+
+                }
+                if(isweighted){
+                    Text text=new Text(""+edge.getWeight());
+                    text.setX((b.getMinX()+c.getMinX())/2);
+                    text.setY((b.getMinY()+c.getMinY())/2);
+                    textLayer.getChildren().add(text);
+                    edgeToText.put(edge,text);
+                }
+                if (isdirected) {
+                    edgeLayer.getChildren().add(arrow);}else{
+                    edgeLayer.getChildren().add(line);
+                }
+
+
+            }
+
+        })
+        ;return graph;
+    }
+
+
+
+
+
+
+
+
 
     public void remove_edge(Edge edge, Graph graph) {
      Edge edge1 =graph.getEdge(edge.getV1().getNumber(),edge.getV2().getNumber());
@@ -238,6 +344,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         text.setX((b.getMinX()+c.getMinX())/2);
         text.setY((b.getMinY()+c.getMinY())/2);
         edgeLayer.getChildren().add(line);
+        e.setWeight(weight);
         graph.addEdge(e);
         root.getChildren().add(text);
 
@@ -402,6 +509,33 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         graph.addarc(e);
     }
 
+
+    public void addarc(Graph graph, Edge e,float weight) {
+        Arrow arrow=new Arrow();
+        Node n1=e.getV1();
+        Node n2=e.getV2();
+        if (e.getV1()==null||e.getV2()==null){
+            return;
+        }
+        StackPane f =corrlate.get(n1);
+        StackPane k =corrlate.get(n2);
+        e.setWeight(weight);
+        Bounds b = f.getBoundsInParent();
+        Bounds c = k.getBoundsInParent();
+        edgeToLine.put(e,arrow);
+
+        arrow.start((float) (b.getMinX()+b.getWidth()/2), (float) (b.getMinY()+b.getHeight()/2));
+        arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeight()/2));
+        Text text=new Text(""+weight);
+        text.setX((b.getMinX()+c.getMinX())/2);
+        text.setY((b.getMinY()+c.getMinY())/2);
+        textLayer.getChildren().add(text);
+        edgeLayer.getChildren().add(arrow);
+        graph.addarc(e);
+    }
+
+
+
     public void removearc(Graph graph, Edge e) {
    if (!edgeToText.containsKey(e)){
        edgeToLine.remove(e);
@@ -418,19 +552,48 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
 
 
+    private static Graph complement_graph(Graph graph) {
+        Graph Complement_graph=new Graph(graph.getVertices(),new ArrayList<>());
+        for (int i=0;i<graph.getVertices().size();i++) {
+            for(int j=i+1;j<graph.getVertices().size();j++) {
+                Node n=graph.getVertices().get(i);
+                Node n2=graph.getVertices().get(j);
+
+                if(graph.getEdge(n.getNumber(),n2.getNumber())==null) {
+                    Complement_graph.addEdge(new Edge(n,n2));
+                }
+            }
+        }
+
+        return Complement_graph;
+    }
+
+
+
+
+
     //dont ask me how long this took me to figure out
-    public  void playNext(LinkedList<EdgeAnimation> time) {
-        EdgeAnimation next = time.poll();
-        if (next == null) return;
-        next.timeline.setOnFinished(e -> {
-            if (next.circle != null) {
-                root.getChildren().remove(next.circle);}
-            playNext(time);
-        });
+    public  void playNext(LinkedList<? extends Animations> time) {
+     //will later expand this to sets when ready
 
-        next.timeline.play();
+       Animations polled =time.poll();
+
+       if (polled==null){
+           return;
+       }
+       if (polled instanceof EdgeAnimation next) {
 
 
+           next.timeline.setOnFinished(e -> {
+               if (next.circle != null) {
+                   root.getChildren().remove(next.circle);
+               }
+               playNext(time);
+           });
+
+           next.timeline.play();
+
+       }
     }
 
 

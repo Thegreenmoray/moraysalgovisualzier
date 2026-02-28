@@ -1,4 +1,4 @@
-package app;
+package runner;
 
 import animations.*;
 import graph_theory.*;
@@ -42,7 +42,7 @@ public class Main extends Application {
                     "    @Override\n" +
                     "    public void run(Edge_interface api,Visual_part part) {\n" +
                     "        // Your algorithm goes here\n" +
-                  //  " part.establish(4,3,true,false,true);\n" +
+                    " part.randomgraph_establish(4,3,true,false,true);\n" +
                     "    }\n" +
                     "}\n");
 
@@ -93,7 +93,7 @@ public class Main extends Application {
 
             @Override
             public void addarc(Graph graph, Edge e, Visual_part part, float weight) {
-
+                  part.addarc(graph,e,weight);
             }
 
             @Override

@@ -1,6 +1,7 @@
 package tests.data_structure;
 
-import app.EdgeAnimation;
+import animations.Animations;
+import animations.EdgeAnimation;
 import animations.Visual_part;
 import graph_theory.Edge;
 import animations.Graph;
@@ -12,23 +13,23 @@ import set_theory.Set_theory_items;
 import java.util.*;
 
 
-/*The comments are predominantly meant for newbies, for more experienced
- developers these are just here to show how to visualize your code
-  with the compiler. */
+/*The comments for the other algorithms are predominantly meant for newbies,
+for more experienced developers these are just
+here to show how to visualize your code with the compiler. */
 
 public class Example_problems {
 
 //------------------------------To start------------------------------
 
 public static void Adding_and_removing_nodes(Visual_part part,Edge_interface api){
-    Graph g=part.establish(4,3,true,false,true);
+    Graph g=part.randomgraph_establish(4,3,true,false,true);
     Node node=new Node(6);
 api.addNode(g,node,part);
             api.removeNode(g,g.getVertices().get(2),part);
 api.removeNode(g,node,part);}
 
 public static void Adding_and_removing_edges(Visual_part part,Edge_interface api){
-        Graph g=part.establish(4,3,true,false,true);
+        Graph g=part.randomgraph_establish(4,3,true,false,false);
         Node node=new Node(6);
         api.addNode(g,node,part);
         Edge edge=new Edge(g.getVertices().get(3),node);
@@ -39,7 +40,7 @@ public static void Adding_and_removing_edges(Visual_part part,Edge_interface api
 
 
     public static void Adding_and_removing_arcs(Visual_part part,Edge_interface api){
-        Graph g=part.establish(4,3,true,false,true);
+        Graph g=part.randomgraph_establish(4,3,true,false,true);
         Node node=new Node(6);
         api.addNode(g,node,part);
         Edge edge=new Edge(g.getVertices().get(3),node);
@@ -49,7 +50,69 @@ public static void Adding_and_removing_edges(Visual_part part,Edge_interface api
         api.removearc(g,edge2,part);}
 
 
+    public static void Make_graph_invisible_visible(Visual_part part,Edge_interface api){
+        Graph g=part.randomgraph_establish(4,3,true,false,true);
 
+api.setallinvisible(part);
+api.setallvisible(part);
+}
+
+
+
+    public static void making_edges_invisible_visible(Visual_part part,Edge_interface api){
+        Graph g=part.randomgraph_establish(4,3,true,false,false);
+        Node node=new Node(6);
+        api.addNode(g,node,part);
+        Edge edge=new Edge(g.getVertices().get(3),node);
+        Edge edge2=new Edge(g.getVertices().get(2),node);
+        api.addEdge(g,edge,part);
+        api.addEdge(g,edge2,part);
+        api.makeedgeinvisible(g,edge,part);
+        api.makeedgevisible(g,edge,part);
+}
+
+    public static void Making_arcs_visible_invisible(Visual_part part,Edge_interface api){
+        Graph g=part.randomgraph_establish(4,3,true,false,true);
+        Node node=new Node(6);
+        api.addNode(g,node,part);
+        Edge edge=new Edge(g.getVertices().get(3),node);
+        Edge edge2=new Edge(g.getVertices().get(2),node);
+        api.addarc(g,edge,part);
+        api.addarc(g,edge2,part);
+        api.removearc(g,edge2,part);
+        api.makarcinvisible(g,edge,part);
+        api.makearcvisible(g,edge,part);
+}
+
+
+    public static void Making_nodes_visible_invisible(Visual_part part,Edge_interface api){
+        Graph g=part.randomgraph_establish(4,3,true,false,false);
+        Node node=new Node(6);
+        api.addNode(g,node,part);
+        api.makenodeinvisible(g,node,part);
+        api.makenodevisible(g,node,part);
+    }
+
+
+    public static void making_edges_weighted(Visual_part part,Edge_interface api){
+        Graph g=part.randomgraph_establish(4,3,true,true,false);
+        Node node=new Node(6);
+        api.addNode(g,node,part);
+        Edge edge=new Edge(g.getVertices().get(3),node);
+        Edge edge2=new Edge(g.getVertices().get(2),node);
+        api.addEdge(g,edge,part,9);
+        api.addEdge(g,edge2,part,-1);
+    }
+
+    public static void Making_arcs_weighted(Visual_part part,Edge_interface api){
+        Graph g=part.randomgraph_establish(4,3,true,false,true);
+        Node node=new Node(6);
+        api.addNode(g,node,part);
+        Edge edge=new Edge(g.getVertices().get(3),node);
+        Edge edge2=new Edge(g.getVertices().get(2),node);
+        api.addarc(g,edge,part,4);
+        api.addarc(g,edge2,part,-8);
+    }
 
 
 
@@ -141,7 +204,8 @@ public static void Adding_and_removing_edges(Visual_part part,Edge_interface api
                 if(!visted[n.getNumber()]) {
 
                     if (graphTheoryInterface !=null&&visualPart!=null){Edge edge = graph.getEdge(polled.getNumber(), n.getNumber());
-                    timelineQueue.add(graphTheoryInterface.onEdgesearched(edge));
+                    timelineQueue.add(graphTheoryInterface.pause(200));
+                        timelineQueue.add(graphTheoryInterface.onEdgesearched(edge));
                     timelineQueue.add(graphTheoryInterface.highlightNode(n));
                 }
                     q.add(n);
@@ -152,7 +216,7 @@ public static void Adding_and_removing_edges(Visual_part part,Edge_interface api
 
         }
         if (graphTheoryInterface !=null&&visualPart!=null) {
-            visualPart.playNext((LinkedList<EdgeAnimation>) timelineQueue);
+            visualPart.playNext((LinkedList<? extends Animations>) timelineQueue);
         }
         return visted;
     }
@@ -226,7 +290,7 @@ public static void Adding_and_removing_edges(Visual_part part,Edge_interface api
             if(!visted[n.getNumber()]){
                 if (graphTheoryInterface !=null){
                 Edge edge=graph.getEdge(graph.getVertices().get(node_number).getNumber(),n.getNumber());
-
+                    timelineQueue.add(graphTheoryInterface.pause(200));
                 timelineQueue.add(graphTheoryInterface.onEdgesearched(edge));
                 timelineQueue.add(graphTheoryInterface.highlightNode(n));
                 graphTheoryInterface.onEdgesearched(edge);}
@@ -588,6 +652,31 @@ int capcaity_of_bins,List<Integer> items){ //need a way to return bin cost that 
         return best_fit_offline_approximation;
 }
 
+    private static List<Node> node_candidates( Graph graph,List<Node> currentSet,List<Node> candidates) {
+        // this is perfectly okay for clique but not independent set
+
+        boolean isvaild;
+        List<Node> vaild_candidates=new ArrayList<>();
+
+        for(Node candidate :candidates){
+            isvaild=false;
+            for (Node node : currentSet) {
+                if (graph.isadjacent(node, candidate)) {
+                    isvaild = true;
+                    break;
+                }
+
+            }
+
+            if(isvaild){
+                vaild_candidates.add(candidate);
+            }
+
+        }
+
+
+        return vaild_candidates;
+    }
 
 private static List<Integer> Greedy_coin_change(List<Integer> coins,int intinal_amount){
        //assume coins are sorted
@@ -789,53 +878,71 @@ private static List<Integer> two_partition(){
     // (1.5)
     public static List<Node> independent_set(Graph graph,List<Node> best_set,List<Node> current_set,List<Node> candidates){
 
+
         if(current_set.isEmpty()){
             candidates=  graph.getVertices();
-        }else {
-            candidates=  node_candidates(graph,current_set,candidates);
         }
         // if our current size and our candidate size is smaller than
         //the best we've found so far, don't even bother searching further.
+
         if(current_set.size() + candidates.size() <= best_set.size()){
-           return best_set;
+            return best_set;
         }
 
-        for(Node n:candidates){
-           current_set.add(n);
-            if (current_set.size()>best_set.size()) {
+
+
+
+
+        for(int i=0;i<candidates.size();i++){
+        Node candidate=candidates.get(i);
+
+  current_set.add(candidate);
+
+
+           if (current_set.size()>best_set.size()) {
                 //prevents contamination
                 best_set= new ArrayList<>(current_set);
             }
-            best_set=independent_set(graph,best_set,current_set,candidates);
-           current_set.remove(n);
-        }
+            List<Node> nextCandidates = new ArrayList<>();
 
+ /*in clique its much easier since a node cannot be adjenct to itself
+ or at least you cannot form an edge between itself
+  however thats a problem for independent set since
+ this is examining nodes not adjenct to each other
+ and a node can never be adjencent to itself so unless
+ you do something like this it will never stop.*/
+
+
+         for (int j=i+1;j<candidates.size();j++){
+             //^ this forces you to look at other nodes
+             //and prevent an infinite loop
+
+                 Node c = candidates.get(j);
+
+                 boolean vaild_candidate = true;
+                 for (Node u : current_set) {
+                     if (graph.isadjacent(u, c)) {
+                         vaild_candidate = false;
+                         break;
+                     }
+                 }
+
+                 if (vaild_candidate) nextCandidates.add(c);
+
+         }
+
+
+            best_set=independent_set(graph,best_set,current_set,nextCandidates);
+            current_set.remove(candidate);
+        }
+// honestly you are better off taking the G^c (coming soon) of the intinal graph
+//then running clique, no need to worry about ordering.
+// this may not be great for sparse graphs though becuase the complement will be dense
+//But thats debatable
 
         return best_set;
     }
 
-    private static List<Node> node_candidates( Graph graph,List<Node> currentSet,List<Node> candidates) {
-    boolean isvaild;
-        List<Node> vaild_candidates=new ArrayList<>();
-        for(Node candidate :candidates){
-        isvaild=true;
-            for (Node node : currentSet) {
-                if (graph.isadjacent(node, candidate)) {
-                    isvaild = false;
-                    break;
-                }
-
-            }
-
-        if(isvaild){
-            vaild_candidates.add(candidate);
-        }
-
-        }
-
-
-        return vaild_candidates;
-    }
 
     //round two
     public static void unbounded_knapsack(int[] values,int[] weights,int weight){
