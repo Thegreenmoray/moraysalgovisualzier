@@ -232,7 +232,9 @@ api.setallvisible(part);
         for(Edge e:graph.indenctedges(graph.getVertices().getFirst())){
             Min_heap.add_to_heap(e,heap);
         }
+       graphTheoryInterface.setallinvisible(visualPart);
         mst.addVertex(graph.getVertices().getFirst());
+        graphTheoryInterface.makenodevisible(graph,graph.getVertices().getFirst(),visualPart);
        while(!heap.isEmpty()&&mst.getVertices().size()<graph.getVertices().size()){
             Edge other_edges=Min_heap.extract_from_heap(heap);
 
@@ -279,6 +281,11 @@ api.setallvisible(part);
 
         }
 
+        if (graphTheoryInterface !=null&&visualPart!=null) {
+            visualPart.playNext((LinkedList<? extends Animations>) timelineQueue);
+        }
+
+
 
         return mst;
     }
@@ -317,10 +324,13 @@ api.setallvisible(part);
                     Edge edgeik=graph.getEdge(i,k);
                     Edge edgekj=graph.getEdge(k,j);
 
-
                     timelineQueue.add(graphTheoryInterface.onEdgesearched(edgeij));
+                      timelineQueue.add(graphTheoryInterface.pause(200));
                     timelineQueue.add(graphTheoryInterface.onEdgesearched(edgeik));
-                    timelineQueue.add(graphTheoryInterface.onEdgesearched(edgekj));}
+                      timelineQueue.add(graphTheoryInterface.pause(200));
+                    timelineQueue.add(graphTheoryInterface.onEdgesearched(edgekj));
+                      timelineQueue.add(graphTheoryInterface.pause(200));
+                  }
 
                     adjacency_matrix[i][j] = Math.min(adjacency_matrix[i][j], adjacency_matrix[i][k]+adjacency_matrix[k][j]);
                 }
@@ -398,7 +408,7 @@ private static float Fractional_knapsack(List<Integer> items,List<Integer> weigh
     //-------------miscellaneous----------------------------------------------------------
 
     private static boolean binarysearch(List<Integer> list, int e){
-       Arrays.sort(new List[]{list});
+       list.sort(Comparator.naturalOrder());
 
         return actualbinarysearch(list,e);
     }
@@ -865,8 +875,64 @@ private static int number_of_ways_to_return_change(){
 
 
 
-private static List<Integer> two_partition(){
-    return List.of();
+private static List<Integer> two_partition(Integer[] listed){
+  int sum=0;
+   for (int list:listed){
+       sum+=list;
+   }
+        if (sum%2!=0||sum==0){
+            return new ArrayList<>();
+        }
+        int partition=sum/2;
+
+
+    int n=listed.length;
+    boolean[][] subset=new boolean[n+1][partition+1];
+    ArrayList<Integer> reconstructed=new ArrayList<>();
+
+    subset[0][0]=true;
+    for(int i=1;i<=partition;i++){
+        subset[0][i]=false;
+    }
+
+
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=partition;j++){
+            if(listed[i-1]==j){
+                subset[i][j]=true;
+            } else if (listed[i-1]>j) {
+                subset[i][j]=subset[i-1][j];
+            }else {
+
+                subset[i][j] = subset[i - 1][j]
+                        || subset[i - 1][j - listed[i - 1]];
+            }
+
+        }
+    }
+
+    if(!subset[n][partition]){
+        return reconstructed;  //only case if a partition to P does not exist
+        //this is here to prevent an infinite loop
+    }
+
+
+    int i=n;
+    int j=partition;
+    while(j>0){
+        if (!subset[i - 1][j]) {
+            reconstructed.add(listed[i - 1]);
+            j -= listed[i - 1];
+        }
+        i--;
+
+
+    }
+
+
+
+
+    return reconstructed;
 }
 
 
@@ -879,7 +945,7 @@ private static List<Integer> two_partition(){
     public static List<Node> independent_set(Graph graph,List<Node> best_set,List<Node> current_set,List<Node> candidates){
 
 
-        if(current_set.isEmpty()){
+        if(current_set.isEmpty()||candidates.isEmpty()){
             candidates=  graph.getVertices();
         }
         // if our current size and our candidate size is smaller than
@@ -947,9 +1013,9 @@ private static List<Integer> two_partition(){
     //round two
     public static void unbounded_knapsack(int[] values,int[] weights,int weight){
 int[] unbounded_knapsack_array=new int[weight+1];
-
+int n=values.length;
 for(int i=1;i<=weight;i++){
-    for(int j=0;j<values.length;j++){
+    for(int j=0;j<n;j++){
 
        if(weights[j]<=i){
         unbounded_knapsack_array[i]=Math.max(unbounded_knapsack_array[i],
@@ -989,7 +1055,7 @@ private static void Matrix_Permanent_of_zero(){
 }
 
 
-private static void chromatic_number(){
+private static void chromatic_number(Graph graph,String[] colorlist){
 
 }
 
@@ -999,9 +1065,6 @@ private static <G> List<List<G>> set_cover(){
 
     return List.of();
 }
-
-
-
 
 
     //round two

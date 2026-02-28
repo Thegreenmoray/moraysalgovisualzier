@@ -11,7 +11,7 @@ private GraphAlgorithm currentAlgorithm;
 
 
     public void setup(String code) throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-
+    //this is just from the AlgothrimCompiler
     Class<?> clazz = AlgorithmCompiler.compile(code);
     if (clazz == null) {
         throw new RuntimeException("Compilation failed.");
@@ -20,7 +20,7 @@ private GraphAlgorithm currentAlgorithm;
     if (!GraphAlgorithm.class.isAssignableFrom(clazz)) {
         throw new RuntimeException("UserAlgorithm must implement GraphAlgorithm.");
     }
-
+//just some type casting
     Object instance = clazz.getDeclaredConstructor().newInstance();
     GraphAlgorithm algo = (GraphAlgorithm) instance;
 

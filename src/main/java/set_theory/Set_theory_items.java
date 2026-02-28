@@ -1,12 +1,8 @@
 package set_theory;
 
-import graph_theory.Edge;
 import javafx.util.Pair;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Set_theory_items {
 private Set_theory_items(){}
@@ -107,4 +103,13 @@ private Set_theory_items(){}
         //leave it
         return  powerset(i+1,base_set,current_subsets,subset);
     }
+
+    public static <E> List<E> complement(E[] listed, ArrayList<E> reconstructed) {
+        Set<E> list = new HashSet<>(List.of(listed));
+
+        list.removeAll(reconstructed);
+
+        return new ArrayList<>(list);
     }
+
+}
