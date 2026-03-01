@@ -42,7 +42,7 @@ public class SandboxSecurityManager extends SecurityManager {
              ||lib.contains("tests")
 
             ) {
-                return; // Your own code is safe
+                return;
             }
             // Also allow absolute paths that point to JavaFX
             if (lib.contains("javafx") || lib.contains("jfx")) {
