@@ -92,8 +92,7 @@ public void setEdgeState(EdgeState edgeState) {
         if (obj == null || getClass() != obj.getClass()) return false;
         Edge e = (Edge)obj;
 
-        return weight == e.weight &&
-                v1.equals(e.v1) &&
+        return v1.equals(e.v1) &&
                 v2.equals(e.v2);
     }
 
@@ -110,13 +109,13 @@ public void setEdgeState(EdgeState edgeState) {
 
 
     public boolean containsonly(Node v){
-        return v1.number==v.number;
+        return v1.getNumber() ==v.getNumber();
 }
 
 
     @Override
     public int hashCode() {
-        return Objects.hash(v1, v2, weight);
+        return Objects.hash(v1, v2);
     }
 
 }

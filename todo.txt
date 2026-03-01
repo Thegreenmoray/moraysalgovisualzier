@@ -6,10 +6,13 @@
 -implement the visualizers into the example code (That has been unit tested)
 -second round unit tests(Graph, Edge, Node, Carteasian Product,Istree,isbipartite,iscompelte,Edge Interface,Visualpart)
 -set visuals up for sets/arrays/lists/matricies
+- Bsort, Qsort
+-Both DP knapsacks
 -build and test generalized Sudoku and test it(2.5)
 -build chromatic color algo unit test it (2.5)
+-Sandbox environment with GraalVM
 -third round unit tests(All previous tests but more edge cases, first round was rather shallow)
--compelte set based algorithms (Kanade, Bsort, Qsort, Both DP knapsacks, Sudoku) (radix sort?)
+-compelte set based algorithms (Kanade, Sudoku) (radix sort?)
 -fix overlapping issues
 -fourth round unit tests(Edge Interface,Visualpart,ExampleProbelms)
 -Maybe add more dp algorithms?
@@ -17,5 +20,5 @@
 -Maybe add np approximations?
 -Improve background more instead just being a white screen?
 -Maybe more unit tests?
--Security?
+ ̶-̶S̶e̶c̶u̶r̶i̶t̶y̶?̶ //Security manger for now will replace this with GraalVM
 -something else?

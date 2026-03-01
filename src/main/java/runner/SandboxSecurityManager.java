@@ -1,8 +1,8 @@
 package runner;
 
+import java.lang.reflect.ReflectPermission;
 import java.security.Permission;
-import java.util.Set;
-
+//will eventually be replaced with GraalVM, but this will be fine for now.
 public class SandboxSecurityManager extends SecurityManager {
 
 
@@ -17,15 +17,15 @@ public class SandboxSecurityManager extends SecurityManager {
 
 
     public void checkWrite(String file) {
-        throw new SecurityException("File write blocked: " + file+" not allowed");
+        throw new SecurityException("File write blocked: " +file+" not allowed");
     }
 
-
+//no botnet connections
     public void checkConnect(String host, int port) {
         throw new SecurityException("Network blocked: " + host + ":" + port+" not allowed");
     }
 
-
+//No fork bombs or Deletion of the OS or hard drive
     public void checkExec(String cmd) {
         throw new SecurityException("Process execution blocked: " + cmd+" not allowed");
     }
@@ -59,7 +59,19 @@ public class SandboxSecurityManager extends SecurityManager {
 
 
     public void checkPermission(Permission perm) {
-        //everything else should be fine for now
+        // Block setAccessible attempts
+        if (perm instanceof ReflectPermission) {
+            throw new SecurityException("Reflection access blocked: " + perm.getName());
+        }
+
+        // Block method invocation permissions
+        if (perm instanceof RuntimePermission) {
+            String name = perm.getName();
+            if (name.equals("accessDeclaredMembers") ||
+                    name.equals("suppressAccessChecks")) {
+                throw new SecurityException("Runtime permission blocked: " + name);
+            }
+        }
     }
 
 

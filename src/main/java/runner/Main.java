@@ -42,7 +42,7 @@ public class Main extends Application {
                     "    @Override\n" +
                     "    public void run(Edge_interface api,Visual_part part) {\n" +
                     "        // Your algorithm goes here\n" +
-                    " part.randomgraph_establish(4,3,true,false,true);\n" +
+                    " Graph graph=part.randomgraph_establish(8,1,true,false,true);\n" +
                     "    }\n" +
                     "}\n");
 
@@ -60,7 +60,7 @@ public class Main extends Application {
 
                 @Override
                 public EdgeAnimation highlightNode(Node u) {
-//                    u.setVertexState(VertexState.VISITED);
+                   u.setVertexState(VertexState.VISITED);
 
                 return Visual_part.highlightNode(u);}
 
@@ -102,13 +102,13 @@ public class Main extends Application {
             }
 
             @Override
-            public void setallinvisible( Visual_part part) {
-              part.makeallofgraphinvisible();
+            public void setallinvisible( Graph graph, Visual_part part) {
+              part.makeallofgraphinvisible(graph);
             }
 
             @Override
-            public void setallvisible(Visual_part part) {
-                part.makeallofgraphvisible();
+            public void setallvisible(Graph graph,Visual_part part) {
+                part.makeallofgraphvisible(graph);
             }
 
             @Override

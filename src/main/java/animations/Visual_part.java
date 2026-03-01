@@ -86,7 +86,7 @@ public class Visual_part {
          nodeLayer.getChildren().add(pane);
        }
 
-        Platform.runLater(() -> {
+
 
        for (int i=0;i<graph.getEdges().size();i++) {
            Edge edge= graph.getEdges().get(i);
@@ -142,7 +142,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
        }
 
-        })
+
         ;return graph;
     }
 
@@ -187,7 +187,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
             nodeLayer.getChildren().add(pane);
         }
 
-        Platform.runLater(() -> {
+
 
             for (int i=0;i<graph.getEdges().size();i++) {
                 Edge edge= graph.getEdges().get(i);
@@ -242,16 +242,8 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
 
             }
-
-        })
         ;return graph;
     }
-
-
-
-
-
-
 
 
 
@@ -441,14 +433,25 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         return new EdgeAnimation(timeline,circle);
     }
 
-    public void makeallofgraphinvisible() {
-     edgeLayer.setVisible(false);
-     nodeLayer.setVisible(false);
+    public void makeallofgraphinvisible(Graph graph) {
+    for (Node node:graph.getVertices()){
+        make_node_invisible(graph,node);
+    }
+    for (Edge e:graph.getEdges()){
+        make_edge_invisible(graph,e);
     }
 
-    public void makeallofgraphvisible() {
-        edgeLayer.setVisible(true);
-        nodeLayer.setVisible(true);
+
+
+    }
+
+    public void makeallofgraphvisible(Graph graph) {
+        for (Node node:graph.getVertices()){
+            make_node_visible(graph,node);
+        }
+        for (Edge e:graph.getEdges()){
+            make_edge_visible(graph,e);
+        }
     }
 
 
@@ -456,18 +459,18 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
     public void make_node_visible(Graph graph, Node node) {
     if(graph.containsnode(node)){
         corrlate.get(node).setVisible(true);
-        for (Edge e : graph.indenctedges(node)) {
-            if(corrlate.get(e.getV2()).isVisible()){
-            edgeToLine.get(e).setVisible(true);}
-
-        }
     }
+
+
+
     }
     public void make_node_invisible(Graph graph, Node node) {
         if(graph.containsnode(node)){
             corrlate.get(node).setVisible(false);
             for (Edge e : graph.indenctedges(node)) {
+              if (edgeToLine.containsKey(e)){
                 edgeToLine.get(e).setVisible(false);}
+            }
 
 
         }
@@ -480,8 +483,13 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
     public void make_edge_invisible(Graph graph, Edge e) {
    if (graph.containsedge(e)) {
-       edgeToLine.get(e).setVisible(false);
+    if (edgeToLine.containsKey(e)) {
+       edgeToLine.get(e).setVisible(false);}
+       if (edgeToText.containsKey(e)) {
+           edgeToText.get(e).setVisible(false);
+       }
    }
+
     }
 
 

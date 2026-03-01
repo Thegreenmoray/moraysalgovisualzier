@@ -53,8 +53,8 @@ public static void Adding_and_removing_edges(Visual_part part,Edge_interface api
     public static void Make_graph_invisible_visible(Visual_part part,Edge_interface api){
         Graph g=part.randomgraph_establish(4,3,true,false,true);
 
-api.setallinvisible(part);
-api.setallvisible(part);
+api.setallinvisible(g,part);
+api.setallvisible(g,part);
 }
 
 
@@ -232,10 +232,13 @@ api.setallvisible(part);
         for(Edge e:graph.indenctedges(graph.getVertices().getFirst())){
             Min_heap.add_to_heap(e,heap);
         }
-       graphTheoryInterface.setallinvisible(visualPart);
+       graphTheoryInterface.setallinvisible(graph,visualPart);
+        timelineQueue.add(graphTheoryInterface.pause(200));
         mst.addVertex(graph.getVertices().getFirst());
+       timelineQueue.add(graphTheoryInterface.pause(200));
         graphTheoryInterface.makenodevisible(graph,graph.getVertices().getFirst(),visualPart);
-       while(!heap.isEmpty()&&mst.getVertices().size()<graph.getVertices().size()){
+        timelineQueue.add(graphTheoryInterface.highlightNode(graph.getVertices().getFirst()));
+        while(!heap.isEmpty()&&mst.getVertices().size()<graph.getVertices().size()){
             Edge other_edges=Min_heap.extract_from_heap(heap);
 
             if (Graph_tools.Willcreateacycle(mst,other_edges.getV1(),other_edges.getV2())) {
@@ -249,8 +252,15 @@ api.setallvisible(part);
 
               if (!mst.containsnode(other_edges.getV1())){
                   mst.addVertex(other_edges.getV1());
+                  timelineQueue.add(graphTheoryInterface.pause(200));
+                  graphTheoryInterface.makenodevisible(graph,other_edges.getV1(),visualPart);
+                  timelineQueue.add(graphTheoryInterface.highlightNode(other_edges.getV1()));
                   if (arcs_or_edges){
-                  mst.addarc(other_edges,other_edges.getWeight());}
+                  mst.addarc(other_edges,other_edges.getWeight());
+                      timelineQueue.add(graphTheoryInterface.pause(200));
+                  graphTheoryInterface.makearcvisible(graph,other_edges,visualPart);
+
+                  }
                   else {
                       //determine the highest pointer at this point
                       pointer=pointer+1;
@@ -262,9 +272,14 @@ api.setallvisible(part);
               }
               if (!mst.containsnode(other_edges.getV2())) {
                   mst.addVertex(other_edges.getV2());
-
+                  graphTheoryInterface.makenodevisible(graph,other_edges.getV2(),visualPart);
+                  timelineQueue.add(graphTheoryInterface.pause(200));
+                  timelineQueue.add(graphTheoryInterface.highlightNode(other_edges.getV2()));
                   if (arcs_or_edges){
-                      mst.addarc(other_edges,other_edges.getWeight());}
+                      mst.addarc(other_edges,other_edges.getWeight());
+                      timelineQueue.add(graphTheoryInterface.pause(200));
+                      graphTheoryInterface.makearcvisible(graph,other_edges,visualPart);
+                  }
                   else {
                       //determine the highest pointer at this point
                       pointer=pointer+1;
@@ -324,12 +339,15 @@ api.setallvisible(part);
                     Edge edgeik=graph.getEdge(i,k);
                     Edge edgekj=graph.getEdge(k,j);
 
+                    if (edgeij!=null){
                     timelineQueue.add(graphTheoryInterface.onEdgesearched(edgeij));
-                      timelineQueue.add(graphTheoryInterface.pause(200));
+                      timelineQueue.add(graphTheoryInterface.pause(200));}
+                    if (edgeik!=null){
                     timelineQueue.add(graphTheoryInterface.onEdgesearched(edgeik));
-                      timelineQueue.add(graphTheoryInterface.pause(200));
+                      timelineQueue.add(graphTheoryInterface.pause(200));}
+                    if (edgekj!=null){
                     timelineQueue.add(graphTheoryInterface.onEdgesearched(edgekj));
-                      timelineQueue.add(graphTheoryInterface.pause(200));
+                      timelineQueue.add(graphTheoryInterface.pause(200));}
                   }
 
                     adjacency_matrix[i][j] = Math.min(adjacency_matrix[i][j], adjacency_matrix[i][k]+adjacency_matrix[k][j]);
