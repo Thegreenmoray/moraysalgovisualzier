@@ -5,7 +5,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
@@ -456,13 +455,20 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
 
 
-    public void make_node_visible(Graph graph, Node node) {
-    if(graph.containsnode(node)){
-        corrlate.get(node).setVisible(true);
+    public EdgeAnimation make_node_visible(Graph graph, Node node) {
+    if(!graph.containsnode(node)){
+       return null;
+
     }
+      javafx.scene.layout.StackPane stackPane =corrlate.get(node);
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        e -> {}
+                ),
+                new KeyFrame(Duration.millis(200),
+                        e ->{stackPane.setVisible(true);}));
 
-
-
+    return new EdgeAnimation(timeline);
     }
     public void make_node_invisible(Graph graph, Node node) {
         if(graph.containsnode(node)){
@@ -549,7 +555,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
        edgeToLine.remove(e);
        graph.removearc(e);
 
-       return ;
+       return;
    }
   Text text= edgeToText.get(e);
    textLayer.getChildren().remove(text);
@@ -712,18 +718,23 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
     }
 
-    public void makearcvisible(Edge edge) {
+    public EdgeAnimation makearcvisible(Edge edge) {
         if (!edgeToLine.containsKey(edge)) {
-            return;
+            return null;
         }
-
-        if (edgeToText.containsKey(edge)) {
+        javafx.scene.Node node = edgeToLine.get(edge);
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        e -> {}
+                ),
+                new KeyFrame(Duration.millis(200),
+                        e ->{if (edgeToText.containsKey(edge)) {
             edgeToText.get(edge).setVisible(true);
         }
-
-        edgeToLine.get(edge).setVisible(true);
-
+        node.setVisible(true);}));
 
 
+
+        return new EdgeAnimation(timeline);
     }
 }

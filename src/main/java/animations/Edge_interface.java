@@ -14,14 +14,14 @@ public interface Edge_interface {
      void removeEdge(Graph graph,Edge e,Visual_part part);
      void setallinvisible(Graph graph,Visual_part part);
      void setallvisible(Graph graph,Visual_part part);
-    void makenodevisible(Graph graph,Node node,Visual_part part);
+    EdgeAnimation makenodevisible(Graph graph,Node node,Visual_part part);
      void makeedgevisible(Graph graph,Edge edge,Visual_part part);
      void makeedgeinvisible(Graph graph,Edge edge,Visual_part part);
      void makenodeinvisible(Graph graph,Node node,Visual_part part);
      void addarc(Graph graph,Edge e,Visual_part part);
      void removearc(Graph graph,Edge e,Visual_part part);
      void makarcinvisible(Graph graph,Edge edge,Visual_part part);
-     void makearcvisible(Graph graph, Edge edge, Visual_part part);
+     EdgeAnimation makearcvisible(Graph graph, Edge edge, Visual_part part);
     void addEdge(Graph graph,Edge e,Visual_part part,float weight);
     void addarc(Graph graph,Edge e,Visual_part part,float weight);
 }

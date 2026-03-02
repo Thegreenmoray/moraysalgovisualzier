@@ -112,8 +112,9 @@ public class Main extends Application {
             }
 
             @Override
-            public void makenodevisible(Graph graph,Node node, Visual_part part) {
-             part.make_node_visible(graph,node);
+            public EdgeAnimation makenodevisible(Graph graph,Node node, Visual_part part) {
+           return part.make_node_visible(graph,node);
+
             }
 
             @Override
@@ -147,8 +148,8 @@ public class Main extends Application {
             }
 
             @Override
-            public void makearcvisible(Graph graph, Edge edge, Visual_part part) {
-                part.makearcvisible(edge);
+            public EdgeAnimation makearcvisible(Graph graph, Edge edge, Visual_part part) {
+                return part.makearcvisible(edge);
             }
 
 

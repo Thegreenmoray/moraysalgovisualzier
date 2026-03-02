@@ -72,6 +72,7 @@ api.setallvisible(g,part);
 }
 
     public static void Making_arcs_visible_invisible(Visual_part part,Edge_interface api){
+        Queue<EdgeAnimation> timelineQueue=new LinkedList<>();
         Graph g=part.randomgraph_establish(4,3,true,false,true);
         Node node=new Node(6);
         api.addNode(g,node,part);
@@ -81,16 +82,19 @@ api.setallvisible(g,part);
         api.addarc(g,edge2,part);
         api.removearc(g,edge2,part);
         api.makarcinvisible(g,edge,part);
-        api.makearcvisible(g,edge,part);
+       timelineQueue.add( api.makearcvisible(g,edge,part));
+       part.playNext((LinkedList<? extends Animations>) timelineQueue);
 }
 
 
     public static void Making_nodes_visible_invisible(Visual_part part,Edge_interface api){
+        Queue<EdgeAnimation> timelineQueue=new LinkedList<>();
         Graph g=part.randomgraph_establish(4,3,true,false,false);
         Node node=new Node(6);
         api.addNode(g,node,part);
         api.makenodeinvisible(g,node,part);
-        api.makenodevisible(g,node,part);
+       timelineQueue.add( api.makenodevisible(g,node,part));
+        part.playNext((LinkedList<? extends Animations>) timelineQueue);
     }
 
 
@@ -236,7 +240,7 @@ api.setallvisible(g,part);
         timelineQueue.add(graphTheoryInterface.pause(200));
         mst.addVertex(graph.getVertices().getFirst());
        timelineQueue.add(graphTheoryInterface.pause(200));
-        graphTheoryInterface.makenodevisible(graph,graph.getVertices().getFirst(),visualPart);
+        timelineQueue.add(graphTheoryInterface.makenodevisible(graph,graph.getVertices().getFirst(),visualPart));
         timelineQueue.add(graphTheoryInterface.highlightNode(graph.getVertices().getFirst()));
         while(!heap.isEmpty()&&mst.getVertices().size()<graph.getVertices().size()){
             Edge other_edges=Min_heap.extract_from_heap(heap);
@@ -253,12 +257,12 @@ api.setallvisible(g,part);
               if (!mst.containsnode(other_edges.getV1())){
                   mst.addVertex(other_edges.getV1());
                   timelineQueue.add(graphTheoryInterface.pause(200));
-                  graphTheoryInterface.makenodevisible(graph,other_edges.getV1(),visualPart);
+                  timelineQueue.add(graphTheoryInterface.makenodevisible(graph,other_edges.getV1(),visualPart));
                   timelineQueue.add(graphTheoryInterface.highlightNode(other_edges.getV1()));
                   if (arcs_or_edges){
                   mst.addarc(other_edges,other_edges.getWeight());
                       timelineQueue.add(graphTheoryInterface.pause(200));
-                  graphTheoryInterface.makearcvisible(graph,other_edges,visualPart);
+                      timelineQueue.add( graphTheoryInterface.makearcvisible(graph,other_edges,visualPart));
 
                   }
                   else {
@@ -272,13 +276,13 @@ api.setallvisible(g,part);
               }
               if (!mst.containsnode(other_edges.getV2())) {
                   mst.addVertex(other_edges.getV2());
-                  graphTheoryInterface.makenodevisible(graph,other_edges.getV2(),visualPart);
+                  timelineQueue.add( graphTheoryInterface.makenodevisible(graph,other_edges.getV2(),visualPart));
                   timelineQueue.add(graphTheoryInterface.pause(200));
                   timelineQueue.add(graphTheoryInterface.highlightNode(other_edges.getV2()));
                   if (arcs_or_edges){
                       mst.addarc(other_edges,other_edges.getWeight());
                       timelineQueue.add(graphTheoryInterface.pause(200));
-                      graphTheoryInterface.makearcvisible(graph,other_edges,visualPart);
+                      timelineQueue.add( graphTheoryInterface.makearcvisible(graph,other_edges,visualPart));
                   }
                   else {
                       //determine the highest pointer at this point
