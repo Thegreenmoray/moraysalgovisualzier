@@ -207,7 +207,7 @@ api.setallvisible(g,part);
 
                 if(!visted[n.getNumber()]) {
 
-                    if (graphTheoryInterface !=null&&visualPart!=null){Edge edge = graph.getEdge(polled.getNumber(), n.getNumber());
+                    if (graphTheoryInterface !=null&&visualPart!=null){Edge edge = graph.getEdge(polled, n);
                     timelineQueue.add(graphTheoryInterface.pause(200));
                         timelineQueue.add(graphTheoryInterface.onEdgesearched(edge));
                     timelineQueue.add(graphTheoryInterface.highlightNode(n));
@@ -315,7 +315,7 @@ api.setallvisible(g,part);
         for(Node n:graph.neighbors(graph.getVertices().get(node_number))){
             if(!visted[n.getNumber()]){
                 if (graphTheoryInterface !=null){
-                Edge edge=graph.getEdge(graph.getVertices().get(node_number).getNumber(),n.getNumber());
+                Edge edge=graph.getEdge(graph.getVertices().get(node_number),n);
                     timelineQueue.add(graphTheoryInterface.pause(200));
                 timelineQueue.add(graphTheoryInterface.onEdgesearched(edge));
                 timelineQueue.add(graphTheoryInterface.highlightNode(n));
@@ -339,9 +339,13 @@ api.setallvisible(g,part);
                 for (int j = 0; j < graph.getVertices().size(); j++) {
                 //these parts only exist for unit tests ignore these
                   if (visualPart !=null&&graphTheoryInterface!=null){
-                    Edge edgeij=graph.getEdge(i,j);
-                    Edge edgeik=graph.getEdge(i,k);
-                    Edge edgekj=graph.getEdge(k,j);
+                    Node node1=graph.getVertices().get(i);
+                    Node node2=graph.getVertices().get(j);
+                    Node node3=graph.getVertices().get(k);
+
+                      Edge edgeij=graph.getEdge(node1,node2);
+                    Edge edgeik=graph.getEdge(node1,node3);
+                    Edge edgekj=graph.getEdge(node3,node2);
 
                     if (edgeij!=null){
                     timelineQueue.add(graphTheoryInterface.onEdgesearched(edgeij));
@@ -421,10 +425,6 @@ private static float Fractional_knapsack(List<Integer> items,List<Integer> weigh
 
     return 0;
 }
-
-
-
-
 
 
     //-------------miscellaneous----------------------------------------------------------
@@ -521,8 +521,8 @@ for (int i=0;i<odd_degree.size();i++){
     for (int j=i+1;j<odd_degree.size();j++){
         Node u = odd_degree.get(i);
         Node v = odd_degree.get(j);
-        Edge e1 = graph.getEdge(u.getNumber(), v.getNumber());
-        Edge e2=graph.getEdge(v.getNumber(),u.getNumber());
+        Edge e1 = graph.getEdge(u, v);
+        Edge e2=graph.getEdge(v,u);
         if(e1!=null||e2!=null){
         Edge edge = e1 ==null? e2:e1;
         Min_heap.add_to_heap(edge,edges);
@@ -554,6 +554,7 @@ nodeorder=euleriantour(near_neighbor,edges.getFirst(),edges.getFirst().getPointe
         return build_Hamiltonian_tour(graph,nodeorder);
 
     }
+
     private static Graph build_Hamiltonian_tour(Graph graph, List<Node> nodeorder) {
       Graph tour=Graph_tools.empty_graph();
       Node start=nodeorder.getFirst();
@@ -583,7 +584,7 @@ nodeorder=euleriantour(near_neighbor,edges.getFirst(),edges.getFirst().getPointe
           if (prev!=null) {
              if (!tour.containsnode(next)) {
                  tour.addVertex(next);
-                 Edge e=graph.getEdge(prev.getNumber(),next.getNumber());
+                 Edge e=graph.getEdge(prev,next);
                  tour.addarc(e,e.getWeight());
              }
           }
@@ -591,7 +592,7 @@ nodeorder=euleriantour(near_neighbor,edges.getFirst(),edges.getFirst().getPointe
 //now with our trimmed tail this has to be unique, this also doesn't
 //conflict with our tour since all of those nodes that were trimmed of would have been visited before
           if (prev.equals(end_unique)) {
-              Edge e=graph.getEdge(end_unique.getNumber(),start.getNumber());
+              Edge e=graph.getEdge(end_unique,start);
               tour.addarc(e,e.getWeight());
           }
       }
@@ -845,7 +846,7 @@ for(int i=1;i<=sum;i++){
     }
 
 
-    //--------------Some Interview problems--------------------------------
+//--------------Some Interview problems--------------------------------
 
 
     private static boolean isapalindrome(String s){
@@ -893,10 +894,51 @@ private static int number_of_ways_to_return_change(){
 
 
 
+private static int[] three_color_dutch_flag_generalized(int[] colors,int[] order){
+//the k color variant is often used in enhancing qsort
+ if(3!=order.length){
+     return null;
+ }
+
+
+    int start=0;
+    int end=colors.length-1;
+    int mid=0;
+    int first_element=order[0];
+    int second_element=order[1];
 
 
 
+   while (mid<=end){
+      if (colors[mid]==first_element){
+          int temp=colors[mid];
+          colors[mid]=colors[start];
+          colors[start]=temp;
+          start++;
+          mid++;
+          continue;
+      }
 
+
+       if(colors[mid]==second_element){
+           mid++;
+           continue;
+       }
+
+           int temp=colors[mid];
+           colors[mid]=colors[end];
+           colors[end]=temp;
+           end--;
+
+
+   }
+
+
+    return colors;
+}
+
+
+//still wip
 private static List<Integer> two_partition(Integer[] listed){
   int sum=0;
    for (int list:listed){
@@ -909,31 +951,31 @@ private static List<Integer> two_partition(Integer[] listed){
 
 
     int n=listed.length;
-    boolean[][] subset=new boolean[n+1][partition+1];
+    boolean[][] partition_matrix=new boolean[n+1][partition+1];
     ArrayList<Integer> reconstructed=new ArrayList<>();
 
-    subset[0][0]=true;
+    partition_matrix[0][0]=true;
     for(int i=1;i<=partition;i++){
-        subset[0][i]=false;
+        partition_matrix[0][i]=false;
     }
 
 
     for(int i=1;i<=n;i++){
         for(int j=1;j<=partition;j++){
             if(listed[i-1]==j){
-                subset[i][j]=true;
+                partition_matrix[i][j]=true;
             } else if (listed[i-1]>j) {
-                subset[i][j]=subset[i-1][j];
+                partition_matrix[i][j]=partition_matrix[i-1][j];
             }else {
 
-                subset[i][j] = subset[i - 1][j]
-                        || subset[i - 1][j - listed[i - 1]];
+                partition_matrix[i][j] = partition_matrix[i - 1][j]
+                        || partition_matrix[i - 1][j - listed[i - 1]];
             }
 
         }
     }
 
-    if(!subset[n][partition]){
+    if(!partition_matrix[n][partition]){
         return reconstructed;  //only case if a partition to P does not exist
         //this is here to prevent an infinite loop
     }
@@ -942,7 +984,7 @@ private static List<Integer> two_partition(Integer[] listed){
     int i=n;
     int j=partition;
     while(j>0){
-        if (!subset[i - 1][j]) {
+        if (!partition_matrix[i - 1][j]) {
             reconstructed.add(listed[i - 1]);
             j -= listed[i - 1];
         }
@@ -958,7 +1000,7 @@ private static List<Integer> two_partition(Integer[] listed){
 }
 
 
-
+//I should probaly do some with hashmaps.
 
 
 
@@ -1023,10 +1065,10 @@ private static List<Integer> two_partition(Integer[] listed){
             best_set=independent_set(graph,best_set,current_set,nextCandidates);
             current_set.remove(candidate);
         }
-// honestly you are better off taking the G^c (coming soon) of the intinal graph
-//then running clique, no need to worry about ordering.
-// this may not be great for sparse graphs though becuase the complement will be dense
-//But thats debatable
+/* honestly you are better off taking the G^c (coming soon) of the intinal graph
+then running clique, no need to worry about ordering.
+this may not be great for sparse graphs though becuase the complement will be dense
+But thats debatable*/
 
         return best_set;
     }
@@ -1077,13 +1119,14 @@ private static void Matrix_Permanent_of_zero(){
 }
 
 
-private static void chromatic_number(Graph graph,String[] colorlist){
+private static void chromatic_number(Graph graph,String[] colorlist,
+ ArrayList<String> miniumcolorlist,int colorlimit,ArrayList<String> currentcolorlist){
 
 }
 
 
 
-private static <G> List<List<G>> set_cover(){
+private static <G> List<List<G>> set_cover(G[] universalset){
 
     return List.of();
 }

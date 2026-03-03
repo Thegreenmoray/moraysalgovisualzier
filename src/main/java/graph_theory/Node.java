@@ -1,10 +1,10 @@
 package graph_theory;
 
 public class Node {
-private int number;
-int weight;
-VertexState vertexState;
-String hexcode_color;
+private final int number;
+private int weight;
+private VertexState vertexState;
+private String hexcode_color;
 
     public String getHexcode_color() {
         return hexcode_color;
@@ -54,9 +54,6 @@ public void setVertexState(VertexState vertexState) {
         return number;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
 
     public int getWeight() {
         return weight;
@@ -78,7 +75,7 @@ public void setVertexState(VertexState vertexState) {
 
         if (!(obj instanceof Node)) return  false;
 
-        return ((Node) obj).number == this.number;
+        return ((Node) obj).getNumber() == this.number;
     }
 
     @Override

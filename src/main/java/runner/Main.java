@@ -42,7 +42,7 @@ public class Main extends Application {
                     "    @Override\n" +
                     "    public void run(Edge_interface api,Visual_part part) {\n" +
                     "        // Your algorithm goes here\n" +
-                    " Graph graph=part.randomgraph_establish(8,1,true,false,true);\n" +
+                    " Graph graph=part.randomgraph_establish(4,1,true,false,false);\n" +
                     "    }\n" +
                     "}\n");
 

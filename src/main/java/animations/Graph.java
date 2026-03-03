@@ -8,8 +8,8 @@ import java.util.*;
 public class Graph {
 List<Edge> edges;
 List<Node> vertices;
-List<List<Edge>> indencent_list;
- List<List<Node>> adjacencyList;
+HashMap<Node,List<Edge>> indencent_list;
+ HashMap<Node,List<Node>> adjacencyList;
 
 
 public Graph(List<Node> vertex, List<Edge> edge){
@@ -19,13 +19,13 @@ public Graph(List<Node> vertex, List<Edge> edge){
     adjacencyList=createadjencylist();
 }
 
-    private List<List<Node>> createadjencylist() {
-        List<List<Node>> adjencylist=new ArrayList<>();
+    private HashMap<Node,List<Node>> createadjencylist() {
+        HashMap<Node,List<Node>> adjencylist=new HashMap<>();
         if(this.vertices==null){
-            return new ArrayList<>();
+            return new HashMap<>();
         }
         for (Node v : this.vertices) {
-             adjencylist.add(adjenctnodes(v));
+             adjencylist.put(v,adjenctnodes(v));
         }
 
 
@@ -36,9 +36,8 @@ public Graph(List<Node> vertex, List<Edge> edge){
     }
 
     private List<Node> adjenctnodes(Node v) {
-        int idx = vertices.indexOf(v);
         Set<Node> result = new HashSet<>();
-        for(Edge e:indencent_list.get(idx)){
+        for(Edge e:indencent_list.get(v)){
             Node vertex = v.equals(e.getV1())? e.getV2() : e.getV1();
             result.add(vertex);
 
@@ -47,26 +46,26 @@ public Graph(List<Node> vertex, List<Edge> edge){
 
 }
 
-    private List<List<Edge>> createindcendcelist(){
-        List<List<Edge>> incdencelist=new ArrayList<>();
+    private HashMap<Node,List<Edge>> createindcendcelist(){
+        HashMap<Node,List<Edge>> incdencelist=new HashMap<>();
         if(this.vertices==null){
-            return new ArrayList<>();
+            return new HashMap<>();
         }
         for (Node v : this.vertices) {
-            incdencelist.add(incidentEdges(v));
+            incdencelist.put(v,incidentEdges(v));
         }
 
 
         return incdencelist;
     }
 
-    public Edge getEdge (int i, int j){
+    public Edge getEdge (Node v1, Node v2){
 if (indencent_list.isEmpty()){
     return null;
 }
 
-   for (Edge n:indencent_list.get(i)){
-       if (n.getV2().getNumber()==j){
+   for (Edge n:indencent_list.get(v1)){
+       if (n.getV2().equals(v2)){
            return n;}}
 
     return null;
@@ -79,13 +78,6 @@ public List<Node> getVertices(){
     return this.vertices;
 }
 
-protected void setEdges(List<Edge> edges) {
-    this.edges = edges;
-}
-
-protected void setVertices(List<Node> vertices) {
-    this.vertices = vertices;
-}
 
 public void addarc(Edge e){
     if (!edges.contains(e)){
@@ -129,12 +121,12 @@ public void removearc(Edge e){
 
     public List<Node> neighbors(Node v){
 
-        return adjacencyList.get(v.getNumber());
+        return adjacencyList.get(v);
     }
 
 public List<Edge> indenctedges(Node v){
 
-    return indencent_list.get(v.getNumber());
+    return indencent_list.get(v);
 }
 
 public void addEdge(Edge e){
@@ -162,7 +154,7 @@ public void addEdge(Edge e){
 }
 
 private void deletednodesedges(Node v){
-    for(Edge e:indencent_list.get(v.getNumber())){
+    for(Edge e:indencent_list.get(v)){
         edges.remove(e);
     }
 
@@ -253,11 +245,6 @@ private void deletednodesedges(Node v){
 
     }
 
-
-
-
-
-
     public void addVertex(Node v){
     if (!this.containsnode(v)){
     this.vertices.add(v);}
@@ -267,7 +254,7 @@ public void removeEdge(Edge e){
     Node e1 = e.getV1();
     Node e2 = e.getV2();
     this.edges.remove(e);
-    this.edges.remove(getEdge(e2.getNumber(), e1.getNumber()));
+    this.edges.remove(getEdge(e2, e1));
     updateincidentedges();
     updateadjencylist();
 
@@ -280,11 +267,11 @@ public void removeVertex(Node v){
 }
 
  public int degree(Node v){
-     return indencent_list.get(v.getNumber()).size();
+     return indencent_list.get(v).size();
  }
 
 public boolean isadjacent(Node v1, Node v2){
-    for (Node node:adjacencyList.get(v1.getNumber())){
+    for (Node node:adjacencyList.get(v1)){
       if (node.equals(v2)){
           return true;
       }
@@ -294,7 +281,7 @@ public boolean isadjacent(Node v1, Node v2){
 
  public boolean isincident(Node v1, Node v2){
 
-    for(Edge e1:indencent_list.get(v1.getNumber())){
+    for(Edge e1:indencent_list.get(v1)){
         if (e1.getV2().getNumber()==v2.getNumber()){
           return true;
         }
@@ -320,7 +307,7 @@ for(Node node:this.vertices){
 
 
     public boolean containsedge(Edge e) {
-        return getEdge(e.getV1().getNumber(), e.getV2().getNumber())!=null;
+        return getEdge(e.getV1(), e.getV2())!=null;
     }
 
 

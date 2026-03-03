@@ -7,6 +7,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -24,7 +25,7 @@ public class Visual_part {
   private static Pane edgeLayer = new Pane();
    private static Pane nodeLayer = new Pane();
    private static Pane textLayer = new Pane();
-    private static Map<Node,StackPane> corrlate=new HashMap<>();
+    private static Map<Node,Group> corrlate=new HashMap<>();
    private static Map<Edge, javafx.scene.Node> edgeToLine =new HashMap<>();
    private static Map<Edge, Text> edgeToText =new HashMap<>();
     private Pane root;
@@ -55,10 +56,10 @@ public class Visual_part {
         for (int i=0;i<graph.getVertices().size();i++) {
           Node node= graph.getVertices().get(i);
          Circle circle = new Circle(10);
-           circle.setFill(Color.BLACK);
+           circle.setFill(Color.RED);
 
            Text text=new Text(""+node.getNumber());
-         StackPane pane = new StackPane(circle,text);
+         Group group = new Group(circle,text);
            Random random=new Random();
            int distance_X;
            int distance_Y;
@@ -80,9 +81,9 @@ public class Visual_part {
 
           }while (!good&&current_attempts<max_attempts); /*we do not want this looping forever!*/
           mina_distance.add(new Point2D(distance_X,distance_Y));
-           pane.relocate(distance_X,distance_Y);
-          corrlate.put(node, pane);
-         nodeLayer.getChildren().add(pane);
+           group.relocate(distance_X,distance_Y);
+          corrlate.put(node, group);
+         nodeLayer.getChildren().add(group);
        }
 
 
@@ -105,11 +106,11 @@ public class Visual_part {
          Node n1=edge.getV1();
          Node n2=edge.getV2();
 
-           StackPane f =corrlate.get(n1);
-         StackPane k =corrlate.get(n2);
+           Group f =corrlate.get(n1);
+         Group k =corrlate.get(n2);
 
-           Bounds b = f.getBoundsInParent();
-           Bounds c = k.getBoundsInParent();
+           Bounds b = f.localToScene(f.getBoundsInLocal());
+           Bounds c = k.localToScene(k.getBoundsInLocal());
 
 if (isdirected) {
            edgeToLine.put(edge,arrow);}else {
@@ -140,9 +141,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
 
        }
-
-
-        ;return graph;
+       return graph;
     }
 
 
@@ -156,10 +155,10 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         for (int i=0;i<graph.getVertices().size();i++) {
             Node node= graph.getVertices().get(i);
             Circle circle = new Circle(10);
-            circle.setFill(Color.BLACK);
+            circle.setFill(Color.RED);
 
             Text text=new Text(""+node.getNumber());
-            StackPane pane = new StackPane(circle,text);
+            Group pane = new Group(circle,text);
             Random random=new Random();
             int distance_X;
             int distance_Y;
@@ -206,8 +205,8 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
                 Node n1=edge.getV1();
                 Node n2=edge.getV2();
 
-                StackPane f =corrlate.get(n1);
-                StackPane k =corrlate.get(n2);
+                Group f =corrlate.get(n1);
+                Group k =corrlate.get(n2);
 
                 Bounds b = f.getBoundsInParent();
                 Bounds c = k.getBoundsInParent();
@@ -247,7 +246,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
 
     public void remove_edge(Edge edge, Graph graph) {
-     Edge edge1 =graph.getEdge(edge.getV1().getNumber(),edge.getV2().getNumber());
+     Edge edge1 =graph.getEdge(edge.getV1(),edge.getV2());
 
      if(edge1!=null){
        Line line = (Line) edgeToLine.get(edge1);
@@ -261,7 +260,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
     public void removenode(Graph graph, Node n) {
    Node noodle=graph.getVertices().get(n.getNumber());
    if (noodle!=null){
-       StackPane f =corrlate.get(noodle);
+       Group f =corrlate.get(noodle);
        nodeLayer.getChildren().remove(f);
        for (Edge edge:graph.indenctedges(noodle)){
            if(edge!=null){
@@ -285,8 +284,8 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         Node n1=e.getV1();
         Node n2=e.getV2();
 
-        StackPane f =corrlate.get(n1);
-        StackPane k =corrlate.get(n2);
+        Group f =corrlate.get(n1);
+        Group k =corrlate.get(n2);
 
         Bounds b = f.getBoundsInParent();
         Bounds c = k.getBoundsInParent();
@@ -317,8 +316,8 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         root.applyCss();
         root.layout();
 
-        StackPane f =corrlate.get(n1);
-        StackPane k =corrlate.get(n2);
+        Group f =corrlate.get(n1);
+        Group k =corrlate.get(n2);
 
         Bounds b = f.getBoundsInParent();
         Bounds c = k.getBoundsInParent();
@@ -347,7 +346,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         circle.setFill(Color.BLACK);
 
         Text text=new Text(""+n.getNumber());
-        StackPane pane = new StackPane(circle,text);
+        Group pane = new Group(circle,text);
         Random random=new Random();
         int distance_X;
         int distance_Y;
@@ -379,7 +378,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
     public static EdgeAnimation highlightNode(Node u) {
 
-        StackPane f = Visual_part.corrlate.get(u);
+        Group f = Visual_part.corrlate.get(u);
         f.setStyle("-fx-background-color: #ff0000");
 
         Timeline timeline = new Timeline(
@@ -400,12 +399,14 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         Circle circle = new Circle(5);
         Node n1=edge.getV1();
         Node n2=edge.getV2();
-        StackPane f =corrlate.get(n1);
-        StackPane k =corrlate.get(n2);
-    float targetx= (float) (k.getLayoutX()+k.getWidth() /2);
-    float targety= (float) (k.getLayoutY()+k.getHeight()/2);
-    float startx= (float) (f.getLayoutX()+f.getWidth()/2);
-    float starty= (float) (f.getLayoutY()+f.getHeight()/2);
+        Group f =corrlate.get(n1);
+        Group k =corrlate.get(n2);
+
+
+    float targetx= (float) (f.getLayoutX()+f.minWidth(1) /2);
+    float targety= (float) (f.getLayoutY()+f.minHeight(1)/2);
+    float startx= (float) (k.getLayoutX()+k.maxWidth(1)/2);
+    float starty= (float) (k.getLayoutY()+k.maxHeight(1)/2);
 
        root.getChildren().add(circle);
 //dont ask me how long this took me to figure out
@@ -460,7 +461,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
        return null;
 
     }
-      javafx.scene.layout.StackPane stackPane =corrlate.get(node);
+        Group stackPane =corrlate.get(node);
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO,
                         e -> {}
@@ -506,8 +507,8 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
                if (e.getV1()==null||e.getV2()==null){
                    return;
                }
-        StackPane f =corrlate.get(n1);
-        StackPane k =corrlate.get(n2);
+        Group f =corrlate.get(n1);
+        Group k =corrlate.get(n2);
 
         Bounds b = f.getBoundsInParent();
         Bounds c = k.getBoundsInParent();
@@ -531,8 +532,8 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         if (e.getV1()==null||e.getV2()==null){
             return;
         }
-        StackPane f =corrlate.get(n1);
-        StackPane k =corrlate.get(n2);
+        Group f =corrlate.get(n1);
+        Group k =corrlate.get(n2);
         e.setWeight(weight);
         Bounds b = f.getBoundsInParent();
         Bounds c = k.getBoundsInParent();
@@ -573,7 +574,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
                 Node n=graph.getVertices().get(i);
                 Node n2=graph.getVertices().get(j);
 
-                if(graph.getEdge(n.getNumber(),n2.getNumber())==null) {
+                if(graph.getEdge(n,n2)==null) {
                     Complement_graph.addEdge(new Edge(n,n2));
                 }
             }

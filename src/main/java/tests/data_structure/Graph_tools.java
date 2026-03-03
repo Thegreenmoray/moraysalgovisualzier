@@ -83,7 +83,9 @@ private static float[][] adjacency_matrix_creation(float[][] adjacency_matrix,Gr
                   adjacency_matrix[i][j]=0;
                   continue;
               }
-             Edge edge=graph.getEdge(i,j);
+              Node node =graph.getVertices().get(i);
+              Node ne=graph.getVertices().get(j);
+             Edge edge=graph.getEdge(node,ne);
          if (edge!=null){
              adjacency_matrix[i][j]=edge.getWeight();
              continue;

@@ -64,8 +64,8 @@ public Arrow() {
         double uy = dy / len;
 
 // shorten the arrow so it touches the circle edge
-        dx -= ux * 9;
-        dy -= uy * 9;
+        dx -= ux * radius;
+        dy -= uy * radius;
 
 
         updategeopointer();
