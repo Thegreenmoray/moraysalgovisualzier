@@ -377,7 +377,8 @@ api.setallvisible(g,part);
         for(int i=0;i<node.size();i++){
             if(!visted[node.get(i).getNumber()]){
 
-              visted= b_or_d ? bfs(graph,i,visted,graphTheoryInterface,visualPart):dfs(graph,i,visted,graphTheoryInterface,timelineQueue);
+              visted= //b_or_d ? bfs(graph,i,visted,graphTheoryInterface,visualPart):
+                      dfs(graph,i,visted,graphTheoryInterface,timelineQueue);
             }
         }
        if(!b_or_d){ //dfs
@@ -1005,17 +1006,49 @@ private static List<Integer> two_partition(Integer[] listed){
 
 
     //--------------------NP-Hard--------------------------------------------------
+ public static List<Node> independent_set(Graph graph,Visual_part  part,
+                                    Edge_interface edgeInterface) {
+     Queue<EdgeAnimation> timelineQueue = new LinkedList<>();
+
+   List<Node> list= independent_set_calculation(graph,new ArrayList<>(),
+             new ArrayList<>(),new ArrayList<>(),part,edgeInterface,timelineQueue);
+
+   for (Node node : list) {
+       timelineQueue.add(edgeInterface.highlight_semi_permant(node, part));
+   }
+
+     if (edgeInterface !=null&&part!=null) {
+         part.playNext((LinkedList<? extends Animations>) timelineQueue);
+     }
+
+     return list;
+ }
+
+
+
+
+
     // (1.5)
-    public static List<Node> independent_set(Graph graph,List<Node> best_set,List<Node> current_set,List<Node> candidates){
+    private static List<Node> independent_set_calculation(Graph graph,List<Node> best_set,
+     List<Node> current_set,List<Node> candidates,Visual_part  part,
+     Edge_interface edgeInterface, Queue<EdgeAnimation> timelineQueue){
+        if (current_set.isEmpty() && timelineQueue.isEmpty()) {
+            timelineQueue.add(edgeInterface.pause(1));
+        }
 
 
-        if(current_set.isEmpty()||candidates.isEmpty()){
+
+        if(current_set.isEmpty()){
             candidates=  graph.getVertices();
         }
         // if our current size and our candidate size is smaller than
         //the best we've found so far, don't even bother searching further.
 
         if(current_set.size() + candidates.size() <= best_set.size()){
+            if (part != null&&edgeInterface!=null) {
+                    timelineQueue.add(edgeInterface.pause(50));
+            }
+
             return best_set;
         }
 
@@ -1027,6 +1060,8 @@ private static List<Integer> two_partition(Integer[] listed){
         Node candidate=candidates.get(i);
 
   current_set.add(candidate);
+            if (part != null&&edgeInterface!=null) {
+            timelineQueue.add(edgeInterface.highlight_semi_permant(candidate,part));}
 
 
            if (current_set.size()>best_set.size()) {
@@ -1062,13 +1097,16 @@ private static List<Integer> two_partition(Integer[] listed){
          }
 
 
-            best_set=independent_set(graph,best_set,current_set,nextCandidates);
+            best_set=independent_set_calculation(graph,best_set,current_set,nextCandidates,part,edgeInterface,timelineQueue);
             current_set.remove(candidate);
+         if (part != null&&edgeInterface!=null) {
+            timelineQueue.add( edgeInterface.disable_highlights(candidate,part));}
+
         }
-/* honestly you are better off taking the G^c (coming soon) of the intinal graph
+/* honestly you are better off taking the G^c of the intinal graph
 then running clique, no need to worry about ordering.
-this may not be great for sparse graphs though becuase the complement will be dense
-But thats debatable*/
+this may not be great for sparse graphs though because the complement will be dense
+But that's debatable*/
 
         return best_set;
     }

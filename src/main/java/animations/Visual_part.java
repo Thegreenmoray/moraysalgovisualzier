@@ -36,15 +36,6 @@ public class Visual_part {
         this.root = root;
     }
 
-    private Pane getRoot() {
-        return root;
-    }
-
-    private void setRoot(Pane root) {
-        this.root = root;
-    }
-
-
 
     public Graph randomgraph_establish(int size, int edgechance, boolean isweighted, boolean canbenegative, boolean isdirected) {
     Graph graph =isdirected? generate_graph_directed(size,edgechance,isweighted,canbenegative):generate_graph_undirected(size,edgechance,isweighted,canbenegative);
@@ -145,7 +136,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
     }
 
 
-    public Graph establish(Graph graph,boolean isdirected,boolean isweighted) {
+    public Graph establish(Graph graph,boolean isdirected,boolean isweighted,boolean canbenegative) {
       if (!root.getChildren().contains(edgeLayer)) {
         root.getChildren().addAll(edgeLayer, nodeLayer,textLayer);}
 
@@ -379,14 +370,13 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
     public static EdgeAnimation highlightNode(Node u) {
 
         Group f = Visual_part.corrlate.get(u);
-        f.setStyle("-fx-background-color: #ff0000");
-
+      Circle circle = (Circle) f.getChildren().getFirst();
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO,
-                        e -> f.setStyle("-fx-background-color: #00ff00")
+                        e -> circle.setFill(Color.web("#00ff00"))
                 ),
                 new KeyFrame(Duration.millis(200),
-                        e -> f.setStyle("-fx-background-color: #ff0000")
+                        e -> circle.setFill(Color.web( "#ff0000"))
 
 
 
@@ -733,6 +723,53 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
             edgeToText.get(edge).setVisible(true);
         }
         node.setVisible(true);}));
+
+
+
+        return new EdgeAnimation(timeline);
+    }
+
+
+    public EdgeAnimation highlightnode( Node node) {
+        if (!corrlate.containsKey(node)) {
+            return null;
+        }
+        Group group = corrlate.get(node);
+        Circle circle = (Circle) group.getChildren().getFirst();
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        e -> {
+                            circle.setFill(Color.web( "#0000FF"));
+                        }
+                ),
+                new KeyFrame(Duration.millis(100),
+                        e -> {
+                     circle.setFill(Color.web("#0000FF"));
+                        }));
+
+
+
+        return new EdgeAnimation(timeline);
+    }
+
+    public EdgeAnimation disablenodes( Node node) {
+        if (!corrlate.containsKey(node)) {
+            return null;
+        }
+        Group group  = corrlate.get(node);
+        Circle circle = (Circle) group.getChildren().getFirst();
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        e -> {
+                            circle.setFill(Color.web("#ff0000"));
+                        }
+                ),
+                new KeyFrame(Duration.millis(30),
+                        e -> {
+                            circle.setFill(Color.web("#ff0000"));
+                        }));
+
 
 
 

@@ -24,6 +24,8 @@ public interface Edge_interface {
      EdgeAnimation makearcvisible(Graph graph, Edge edge, Visual_part part);
     void addEdge(Graph graph,Edge e,Visual_part part,float weight);
     void addarc(Graph graph,Edge e,Visual_part part,float weight);
+    EdgeAnimation highlight_semi_permant(Node node,Visual_part part);
+    EdgeAnimation disable_highlights(Node node,Visual_part part);
 }
 
 

@@ -97,6 +97,16 @@ public class Main extends Application {
             }
 
             @Override
+            public EdgeAnimation highlight_semi_permant( Node node, Visual_part part) {
+                return part.highlightnode(node);
+            }
+
+            @Override
+            public EdgeAnimation disable_highlights(Node node, Visual_part part) {
+                return part.disablenodes(node);
+            }
+
+            @Override
             public void removeEdge(Graph graph, Edge e, Visual_part part) {
                part.remove_edge(e, graph);
             }
