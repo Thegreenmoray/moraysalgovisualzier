@@ -4,7 +4,7 @@ public interface GraphAlgorithm {
 
 
     //this is what actually allows you to run it
-    void run(Edge_interface api, Visual_part part);
+    void run(GUI_interface api, Visual_part part);
 }
 
 

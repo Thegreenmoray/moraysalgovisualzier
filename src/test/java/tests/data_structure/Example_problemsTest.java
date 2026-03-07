@@ -2,7 +2,7 @@ package tests.data_structure;
 
 import graph_theory.Edge;
 import animations.Graph;
-import graph_theory.GraphTestHelper;
+import animations.GraphTestHelper;
 import graph_theory.Node;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +14,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
  class Example_problemsTest {
-    @Test
+
+
+
+
+
+     @Test
      void bubble_sort_test() {
         ArrayList<Integer> list=new ArrayList<>();
         list.add(4);
@@ -40,6 +45,22 @@ import static org.junit.jupiter.api.Assertions.*;
     }
     @Test
     void quicksort() {
+
+        List<Integer> list=new ArrayList<>();
+        list.add(4);
+        list.add(1);
+        list.add(3);
+        list.add(9);
+        list.add(2);
+
+        List<Integer> actual =Example_problems.quicksort(list,0,list.size()-1);
+        List<Integer> expected=new ArrayList<>();
+        expected.add(1);
+        expected.add(2);
+        expected.add(3);
+        expected.add(4);
+        expected.add(9);
+        assertEquals(expected,actual);
     }
 
     @Test
@@ -110,10 +131,26 @@ assertArrayEquals(dfs_test,visited);
 
     @Test
     void unbounded_knapsack() {
+
+        int[] weights={12,1,1,2,4};
+        int[] values={4,2,1,2,10};
+        int knapsack=Example_problems.unbounded_knapsack(values,weights,15);
+        int expected=36;
+        assertEquals(expected, knapsack);
+
+
     }
 
     @Test
     void binary_knapsack() {
+        int[] weights={12,1,1,2,4};
+        int[] values={4,2,1,2,10};
+        int knapsack=Example_problems.binary_knapsack(values,weights,15);
+        int expected=15;
+        assertEquals(expected, knapsack);
+
+
+
     }
 
     @Test
@@ -122,24 +159,47 @@ assertArrayEquals(dfs_test,visited);
         List<Edge> edges=new ArrayList<>();
         List<Node> nodes=new ArrayList<>();
 
-        nodes.add(new Node(0));
-        nodes.add(new Node(1));
-        nodes.add(new Node(2));
-        nodes.add(new Node(3));
-        nodes.add(new Node(4));
-        edges.add(new Edge(nodes.get(0),nodes.get(1)));
-        edges.add(new Edge(nodes.get(0),nodes.get(3)));
-        edges.add(new Edge(nodes.get(1),nodes.get(4)));
-        edges.add(new Edge(nodes.get(2),nodes.get(3)));
-        edges.add(new Edge(nodes.get(3),nodes.get(4)));
+
 
 
         Graph graph=new Graph(nodes,edges);
 
+        graph.addVertex(new Node(0));
+        graph.addVertex(new Node(1));
+        graph.addVertex(new Node(2));
+        graph.addVertex(new Node(3));
+        graph.addVertex(new Node(4));
+        graph.addEdge(new Edge(nodes.get(0),nodes.get(1)));
+        graph.addEdge(new Edge(nodes.get(0),nodes.get(3)));
+        graph.addEdge(new Edge(nodes.get(1),nodes.get(4)));
+        graph.addEdge(new Edge(nodes.get(2),nodes.get(3)));
+        graph.addEdge(new Edge(nodes.get(3),nodes.get(4)));
 
         ArrayList<Node> nodes1= (ArrayList<Node>) Example_problems.independent_set(graph,null,null);
       assertEquals(3,nodes1.size());
 
 
     }
+
+    @Test
+     void hamilition(){
+
+
+        Graph graph=new Graph(new ArrayList<>(),new ArrayList<>());
+
+        graph.addVertex(new Node(0));
+        graph.addVertex(new Node(1));
+        graph.addVertex(new Node(2));
+        graph.addVertex(new Node(3));
+        graph.addVertex(new Node(4));
+        graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(1)));
+        graph.addEdge(new Edge(graph.getVertices().get(1),graph.getVertices().get(2)));
+        graph.addEdge(new Edge(graph.getVertices().get(2),graph.getVertices().get(3)));
+        graph.addEdge(new Edge(graph.getVertices().get(3),graph.getVertices().get(4)));
+        graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(4)));
+
+
+        boolean b= Example_problems.ishamilition(graph,null,null);
+        assertEquals(true,b);
+     }
 }

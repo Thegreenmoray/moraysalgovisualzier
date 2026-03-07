@@ -8,6 +8,7 @@ import java.util.*;
 
 
 public class Graph_tools {
+
     
 private Graph_tools(){};
 
@@ -98,7 +99,7 @@ private static float[][] adjacency_matrix_creation(float[][] adjacency_matrix,Gr
         return adjacency_matrix;
     }
 
-private static boolean is_tree(Graph graph){
+public static boolean is_tree(Graph graph){
     //run a modifed dfs
    boolean istree=true;
    //assume graph is connected
@@ -120,18 +121,23 @@ private static boolean dfs_treechecker(Graph graph, Node start,Node parent, bool
                 break;
             }
 
-
-            if ((parent!=null&&!n.equals(parent)&&istree)){
+            if ((parent!=null&&!parent.equals(n)&&visted[n.getNumber()])){
 
                 return false;
                 //stop searching its not a tree
             }
 
 
-            if(!visted[n.getNumber()]&&istree){
+            if(!visted[n.getNumber()]){
 
                istree= dfs_treechecker(graph,n,start,visted,istree);
             }
+
+
+
+
+
+
         }
 
 
@@ -175,7 +181,7 @@ public static List<String> random_unique_colors(Graph graph){
 }
 
 
- private static boolean isbipartite(Graph graph){
+ public static boolean isbipartite(Graph graph){
     String cyan="#00FFFF";
     String magenta="#FF00FF";
     String yellow="#FF0000"; //defualt
@@ -245,19 +251,58 @@ private static Color_package bfs_bipartite(Graph graph, int start, boolean[] vis
 private static boolean coloring(Node start,Node neighbor,String color1,String color2,String defualt_color) {
 
 
-neighbor.setHexcode_color(start.getHexcode_color().equals(defualt_color) ? color1: start.getHexcode_color().equals(color1) ? color2:color1);
+
     if (start.getHexcode_color().equals(neighbor.getHexcode_color())
             &&!neighbor.getHexcode_color().equals(defualt_color)&&!start.getHexcode_color().equals(defualt_color)) {
         return false;
     }
+    neighbor.setHexcode_color(start.getHexcode_color().equals(color1) ? color2:color1);
     return true;
 }
 
 
+public static boolean is_connected(Graph graph){
+boolean isconnected=true;
+
+boolean[] isvisited=new boolean[graph.getVertices().size()];
+
+ isvisited=dfs(isvisited,graph,graph.getVertices().getFirst().getNumber());
+
+ for (boolean b:isvisited) {
+     if(!b){
+         isconnected=false;
+         break;
+     }
+ }
+
+    return isconnected;
+}
+
+private static boolean[] dfs(boolean[] visted,Graph graph,int node_number) {
+        visted[node_number]=true;
+
+        for(Node n:graph.neighbors(graph.getVertices().get(node_number))){
+            if(!visted[n.getNumber()]){
+                dfs(visted,graph,n.getNumber());
+            }}
 
 
+        return visted;
+    }
 
+public static boolean is_eulerian(Graph graph){
+    boolean is_eulerian=true;
+    if(!is_connected(graph)){
+        return false;
+    }
 
+    for(Node n:graph.getVertices()){
+        if(graph.degree(n)%2 !=0){
+            is_eulerian=false;
+            break;
+        }
+    }
 
-
+    return is_eulerian;
+}
 }

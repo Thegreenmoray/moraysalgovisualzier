@@ -37,7 +37,7 @@ public Graph(List<Node> vertex, List<Edge> edge){
 
     private List<Node> adjenctnodes(Node v) {
         Set<Node> result = new HashSet<>();
-        for(Edge e:indencent_list.get(v)){
+        for(Edge e:indenctedges(v)){
             Node vertex = v.equals(e.getV1())? e.getV2() : e.getV1();
             result.add(vertex);
 
@@ -60,11 +60,11 @@ public Graph(List<Node> vertex, List<Edge> edge){
     }
 
     public Edge getEdge (Node v1, Node v2){
-if (indencent_list.isEmpty()){
+if (indenctedges(v1).isEmpty()){
     return null;
 }
 
-   for (Edge n:indencent_list.get(v1)){
+   for (Edge n:indenctedges(v1)){
        if (n.getV2().equals(v2)){
            return n;}}
 
@@ -121,12 +121,12 @@ public void removearc(Edge e){
 
     public List<Node> neighbors(Node v){
 
-        return adjacencyList.get(v);
+        return adjacencyList.getOrDefault(v,Collections.emptyList());
     }
 
 public List<Edge> indenctedges(Node v){
 
-    return indencent_list.get(v);
+    return indencent_list.getOrDefault(v,Collections.emptyList());
 }
 
 public void addEdge(Edge e){
@@ -154,7 +154,7 @@ public void addEdge(Edge e){
 }
 
 private void deletednodesedges(Node v){
-    for(Edge e:indencent_list.get(v)){
+    for(Edge e:indenctedges(v)){
         edges.remove(e);
     }
 
@@ -267,11 +267,11 @@ public void removeVertex(Node v){
 }
 
  public int degree(Node v){
-     return indencent_list.get(v).size();
+     return indenctedges(v).size();
  }
 
 public boolean isadjacent(Node v1, Node v2){
-    for (Node node:adjacencyList.get(v1)){
+    for (Node node:neighbors(v1)){
       if (node.equals(v2)){
           return true;
       }
@@ -281,7 +281,7 @@ public boolean isadjacent(Node v1, Node v2){
 
  public boolean isincident(Node v1, Node v2){
 
-    for(Edge e1:indencent_list.get(v1)){
+    for(Edge e1:indenctedges(v1)){
         if (e1.getV2().getNumber()==v2.getNumber()){
           return true;
         }

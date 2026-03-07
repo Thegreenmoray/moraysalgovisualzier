@@ -17,6 +17,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 
 public class Main extends Application {
@@ -40,9 +41,9 @@ public class Main extends Application {
                     "    // You can add helper methods here\n" +
                     "\n" +
                     "    @Override\n" +
-                    "    public void run(Edge_interface api,Visual_part part) {\n" +
+                    "    public void run(GUI_interface api,Visual_part part) {\n" +
                     "        // Your algorithm goes here\n" +
-                    " Graph graph=part.randomgraph_establish(4,1,true,false,false);\n" +
+                    " Graph graph=part.randomgraph_establish(4,1,false,false,false);\n" +
                     "    }\n" +
                     "}\n");
 
@@ -52,7 +53,7 @@ public class Main extends Application {
         codeInput.setWrapText(true);
 
 
-        Edge_interface edgeInterface=new Edge_interface() {
+        GUI_interface edgeInterface=new GUI_interface() {
                 @Override
                 public EdgeAnimation onEdgesearched(Edge e) {
                     return Visual_part.animate_edge(e, root);
@@ -104,6 +105,21 @@ public class Main extends Application {
             @Override
             public EdgeAnimation disable_highlights(Node node, Visual_part part) {
                 return part.disablenodes(node);
+            }
+
+            @Override
+            public EdgeAnimation highlight_edge(Edge e, Visual_part part) {
+                return part.highlightedge(e);
+            }
+
+            @Override
+            public EdgeAnimation disable_edge(Edge e, Visual_part part) {
+                return part.disableedge(e);
+            }
+
+            @Override
+            public <E> SetAnimation updatetile(List<E> list, Visual_part part, int index) {
+                return null;
             }
 
             @Override

@@ -1,10 +1,12 @@
 package set_theory;
 
 import graph_theory.Node;
+import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,7 +34,25 @@ class Set_theory_itemsTest {
 
     @Test
     void cartesian_product() {
-    }
+        List<Integer> e = new ArrayList<>();
+        e.add(1);
+        e.add(2);
+        e.add(3);
+        List<Character> a = new ArrayList<>();
+        a.add('a');
+        a.add('b');
+        List<Pair<Integer, Character>> cartesian_product  = Set_theory_items.cartesian_product(e,a);
+        List<Pair<Integer, Character>> r = new ArrayList<>();
+        r.add(new Pair<>(1,'a'));
+        r.add(new Pair<>(1,'b'));
+        r.add(new Pair<>(2,'a'));
+        r.add(new Pair<>(2,'b'));
+        r.add(new Pair<>(3,'a'));
+        r.add(new Pair<>(3,'b'));
+        for (int i = 0; i<cartesian_product.size();i++) {
+           assertEquals(cartesian_product.get(i).getKey(),r.get(i).getKey());
+           assertEquals(cartesian_product.get(i).getValue(),r.get(i).getValue());
+    }}
 
     @Test
     void union() {
@@ -173,4 +193,6 @@ class Set_theory_itemsTest {
 
    assertArrayEquals(expected.toArray(),Powerset.toArray());
     }
+
+
 }

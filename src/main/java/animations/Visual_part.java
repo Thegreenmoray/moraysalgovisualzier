@@ -25,6 +25,7 @@ public class Visual_part {
   private static Pane edgeLayer = new Pane();
    private static Pane nodeLayer = new Pane();
    private static Pane textLayer = new Pane();
+
     private static Map<Node,Group> corrlate=new HashMap<>();
    private static Map<Edge, javafx.scene.Node> edgeToLine =new HashMap<>();
    private static Map<Edge, Text> edgeToText =new HashMap<>();
@@ -135,6 +136,12 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
        return graph;
     }
 
+    public <E> List<E> randomset_establish(int size,E itemused){
+
+
+
+        return List.of();
+    };
 
     public Graph establish(Graph graph,boolean isdirected,boolean isweighted,boolean canbenegative) {
       if (!root.getChildren().contains(edgeLayer)) {
@@ -234,8 +241,6 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         ;return graph;
     }
 
-
-
     public void remove_edge(Edge edge, Graph graph) {
      Edge edge1 =graph.getEdge(edge.getV1(),edge.getV2());
 
@@ -252,7 +257,8 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
    Node noodle=graph.getVertices().get(n.getNumber());
    if (noodle!=null){
        Group f =corrlate.get(noodle);
-       nodeLayer.getChildren().remove(f);
+       if (f!=null){
+       nodeLayer.getChildren().remove(f);}
        for (Edge edge:graph.indenctedges(noodle)){
            if(edge!=null){
                Line line = (Line) edgeToLine.get(edge);
@@ -277,7 +283,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
         Group f =corrlate.get(n1);
         Group k =corrlate.get(n2);
-
+if (f!=null&&k!=null){
         Bounds b = f.getBoundsInParent();
         Bounds c = k.getBoundsInParent();
 
@@ -289,7 +295,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         line.setStartY(b.getMinY()+b.getHeight()/2);
         line.setEndX(c.getMinX() +c.getWidth()/2);
         line.setEndY(c.getMinY() +c.getHeight()/2);
-        edgeLayer.getChildren().add(line);
+        edgeLayer.getChildren().add(line);}
         graph.addEdge(e);
 
 
@@ -309,7 +315,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
         Group f =corrlate.get(n1);
         Group k =corrlate.get(n2);
-
+        if (f!=null&&k!=null){
         Bounds b = f.getBoundsInParent();
         Bounds c = k.getBoundsInParent();
 
@@ -325,14 +331,19 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         text.setX((b.getMinX()+c.getMinX())/2);
         text.setY((b.getMinY()+c.getMinY())/2);
         edgeLayer.getChildren().add(line);
+       textLayer.getChildren().add(text);
+}
         e.setWeight(weight);
         graph.addEdge(e);
-        root.getChildren().add(text);
+
 
 
     }
 
     public void addnode(Graph graph, Node n) {
+
+
+
         Circle circle = new Circle(10);
         circle.setFill(Color.BLACK);
 
@@ -444,8 +455,6 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         }
     }
 
-
-
     public EdgeAnimation make_node_visible(Graph graph, Node node) {
     if(!graph.containsnode(node)){
        return null;
@@ -461,6 +470,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
     return new EdgeAnimation(timeline);
     }
+
     public void make_node_invisible(Graph graph, Node node) {
         if(graph.containsnode(node)){
             corrlate.get(node).setVisible(false);
@@ -489,7 +499,6 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
     }
 
-
     public void addarc(Graph graph, Edge e) {
         Arrow arrow=new Arrow();
         Node n1=e.getV1();
@@ -499,7 +508,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
                }
         Group f =corrlate.get(n1);
         Group k =corrlate.get(n2);
-
+if (f !=null &&k !=null){
         Bounds b = f.getBoundsInParent();
         Bounds c = k.getBoundsInParent();
         edgeToLine.put(e,arrow);
@@ -510,10 +519,9 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         text.setX((b.getMinX()+c.getMinX())/2);
         text.setY((b.getMinY()+c.getMinY())/2);
         textLayer.getChildren().add(text);
-        edgeLayer.getChildren().add(arrow);
+        edgeLayer.getChildren().add(arrow);}
         graph.addarc(e);
     }
-
 
     public void addarc(Graph graph, Edge e,float weight) {
         Arrow arrow=new Arrow();
@@ -525,6 +533,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         Group f =corrlate.get(n1);
         Group k =corrlate.get(n2);
         e.setWeight(weight);
+        if (f != null&&k != null){
         Bounds b = f.getBoundsInParent();
         Bounds c = k.getBoundsInParent();
         edgeToLine.put(e,arrow);
@@ -535,11 +544,9 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         text.setX((b.getMinX()+c.getMinX())/2);
         text.setY((b.getMinY()+c.getMinY())/2);
         textLayer.getChildren().add(text);
-        edgeLayer.getChildren().add(arrow);
+        edgeLayer.getChildren().add(arrow);}
         graph.addarc(e);
     }
-
-
 
     public void removearc(Graph graph, Edge e) {
    if (!edgeToText.containsKey(e)){
@@ -555,9 +562,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
     }
 
-
-
-    private static Graph complement_graph(Graph graph) {
+    public  Graph complement_graph(Graph graph) {
         Graph Complement_graph=new Graph(graph.getVertices(),new ArrayList<>());
         for (int i=0;i<graph.getVertices().size();i++) {
             for(int j=i+1;j<graph.getVertices().size();j++) {
@@ -572,10 +577,6 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
         return Complement_graph;
     }
-
-
-
-
 
     //dont ask me how long this took me to figure out
     public  void playNext(LinkedList<? extends Animations> time) {
@@ -600,8 +601,6 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
        }
     }
-
-
 
     private static Graph generate_graph_undirected(int size,int edge_chance,boolean isweighted,boolean can_be_negative_weight){
         LinkedList<Node> nodes = new LinkedList<>();
@@ -644,7 +643,6 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         return new Graph(nodes,edges);
     }
 
-
     private static Graph generate_graph_directed(int size,int edge_chance,boolean isweighted,boolean can_be_negative_weight){
         LinkedList<Node> nodes = new LinkedList<>();
         LinkedList<Edge> edges = new LinkedList<>();
@@ -683,7 +681,6 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         return new Graph(nodes,edges);
     }
 
-
     public void clearboard() {
    edgeLayer.getChildren().clear();
    nodeLayer.getChildren().clear();
@@ -694,7 +691,6 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
 
     }
-
 
     public void makearcinvisible(Edge edge) {
     if (!edgeToLine.containsKey(edge)) {
@@ -713,6 +709,9 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         if (!edgeToLine.containsKey(edge)) {
             return null;
         }
+        if (edgeToText.containsKey(edge)) {
+            edgeToText.get(edge).setVisible(true);
+        }
         javafx.scene.Node node = edgeToLine.get(edge);
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO,
@@ -728,7 +727,6 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
         return new EdgeAnimation(timeline);
     }
-
 
     public EdgeAnimation highlightnode( Node node) {
         if (!corrlate.containsKey(node)) {
@@ -761,13 +759,62 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO,
-                        e -> {
-                            circle.setFill(Color.web("#ff0000"));
+                        e -> circle.setFill(Color.web("#ff0000"))
+                ),
+                new KeyFrame(Duration.millis(30),
+                        e -> circle.setFill(Color.web("#ff0000"))));
+
+
+
+
+        return new EdgeAnimation(timeline);
+    }
+
+    public EdgeAnimation highlightedge(Edge e) {
+        if (!edgeToLine.containsKey(e)) {
+            return null;
+        }
+        Line line = (Line) edgeToLine.get(e);
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        k -> {line.setStroke(Color.web("#ff0000"));
+                            line.setStrokeWidth(3);
                         }
                 ),
                 new KeyFrame(Duration.millis(30),
-                        e -> {
-                            circle.setFill(Color.web("#ff0000"));
+                        k -> {line.setStroke(Color.web("#ff0000"));
+                line.setStrokeWidth(3);
+                }
+
+
+
+                ));
+
+
+
+
+        return new EdgeAnimation(timeline);
+
+    }
+
+    public EdgeAnimation disableedge(Edge e) {
+        if (!edgeToLine.containsKey(e)) {
+            return null;
+        }
+        Line line = (Line) edgeToLine.get(e);
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        k -> {
+                            line.setStroke(Color.web("#000000"));
+                            line.setStrokeWidth(1);
+                        }
+                ),
+                new KeyFrame(Duration.millis(30),
+                        k -> {
+                            line.setStroke(Color.web("#000000"));
+                            line.setStrokeWidth(1);
                         }));
 
 

@@ -5,20 +5,23 @@
 -̶c̶o̶m̶p̶e̶l̶t̶e̶ ̶i̶n̶d̶e̶p̶e̶n̶d̶e̶n̶t̶ ̶s̶e̶t̶ ̶a̶l̶g̶o̶r̶i̶t̶h̶m̶ ̶(̶d̶o̶n̶e̶)̶ ̶a̶n̶d̶ ̶u̶n̶i̶t̶ ̶t̶e̶s̶t̶ ̶i̶t̶ ̶(̶1̶.̶5̶)̶ //done
 ̶-̶S̶e̶c̶u̶r̶i̶t̶y̶?̶ //Security manger for now will replace this with GraalVM
  ̶-̶i̶m̶p̶l̶e̶m̶e̶n̶t̶ ̶t̶h̶e̶ ̶v̶i̶s̶u̶a̶l̶i̶z̶e̶r̶s̶ ̶i̶n̶t̶o̶ ̶t̶h̶e̶ ̶e̶x̶a̶m̶p̶l̶e̶ ̶c̶o̶d̶e̶ ̶(̶T̶h̶a̶t̶ ̶h̶a̶s̶ ̶b̶e̶e̶n̶ ̶u̶n̶i̶t̶ ̶t̶e̶s̶t̶e̶d̶)̶//done
--second round unit tests(Graph, Edge, Node, Carteasian Product,Istree,isbipartite,iscompelte,Edge Interface implementations,Visualpart,
-Qsort,Both DP knapsacks)
+-second round unit tests(Graph, Edge, Node, ̶E̶d̶g̶e̶ ̶I̶n̶t̶e̶r̶f̶a̶c̶e̶ ̶i̶m̶p̶l̶e̶m̶e̶n̶t̶a̶t̶i̶o̶n̶s̶(̶o̶f̶ ̶v̶i̶s̶u̶a̶l̶p̶a̶r̶t̶)̶-̶V̶i̶s̶u̶a̶l̶p̶a̶r̶t̶ ̶̶,̶I̶s̶t̶r̶e̶e̶,̶i̶s̶b̶i̶p̶a̶r̶t̶i̶t̶e̶,̶ ̶C̶a̶r̶t̶e̶a̶s̶i̶a̶n̶ ̶P̶r̶o̶d̶u̶c̶t̶,̶i̶s̶c̶o̶m̶p̶e̶l̶t̶e̶,̶
+ ̶Q̶s̶o̶r̶t̶,̶B̶o̶t̶h̶ ̶D̶P̶ ̶k̶n̶a̶p̶s̶a̶c̶k̶s̶)
+-build chromatic color algo unit test it (2.5)
 -set visuals up for sets/arrays/lists/matricies
 -build and test generalized Sudoku and test it(2.5)
--build chromatic color algo unit test it (2.5)
+-Hook up algorithms unit tested algorithms
 -Sandbox environment with GraalVM
 -third round unit tests(All previous tests but more edge cases, first round was rather shallow)
--compelte set based algorithms (Kanade, Sudoku) (radix sort?)
+-compelte set based algorithms (Kanade,radix sort)
+-compelte some interview probelms, some dp,some np-approx
 -fix overlapping issues
--fourth round unit tests(Edge Interface,Visualpart,ExampleProbelms)
+-fourth round unit tests(Edge Interface,Visualpart,ExampleProbelms) //might only be Example probelms, might just move Edge Interface,Visualpart to unit test 3
+-inclusive features (color blindness accommodation, other things)
 -Maybe add more dp algorithms?
 -Maybe add some common interview problems?
 -Maybe add more np approximations?
 -Improve background more instead just being a white screen?
 -Maybe more unit tests?
 -something else?
--Polygolt?
+-Polygolt (that is be able to write in multiple programming languages)?

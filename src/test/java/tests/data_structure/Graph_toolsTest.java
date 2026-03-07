@@ -101,10 +101,50 @@ float[][] testmatrix= {{0,2,-3,5},
     }
 
 
+     @Test
+     void degree_matrix() {
+     }
+
+     @Test
+     void is_tree() {
+        Graph graph=new Graph(new ArrayList<>(),new ArrayList<>());
+        for (int i=0;i<4;i++){
+            graph.addVertex(new Node(i));
+        }
+        graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(1)));
+        graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(2)));
+        graph.addEdge(new Edge(graph.getVertices().get(1),graph.getVertices().get(2)));
+        graph.addEdge(new Edge(graph.getVertices().get(2),graph.getVertices().get(3)));
+
+        boolean istree=Graph_tools.is_tree(graph);
+        assertEquals(false,istree);
+     }
+
+     @Test
+     void is_complete() {
+      Graph graph= animations.GraphTestHelper.generate_graph_undirected(4,1,false,false);
+   boolean iscompelte=Graph_tools.is_complete(graph);
+   assertEquals(true,iscompelte);
+     }
+
+     @Test
+     void random_unique_colors() {
+     }
+
+     @Test
+     void isbipartite() {
+         Graph graph=new Graph(new ArrayList<>(),new ArrayList<>());
+         for (int i=0;i<4;i++){
+             graph.addVertex(new Node(i));
+         }
+         graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(1)));
+         graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(2)));
+         graph.addEdge(new Edge(graph.getVertices().get(1),graph.getVertices().get(2)));
+         graph.addEdge(new Edge(graph.getVertices().get(2),graph.getVertices().get(3)));
+boolean isbiparte=Graph_tools.isbipartite(graph);
+assertEquals(true,isbiparte);
 
 
 
-
-
-
-}
+     }
+ }

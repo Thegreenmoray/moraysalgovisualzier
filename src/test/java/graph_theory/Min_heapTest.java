@@ -1,8 +1,5 @@
-package tests.data_structure;
+package graph_theory;
 
-import graph_theory.Edge;
-import graph_theory.Min_heap;
-import graph_theory.Node;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

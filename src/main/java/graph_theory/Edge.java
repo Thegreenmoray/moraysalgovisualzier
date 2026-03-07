@@ -3,9 +3,9 @@ package graph_theory;
 import java.util.Objects;
 
 public class Edge {
-    Node v1;
-    Node v2;
-    float weight;
+  private final Node v1;
+ private final Node v2;
+private     float weight;
 
 
 
@@ -55,17 +55,13 @@ public void setEdgeState(EdgeState edgeState) {
         return v1;
     }
 
-    public void setV1(Node v1) {
-        this.v1 = v1;
-    }
+
 
     public Node getV2() {
         return v2;
     }
 
-    public void setV2(Node v2) {
-        this.v2 = v2;
-    }
+
 
     public int getWeight() {
         return (int)weight;

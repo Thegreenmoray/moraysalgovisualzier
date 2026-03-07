@@ -4,7 +4,6 @@ import animations.*;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.security.Permission;
 
 public class AlgorithmRunner {
 
@@ -29,7 +28,7 @@ private GraphAlgorithm currentAlgorithm;
 
 }
 
-    public void run( Edge_interface api, Visual_part part) {
+    public void run(GUI_interface api, Visual_part part) {
         if (currentAlgorithm == null) {
             throw new IllegalStateException("No algorithm loaded. Call setup() first.");
         }

@@ -15,20 +15,24 @@ import java.util.*;
 
 /*The comments for the other algorithms are predominantly meant for newbies,
 for more experienced developers these are just
-here to show how to visualize your code with the compiler. */
+here to show how to visualize your code with the compiler.
+Other notes: unless you are unit testing you can ignore the
+if (part != null&&edgeInterface!=null) {} these only exist for unit tests
+and aren't required for your code.
+*/
 
 public class Example_problems {
 
 //------------------------------To start------------------------------
 
-public static void Adding_and_removing_nodes(Visual_part part,Edge_interface api){
+public static void Adding_and_removing_nodes(Visual_part part, GUI_interface api){
     Graph g=part.randomgraph_establish(4,3,true,false,true);
     Node node=new Node(6);
 api.addNode(g,node,part);
             api.removeNode(g,g.getVertices().get(2),part);
 api.removeNode(g,node,part);}
 
-public static void Adding_and_removing_edges(Visual_part part,Edge_interface api){
+public static void Adding_and_removing_edges(Visual_part part, GUI_interface api){
         Graph g=part.randomgraph_establish(4,3,true,false,false);
         Node node=new Node(6);
         api.addNode(g,node,part);
@@ -39,7 +43,7 @@ public static void Adding_and_removing_edges(Visual_part part,Edge_interface api
         api.removeEdge(g,edge2,part);}
 
 
-    public static void Adding_and_removing_arcs(Visual_part part,Edge_interface api){
+    public static void Adding_and_removing_arcs(Visual_part part, GUI_interface api){
         Graph g=part.randomgraph_establish(4,3,true,false,true);
         Node node=new Node(6);
         api.addNode(g,node,part);
@@ -50,7 +54,7 @@ public static void Adding_and_removing_edges(Visual_part part,Edge_interface api
         api.removearc(g,edge2,part);}
 
 
-    public static void Make_graph_invisible_visible(Visual_part part,Edge_interface api){
+    public static void Make_graph_invisible_visible(Visual_part part, GUI_interface api){
         Graph g=part.randomgraph_establish(4,3,true,false,true);
 
 api.setallinvisible(g,part);
@@ -59,7 +63,7 @@ api.setallvisible(g,part);
 
 
 
-    public static void making_edges_invisible_visible(Visual_part part,Edge_interface api){
+    public static void making_edges_invisible_visible(Visual_part part, GUI_interface api){
         Graph g=part.randomgraph_establish(4,3,true,false,false);
         Node node=new Node(6);
         api.addNode(g,node,part);
@@ -71,7 +75,7 @@ api.setallvisible(g,part);
         api.makeedgevisible(g,edge,part);
 }
 
-    public static void Making_arcs_visible_invisible(Visual_part part,Edge_interface api){
+    public static void Making_arcs_visible_invisible(Visual_part part, GUI_interface api){
         Queue<EdgeAnimation> timelineQueue=new LinkedList<>();
         Graph g=part.randomgraph_establish(4,3,true,false,true);
         Node node=new Node(6);
@@ -87,7 +91,7 @@ api.setallvisible(g,part);
 }
 
 
-    public static void Making_nodes_visible_invisible(Visual_part part,Edge_interface api){
+    public static void Making_nodes_visible_invisible(Visual_part part, GUI_interface api){
         Queue<EdgeAnimation> timelineQueue=new LinkedList<>();
         Graph g=part.randomgraph_establish(4,3,true,false,false);
         Node node=new Node(6);
@@ -98,7 +102,7 @@ api.setallvisible(g,part);
     }
 
 
-    public static void making_edges_weighted(Visual_part part,Edge_interface api){
+    public static void making_edges_weighted(Visual_part part, GUI_interface api){
         Graph g=part.randomgraph_establish(4,3,true,true,false);
         Node node=new Node(6);
         api.addNode(g,node,part);
@@ -108,7 +112,7 @@ api.setallvisible(g,part);
         api.addEdge(g,edge2,part,-1);
     }
 
-    public static void Making_arcs_weighted(Visual_part part,Edge_interface api){
+    public static void Making_arcs_weighted(Visual_part part, GUI_interface api){
         Graph g=part.randomgraph_establish(4,3,true,false,true);
         Node node=new Node(6);
         api.addNode(g,node,part);
@@ -144,17 +148,16 @@ api.setallvisible(g,part);
 
 
     //round two
-    private static  List<Integer> quicksort(List<Integer> e,int low,int high){
+    public static  List<Integer> quicksort(List<Integer> e,int low,int high){
 
-        int n=e.size();
 
-        if (n<2) return e;
+        if (low > high) return e;
 
 
         int partition = partition(e, low, high);
 
-        quicksort(e, low, partition - 1);
-        quicksort(e, partition + 1, high);
+        quicksort(e, low, partition-1);
+        quicksort(e, partition+1, high);
 
 
         return e;
@@ -164,10 +167,10 @@ api.setallvisible(g,part);
 
     private static int partition(List<Integer> e,int low,int high){
 
-        int pivot=e.get(high-1);
-        int pivotpoint=-1;
+        int pivot=e.get(high);
+        int pivotpoint=low-1;
 
-        for (int i=low;i<high;i++){
+        for (int i=low;i<=high;i++){
             if (e.get(i)<=pivot){
                 pivotpoint++;
                 int temp= e.get(pivotpoint);
@@ -190,7 +193,7 @@ api.setallvisible(g,part);
 
 //--------------------------Graph problems----------------------------
 
-    private static boolean[] bfs(Graph graph, int start, boolean[] visted, Edge_interface graphTheoryInterface, Visual_part visualPart) {
+    private static boolean[] bfs(Graph graph, int start, boolean[] visted, GUI_interface graphTheoryInterface, Visual_part visualPart) {
         Queue<EdgeAnimation> timelineQueue = new LinkedList<>();
         Queue<Node> q=new LinkedList<>();
 
@@ -225,9 +228,7 @@ api.setallvisible(g,part);
         return visted;
     }
 
-
-
-    public static Graph Prim(Graph graph, Edge_interface graphTheoryInterface, Visual_part visualPart, boolean arcs_or_edges){
+    public static Graph Prim(Graph graph, GUI_interface graphTheoryInterface, Visual_part visualPart, boolean arcs_or_edges){
         Queue<EdgeAnimation> timelineQueue=new LinkedList<>();
         ArrayList<Edge> heap=new ArrayList<>();
         Graph mst=Graph_tools.empty_graph();
@@ -236,12 +237,16 @@ api.setallvisible(g,part);
         for(Edge e:graph.indenctedges(graph.getVertices().getFirst())){
             Min_heap.add_to_heap(e,heap);
         }
+     if (graphTheoryInterface !=null&&visualPart!=null){
        graphTheoryInterface.setallinvisible(graph,visualPart);
-        timelineQueue.add(graphTheoryInterface.pause(200));
+        timelineQueue.add(graphTheoryInterface.pause(200));}
+
         mst.addVertex(graph.getVertices().getFirst());
-       timelineQueue.add(graphTheoryInterface.pause(200));
-        timelineQueue.add(graphTheoryInterface.makenodevisible(graph,graph.getVertices().getFirst(),visualPart));
-        timelineQueue.add(graphTheoryInterface.highlightNode(graph.getVertices().getFirst()));
+        if (graphTheoryInterface !=null&&visualPart!=null) {
+            timelineQueue.add(graphTheoryInterface.pause(200));
+            timelineQueue.add(graphTheoryInterface.makenodevisible(graph, graph.getVertices().getFirst(), visualPart));
+            timelineQueue.add(graphTheoryInterface.highlightNode(graph.getVertices().getFirst()));
+        }
         while(!heap.isEmpty()&&mst.getVertices().size()<graph.getVertices().size()){
             Edge other_edges=Min_heap.extract_from_heap(heap);
 
@@ -256,14 +261,17 @@ api.setallvisible(g,part);
 
               if (!mst.containsnode(other_edges.getV1())){
                   mst.addVertex(other_edges.getV1());
-                  timelineQueue.add(graphTheoryInterface.pause(200));
-                  timelineQueue.add(graphTheoryInterface.makenodevisible(graph,other_edges.getV1(),visualPart));
-                  timelineQueue.add(graphTheoryInterface.highlightNode(other_edges.getV1()));
+                  if (graphTheoryInterface !=null&&visualPart!=null) {
+                      timelineQueue.add(graphTheoryInterface.pause(200));
+                      timelineQueue.add(graphTheoryInterface.makenodevisible(graph, other_edges.getV1(), visualPart));
+                      timelineQueue.add(graphTheoryInterface.highlightNode(other_edges.getV1()));
+                  }
                   if (arcs_or_edges){
                   mst.addarc(other_edges,other_edges.getWeight());
-                      timelineQueue.add(graphTheoryInterface.pause(200));
-                      timelineQueue.add( graphTheoryInterface.makearcvisible(graph,other_edges,visualPart));
-
+                      if (graphTheoryInterface !=null&&visualPart!=null) {
+                          timelineQueue.add(graphTheoryInterface.pause(200));
+                          timelineQueue.add(graphTheoryInterface.makearcvisible(graph, other_edges, visualPart));
+                      }
                   }
                   else {
                       //determine the highest pointer at this point
@@ -276,13 +284,17 @@ api.setallvisible(g,part);
               }
               if (!mst.containsnode(other_edges.getV2())) {
                   mst.addVertex(other_edges.getV2());
-                  timelineQueue.add( graphTheoryInterface.makenodevisible(graph,other_edges.getV2(),visualPart));
-                  timelineQueue.add(graphTheoryInterface.pause(200));
-                  timelineQueue.add(graphTheoryInterface.highlightNode(other_edges.getV2()));
+                  if (graphTheoryInterface !=null&&visualPart!=null) {
+                      timelineQueue.add(graphTheoryInterface.makenodevisible(graph, other_edges.getV2(), visualPart));
+                      timelineQueue.add(graphTheoryInterface.pause(200));
+                      timelineQueue.add(graphTheoryInterface.highlightNode(other_edges.getV2()));
+                  }
                   if (arcs_or_edges){
                       mst.addarc(other_edges,other_edges.getWeight());
-                      timelineQueue.add(graphTheoryInterface.pause(200));
-                      timelineQueue.add( graphTheoryInterface.makearcvisible(graph,other_edges,visualPart));
+                      if (graphTheoryInterface !=null&&visualPart!=null) {
+                          timelineQueue.add(graphTheoryInterface.pause(200));
+                          timelineQueue.add(graphTheoryInterface.makearcvisible(graph, other_edges, visualPart));
+                      }
                   }
                   else {
                       //determine the highest pointer at this point
@@ -309,7 +321,7 @@ api.setallvisible(g,part);
         return mst;
     }
 
-    private static boolean[] dfs(Graph graph, int node_number, boolean[] visted, Edge_interface graphTheoryInterface,Queue<EdgeAnimation> timelineQueue) {
+    private static boolean[] dfs(Graph graph, int node_number, boolean[] visted, GUI_interface graphTheoryInterface, Queue<EdgeAnimation> timelineQueue) {
        visted[node_number]=true;
 
         for(Node n:graph.neighbors(graph.getVertices().get(node_number))){
@@ -329,8 +341,7 @@ api.setallvisible(g,part);
         return visted;
     }
 
-
-    public static float[][] Floyd_Warshall(float[][] adjacency_matrix, Graph graph, Edge_interface graphTheoryInterface, Visual_part visualPart){
+    public static float[][] Floyd_Warshall(float[][] adjacency_matrix, Graph graph, GUI_interface graphTheoryInterface, Visual_part visualPart){
 // searching the all pairs of shortest paths,
 // good for finding the diameter on smaller graphs
         Queue<EdgeAnimation> timelineQueue = new LinkedList<>();
@@ -369,15 +380,14 @@ api.setallvisible(g,part);
         return adjacency_matrix;
     }
 
-
-    public static boolean[] component_analysis(Graph graph, Edge_interface graphTheoryInterface, boolean[] visted, Visual_part visualPart,boolean b_or_d)  {
+    public static boolean[] component_analysis(Graph graph, GUI_interface graphTheoryInterface, boolean[] visted, Visual_part visualPart, boolean b_or_d)  {
         ArrayList<Node> node= new ArrayList<>( graph.getVertices());
         Queue<EdgeAnimation> timelineQueue = new LinkedList<>();//only if dfs
 
         for(int i=0;i<node.size();i++){
             if(!visted[node.get(i).getNumber()]){
 
-              visted= //b_or_d ? bfs(graph,i,visted,graphTheoryInterface,visualPart):
+              visted= b_or_d ? bfs(graph,i,visted,graphTheoryInterface,visualPart):
                       dfs(graph,i,visted,graphTheoryInterface,timelineQueue);
             }
         }
@@ -389,37 +399,36 @@ api.setallvisible(g,part);
         return visted;
     }
 
-    private static Graph maxium_blossom(Graph graph){
-        float[][] adj=Graph_tools.adjacency_matrix(graph);
-        float[][] minadj=min_adj(adj);
 
+    //still wip
+    private static List<Edge> maximum_blossom(Graph graph){
+      int nodes=graph.getVertices().size();
+        boolean[] matched = new boolean[nodes];
+        boolean[] visited = new boolean[nodes];
+Node first=graph.getVertices().getFirst();
+        Queue<Node> q=new LinkedList<>();
+        visited[first.getNumber()]=true;
+        q.add(first);
+        while(!q.isEmpty()){
+            Node polled=q.poll();
+            List<Node> neighbors = graph.neighbors(polled);
+
+            for (Node n:neighbors) {
+
+                if(!visited[n.getNumber()]) {
+
+                    q.add(n);
+                    visited[n.getNumber()]=true;
+                }
+
+            }
+
+        }
 
 
         return null;
     }
 
-    private static float[][] min_adj(float[][] adj) {
-
-        float max=adj[0][0];
-        for (int i = 0; i < adj.length; i++) {
-            for (int j = 0; j < adj[i].length; j++) {
-                max=Math.max(max,adj[i][j]);
-            }
-        }
-
-      for (int i = 0; i < adj.length; i++) {
-          for (int j = 0; j < adj[i].length; j++) {
-              adj[i][j]=max-adj[i][j];
-          }
-      }
-
-
-
-
-
-
-        return adj;
-    }
  //-----------------Actual normal greedy algorithms (greedy is always optimal)-----------
 
 private static float Fractional_knapsack(List<Integer> items,List<Integer> weights,int W){
@@ -491,17 +500,46 @@ private static float Fractional_knapsack(List<Integer> items,List<Integer> weigh
 
 //------------NP-Approximation algorithms (heuristics)----------------------------
 
+    /* Since NP-hard problems are a nightmare to compute we (software engineers) we often
+    just create good enough answers, here's some of them */
     private static String shortest_superstring_approximation(){
 
         return "";
     }
 
+private static List<Node> non_greedy_clique_approximation(Graph graph){
+
+    return null;
+}
+
+    private static List<Node> node_candidates( Graph graph,List<Node> currentSet,List<Node> candidates) {
+        // this is perfectly okay for clique but not independent set
+
+        boolean isvaild;
+        List<Node> vaild_candidates=new ArrayList<>();
+
+        for(Node candidate :candidates){
+            isvaild=false;
+            for (Node node : currentSet) {
+                if (graph.isadjacent(node, candidate)) {
+                    isvaild = true;
+                    break;
+                }
+
+            }
+
+            if(isvaild){
+                vaild_candidates.add(candidate);
+            }
+
+        }
 
 
-
+        return vaild_candidates;
+    }
 
     //need to test this
-    private static Graph Christofides_approximation(Graph graph, Visual_part visualPart, Edge_interface graphTheoryInterface){
+    private static Graph Christofides_approximation(Graph graph, Visual_part visualPart, GUI_interface graphTheoryInterface){
 
       if (!Graph_tools.is_complete(graph)) {
           return null; //not doable
@@ -510,10 +548,10 @@ private static float Fractional_knapsack(List<Integer> items,List<Integer> weigh
         Graph near_neighbor = Prim(graph, graphTheoryInterface, visualPart,false);
 
         //find all nodes of odd degree
-     List<Node> odd_degree=new ArrayList<>();
+     HashMap<Integer,Node> odd_degree=new HashMap<>();
        for (Node n : near_neighbor.getVertices()) {
            if(near_neighbor.degree(n)%2!=0){
-                odd_degree.add(n);
+                odd_degree.put(n.getNumber(), n);
            }
        }
  //get all edges relating to the odd degrees from the original graph
@@ -537,7 +575,7 @@ int countining_the_pointer=near_neighbor.getEdges().getLast().getPointer();
     while (!odd_degree.isEmpty()&& !edges.isEmpty()){
         // this is the super greedy approach (n^2 log n), slightly less accurate than the optimal n^3 blossom that will be done later
         Edge edge=Min_heap.extract_from_heap(edges);
-        if (odd_degree.contains(edge.getV1())&&odd_degree.contains(edge.getV2())){
+        if (odd_degree.containsKey(edge.getV1().getNumber())&&odd_degree.containsKey(edge.getV2().getNumber())){
 
         //by the handshake lemma if there exists nodes with odd degrees in an undirected graph they must come in pairs
         //that is the number of odd degree nodes is even for any graph
@@ -545,8 +583,8 @@ int countining_the_pointer=near_neighbor.getEdges().getLast().getPointer();
         if(near_neighbor.degree(edge.getV1())%2!=0&&near_neighbor.degree(edge.getV2())%2!=0){
            countining_the_pointer=countining_the_pointer+1;
             near_neighbor.addEdge(edge,edge.getWeight(),true,countining_the_pointer);//TRUE IS for allowing dulipcates this techinally becomes a multigraph
-           odd_degree.remove(edge.getV1());
-           odd_degree.remove(edge.getV2());
+           odd_degree.remove(edge.getV1().getNumber());
+           odd_degree.remove(edge.getV2().getNumber());
         }}}
 List<Node> nodeorder=new ArrayList<>();
     //return the node order of the eulerian tour
@@ -554,6 +592,41 @@ nodeorder=euleriantour(near_neighbor,edges.getFirst(),edges.getFirst().getPointe
 //finally construct a Ham tour with our node list
         return build_Hamiltonian_tour(graph,nodeorder);
 
+    }
+
+    private static Graph minium_weight_blossom(Graph graph){
+        float[][] adj=Graph_tools.adjacency_matrix(graph);
+        if (adj==null){
+            return Graph_tools.empty_graph();
+        }
+        float[][] minadj=min_adj(adj);
+
+
+
+        return null;
+    }
+
+    private static float[][] min_adj(float[][] adj) {
+
+        float max=adj[0][0];
+        for (int i = 0; i < adj.length; i++) {
+            for (int j = 0; j < adj[i].length; j++) {
+                max=Math.max(max,adj[i][j]);
+            }
+        }
+
+        for (int i = 0; i < adj.length; i++) {
+            for (int j = 0; j < adj[i].length; j++) {
+                adj[i][j]=max-adj[i][j];
+            }
+        }
+
+
+
+
+
+
+        return adj;
     }
 
     private static Graph build_Hamiltonian_tour(Graph graph, List<Node> nodeorder) {
@@ -598,9 +671,6 @@ nodeorder=euleriantour(near_neighbor,edges.getFirst(),edges.getFirst().getPointe
           }
       }
 
-
-
-
         return tour;
     }
 
@@ -627,7 +697,6 @@ nodeorder=euleriantour(near_neighbor,edges.getFirst(),edges.getFirst().getPointe
         return nodes;
     }
 
-
     private static Graph Greedy_coloring(Graph graph){
     if (graph.getVertices().isEmpty()) {return graph;}
        ArrayList<String> list = (ArrayList<String>) Graph_tools.random_unique_colors(graph);
@@ -653,64 +722,36 @@ nodeorder=euleriantour(near_neighbor,edges.getFirst(),edges.getFirst().getPointe
     return graph;
 }
 
-
-
    private static List<Node> Greedy_vertex_cover(Graph graph){
         LinkedList<Node> cover=new LinkedList<>();
+        //ArrayList<Edge> listcopy= (ArrayList<Edge>) graph.getEdges();
        graph.getVertices().sort(Comparator.comparingInt(graph::degree).reversed());
        HashSet<Edge> current_edge_collection=new HashSet<>();
 
        for (Node n:graph.getVertices()){
-
+//need to improve this later
            if (Set_theory_items.complement(graph.getEdges(),current_edge_collection).isEmpty()){
                break;
            }
 
            cover.add(n);
-           for (Edge e:graph.indenctedges(n)){
-               current_edge_collection.add(e);
-           }
+           current_edge_collection.addAll(graph.indenctedges(n));
 
        }
 
         return cover;
    }
 
-
-    private static <G> ArrayList<List<G>> bin_packing_best_fit_offline_approximation(
+    private static  ArrayList<List<Integer>> bin_packing_best_fit_offline_approximation(
 int capcaity_of_bins,List<Integer> items){ //need a way to return bin cost that isn't O(n)
-  ArrayList<List<G>> best_fit_offline_approximation=new ArrayList<>(items.size()); //theorically you would need as many bins as items so long as the items are less than the bin
+  ArrayList<List<Integer>> best_fit_offline_approximation=new ArrayList<>(items.size()); //theorically you would need as many bins as items so long as the items are less than the bin
     items.sort(Collections.reverseOrder());
 
 
         return best_fit_offline_approximation;
 }
 
-    private static List<Node> node_candidates( Graph graph,List<Node> currentSet,List<Node> candidates) {
-        // this is perfectly okay for clique but not independent set
 
-        boolean isvaild;
-        List<Node> vaild_candidates=new ArrayList<>();
-
-        for(Node candidate :candidates){
-            isvaild=false;
-            for (Node node : currentSet) {
-                if (graph.isadjacent(node, candidate)) {
-                    isvaild = true;
-                    break;
-                }
-
-            }
-
-            if(isvaild){
-                vaild_candidates.add(candidate);
-            }
-
-        }
-
-
-        return vaild_candidates;
-    }
 
 private static List<Integer> Greedy_coin_change(List<Integer> coins,int intinal_amount){
        //assume coins are sorted
@@ -734,6 +775,8 @@ if(intinal_amount>0){
     return coin_list;
 }
    //----------------------DP---------------------------------
+    /*Dynamic programing algorithms, Just some examples to make learning it
+    easier.*/
 
 private static int largest_increasing_subsequence(int[] squence_array){
     int[] ints=new int[squence_array.length];
@@ -848,7 +891,7 @@ for(int i=1;i<=sum;i++){
 
 
 //--------------Some Interview problems--------------------------------
-
+/* Some common interview problems, not even close to exhaustive*/
 
     private static boolean isapalindrome(String s){
 
@@ -893,6 +936,9 @@ private static int number_of_ways_to_return_change(){
     return 0;
 }
 
+private static int island_finder(int[][] map){
+    return 0;
+}
 
 
 private static int[] three_color_dutch_flag_generalized(int[] colors,int[] order){
@@ -946,6 +992,7 @@ private static List<Integer> two_partition(Integer[] listed){
        sum+=list;
    }
         if (sum%2!=0||sum==0){
+            //no partition exists
             return new ArrayList<>();
         }
         int partition=sum/2;
@@ -1002,21 +1049,60 @@ private static List<Integer> two_partition(Integer[] listed){
 
 
 //I should probaly do some with hashmaps.
+private static <E> LinkedList<E> findtheintersectionofmultilinkedlists(LinkedList<E> a,LinkedList<E> b){
+
+    //assume Hashsets aren't allowed but hashmaps are.
+    HashMap<E,Integer> intersection_check=new HashMap<>();
+        LinkedList<E>intersection=new LinkedList<>();
+
+        for(E e:a){
+            intersection_check.put(e,intersection_check.getOrDefault(e,0)+1);
+        }
+        for(E e:b){
+         if (intersection_check.containsKey(e)&& intersection_check.get(e) > 0) {
+             intersection.add(e);
+             intersection_check.put(e,intersection_check.get(e)-1);
+         }
+        }
 
 
+    return intersection;
+}
+
+
+private static List<String> allanagrams(List<String> list){
+    return list;
+}
+
+
+private static <E> List<E> hasduplicates(){
+    return List.of();
+}
+
+private static <E> List<List<E>> permutations(E[] array){
+
+    return List.of();
+}
 
     //--------------------NP-Hard--------------------------------------------------
+
+    /*(computationally) difficult problems. it is not recommend to run massive instances
+    of these problems (knapsack is somewhat more lenient) unless you want to
+    sit around for hours (or even longer!)*/
+
  public static List<Node> independent_set(Graph graph,Visual_part  part,
-                                    Edge_interface edgeInterface) {
+                                    GUI_interface edgeInterface) {
      Queue<EdgeAnimation> timelineQueue = new LinkedList<>();
 
    List<Node> list= independent_set_calculation(graph,new ArrayList<>(),
              new ArrayList<>(),new ArrayList<>(),part,edgeInterface,timelineQueue);
 
-   for (Node node : list) {
-       timelineQueue.add(edgeInterface.highlight_semi_permant(node, part));
-   }
+     if (edgeInterface !=null&&part!=null) {
+         for (Node node : list) {
 
+             timelineQueue.add(edgeInterface.highlight_semi_permant(node, part));
+         }
+     }
      if (edgeInterface !=null&&part!=null) {
          part.playNext((LinkedList<? extends Animations>) timelineQueue);
      }
@@ -1026,15 +1112,10 @@ private static List<Integer> two_partition(Integer[] listed){
 
 
 
+    private static List<Node> independent_set_calculation(Graph graph, List<Node> best_set,
+                                                          List<Node> current_set, List<Node> candidates, Visual_part  part,
+                                                          GUI_interface edgeInterface, Queue<EdgeAnimation> timelineQueue){
 
-
-    // (1.5)
-    private static List<Node> independent_set_calculation(Graph graph,List<Node> best_set,
-     List<Node> current_set,List<Node> candidates,Visual_part  part,
-     Edge_interface edgeInterface, Queue<EdgeAnimation> timelineQueue){
-        if (current_set.isEmpty() && timelineQueue.isEmpty()) {
-            timelineQueue.add(edgeInterface.pause(1));
-        }
 
 
 
@@ -1046,7 +1127,7 @@ private static List<Integer> two_partition(Integer[] listed){
 
         if(current_set.size() + candidates.size() <= best_set.size()){
             if (part != null&&edgeInterface!=null) {
-                    timelineQueue.add(edgeInterface.pause(50));
+                    timelineQueue.add(edgeInterface.pause(1));
             }
 
             return best_set;
@@ -1070,20 +1151,22 @@ private static List<Integer> two_partition(Integer[] listed){
             }
             List<Node> nextCandidates = new ArrayList<>();
 
- /*in clique its much easier since a node cannot be adjenct to itself
+ /*in clique its much easier since a node cannot be adjacent to itself
  or at least you cannot form an edge between itself
   however thats a problem for independent set since
- this is examining nodes not adjenct to each other
- and a node can never be adjencent to itself so unless
+ this is examining nodes not adjacent to each other
+ and a node can never be adjacent to itself so unless
  you do something like this it will never stop.*/
 
 
          for (int j=i+1;j<candidates.size();j++){
              //^ this forces you to look at other nodes
              //and prevent an infinite loop
+             //this also stops you from looking at other
+             //permutations, which would waste more time
 
                  Node c = candidates.get(j);
-
+               //now you conduct the check
                  boolean vaild_candidate = true;
                  for (Node u : current_set) {
                      if (graph.isadjacent(u, c)) {
@@ -1113,7 +1196,7 @@ But that's debatable*/
 
 
     //round two
-    public static void unbounded_knapsack(int[] values,int[] weights,int weight){
+    public static int unbounded_knapsack(int[] values,int[] weights,int weight){
 int[] unbounded_knapsack_array=new int[weight+1];
 int n=values.length;
 for(int i=1;i<=weight;i++){
@@ -1128,11 +1211,11 @@ for(int i=1;i<=weight;i++){
 }
 
 
-
+        return unbounded_knapsack_array[weight];
     }
 
     //round two
-    public  static void binary_knapsack(int[] values,int[] weights,int weight){
+    public  static int binary_knapsack(int[] values,int[] weights,int weight){
       int n = weights.length;
    int[][] binary_knapsack_matrix=new int[n+1][weight+1];
 
@@ -1149,6 +1232,7 @@ for(int i=1;i<=n;i++){
 }
 
 
+        return binary_knapsack_matrix[n][weight];
     }
 
 
@@ -1156,7 +1240,7 @@ private static void Matrix_Permanent_of_zero(){
 
 }
 
-
+    //round 2.5
 private static void chromatic_number(Graph graph,String[] colorlist,
  ArrayList<String> miniumcolorlist,int colorlimit,ArrayList<String> currentcolorlist){
 
@@ -1170,7 +1254,7 @@ private static <G> List<List<G>> set_cover(G[] universalset){
 }
 
 
-    //round two
+    //round 2.5
  private static void generalized_sudoku(char[][] sudoku,char[] total_chars,char[] vaild_char_list){
         if (!isboardvaild(sudoku)){
             return;
@@ -1294,6 +1378,166 @@ if (!(n==sudoku_size)) {
 
 
         return true;
+    }
+
+
+
+
+
+    public static boolean ishamilition(Graph graph,Visual_part part,
+ GUI_interface edgeInterface){
+        Queue<EdgeAnimation> timelineQueue = new LinkedList<>();
+
+     if (!Graph_tools.is_connected(graph)){
+         return false;
+     }
+     if (Graph_tools.is_tree(graph)){
+         return false;
+     }
+
+    if (graph.getVertices().size()<=2){
+        return false;
+    }
+
+    for (Node v : graph.getVertices()){
+        if (graph.degree(v)==1){
+            return false;
+        }
+    }
+
+    if (Dirac_check(graph)){
+        for (Node node : graph.getVertices()){
+            if (edgeInterface !=null&&part!=null) {
+                timelineQueue.add(edgeInterface.highlight_semi_permant(node, part));
+            }
+        }
+
+        return true;
+    }
+
+
+ArrayList<Node> allnodesdesending = new ArrayList<>(graph.getVertices());
+allnodesdesending.sort(Comparator.comparingInt(graph::degree));
+ArrayList<Node> one_node = new ArrayList<>();
+one_node.add(allnodesdesending.getFirst());
+
+        if (edgeInterface !=null&&part!=null) {
+            timelineQueue.add(edgeInterface.highlight_semi_permant(one_node.getFirst(),part));
+        }
+        Path_Checker path_checker = check_if_hamilition(graph,
+            Graph_tools.adjacency_matrix(graph),allnodesdesending,
+                new Path_Checker(one_node,false),
+                part,edgeInterface,timelineQueue);
+
+        if (!path_checker.isPath_or_cycle_found()){
+            for (Node node : allnodesdesending){
+                if (edgeInterface !=null&&part!=null) {
+                    timelineQueue.add(edgeInterface.disable_highlights(node, part));
+                }
+            }
+        for (Edge edge : graph.getEdges()){
+            if (edgeInterface !=null&&part!=null) {
+                timelineQueue.add(edgeInterface.disable_edge(edge, part));
+            }
+        }
+
+        }
+
+        if (edgeInterface !=null&&part!=null) {
+            part.playNext((LinkedList<? extends Animations>) timelineQueue);
+        }
+
+
+
+        return path_checker.isPath_or_cycle_found();
+    }
+
+    private static boolean Dirac_check(Graph graph) {
+      int nodes = graph.getVertices().size();
+      float condition= (float) nodes /2;
+      boolean check=true;
+     for (Node node : graph.getVertices()){
+         if (graph.degree(node) < condition){
+             //just because this fails this does not guarantee non-hamilition
+             //you need to look
+             check=false;
+             break;
+         }
+     }
+
+     return check;
+    }
+
+
+    private static Path_Checker check_if_hamilition(Graph graph,
+                                                   float[][] adjacency_matrix, List<Node> total_list_of_nodes, Path_Checker path_checker
+   , Visual_part  part, GUI_interface edgeInterface, Queue<EdgeAnimation> timelineQueue) {
+
+     if (total_list_of_nodes.size()==path_checker.getCurrent_path().size()&&isacycle(path_checker.getCurrent_path(),
+             adjacency_matrix,timelineQueue,edgeInterface,graph,part)) {
+         //if we find a ham cycle dont bother couniting
+         return new Path_Checker(path_checker.getCurrent_path(),true);
+     }
+
+     List<Node> remaining_node=Set_theory_items.complement(total_list_of_nodes, path_checker.getCurrent_path());
+
+     for (Node node : remaining_node) {
+         if (path_checker.isPath_or_cycle_found()) {
+           //declare victory and stop
+             break;
+         }
+         if (adjacency_matrix[path_checker.getCurrent_path().getLast().getNumber()][node.getNumber()]!=Float.POSITIVE_INFINITY) {
+
+                 if (edgeInterface!=null&&part!=null) {
+                     timelineQueue.add(edgeInterface.highlight_edge(graph.getEdge(path_checker.getCurrent_path().getLast(),node),part));
+                     timelineQueue.add( edgeInterface.highlight_semi_permant(node,part));
+               }
+                 path_checker.getCurrent_path().add(node);
+                path_checker=check_if_hamilition(graph,adjacency_matrix,total_list_of_nodes,path_checker,part,edgeInterface,timelineQueue);
+                if (!path_checker.isPath_or_cycle_found()) {
+                    path_checker.getCurrent_path().remove(node);
+                if (edgeInterface!=null&&part!=null) {
+                    timelineQueue.add(edgeInterface.disable_edge(graph.getEdge(path_checker.getCurrent_path().getLast(),node), part));
+                 timelineQueue.add(edgeInterface.disable_highlights(node,part));}
+                }
+             }
+         }
+
+
+     return path_checker;
+   }
+
+    private static boolean isacycle(List<Node> nodes, float[][] adjacencyMatrix, Queue<EdgeAnimation> timelineQueue,
+                                    GUI_interface edgeInterface, Graph graph,Visual_part part) {
+       Node prev=null;
+       Node curr;
+       Node last=nodes.getLast();
+       Node first=nodes.getFirst();
+       boolean isgood=false;
+
+       for (Node node : nodes) {
+           curr=node;
+
+         if (node.equals(last)) {
+             if (adjacencyMatrix[last.getNumber()][first.getNumber()]!=Float.POSITIVE_INFINITY) {
+               isgood=true;
+               timelineQueue.add(edgeInterface.highlight_edge(graph.getEdge(last,first),part));
+               timelineQueue.add(edgeInterface.onEdgesearched(graph.getEdge(last,first)));
+                 break;
+             }else {
+                 return false;
+             }
+         }
+           if (prev != null) {
+               if (adjacencyMatrix[prev.getNumber()][curr.getNumber()]==Float.POSITIVE_INFINITY) {
+                break;
+               }
+               timelineQueue.add(edgeInterface.highlight_edge(graph.getEdge(prev,curr),part));
+
+           }
+           prev=curr;
+       }
+        return isgood;
     }
 
 

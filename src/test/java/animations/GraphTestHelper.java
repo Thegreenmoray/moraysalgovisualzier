@@ -1,6 +1,7 @@
-package graph_theory;
+package animations;
 
-import animations.Graph;
+import graph_theory.Edge;
+import graph_theory.Node;
 
 import java.util.LinkedList;
 import java.util.Random;

@@ -3,7 +3,9 @@ package animations;
 import graph_theory.Edge;
 import graph_theory.Node;
 
-public interface Edge_interface {
+import java.util.List;
+
+public interface GUI_interface {
 
      EdgeAnimation onEdgesearched(Edge e);
      EdgeAnimation highlightNode(Node u);
@@ -26,6 +28,9 @@ public interface Edge_interface {
     void addarc(Graph graph,Edge e,Visual_part part,float weight);
     EdgeAnimation highlight_semi_permant(Node node,Visual_part part);
     EdgeAnimation disable_highlights(Node node,Visual_part part);
+    EdgeAnimation highlight_edge(Edge e, Visual_part part);
+    EdgeAnimation disable_edge(Edge e,Visual_part part);
+    <E> SetAnimation updatetile(List<E> list,Visual_part part,int index);
 }
 
 
