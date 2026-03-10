@@ -305,4 +305,15 @@ public static boolean is_eulerian(Graph graph){
 
     return is_eulerian;
 }
+
+    public static boolean[][] colormatrix(Graph graph, List<String> colors) {
+    boolean[][] color_matrix=new boolean[graph.getVertices().size()][colors.size()];
+    for(int i=0;i<graph.getVertices().size();i++){
+        for(int j=0;j<colors.size();j++){
+            color_matrix[i][j]=true;  //by defualt we should be able to use all colors
+        }
+    }
+
+        return color_matrix;
+    }
 }

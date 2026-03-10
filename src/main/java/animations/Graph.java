@@ -266,7 +266,7 @@ public void removeVertex(Node v){
   updateincidentedges();
 }
 
- public int degree(Node v){
+ public  int degree(Node v){
      return indenctedges(v).size();
  }
 

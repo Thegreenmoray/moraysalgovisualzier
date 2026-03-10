@@ -38,7 +38,7 @@ public class Visual_part {
     }
 
 
-    public Graph randomgraph_establish(int size, int edgechance, boolean isweighted, boolean canbenegative, boolean isdirected) {
+    public Graph randomgraph_establish(int size, double edgechance, boolean isweighted, boolean canbenegative, boolean isdirected) {
     Graph graph =isdirected? generate_graph_directed(size,edgechance,isweighted,canbenegative):generate_graph_undirected(size,edgechance,isweighted,canbenegative);
      if (!root.getChildren().contains(edgeLayer)) {
         root.getChildren().addAll(edgeLayer, nodeLayer,textLayer);}
@@ -60,7 +60,7 @@ public class Visual_part {
          int current_attempts=0;
           do{
           good=true;
-            distance_X=random.nextInt(500)+100;
+            distance_X=random.nextInt(1000)+100;
             distance_Y=random.nextInt(500)+100;
 
               for (Point2D p : mina_distance) {
@@ -143,7 +143,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         return List.of();
     };
 
-    public Graph establish(Graph graph,boolean isdirected,boolean isweighted,boolean canbenegative) {
+    public Graph establish(Graph graph,boolean isdirected,boolean isweighted) {
       if (!root.getChildren().contains(edgeLayer)) {
         root.getChildren().addAll(edgeLayer, nodeLayer,textLayer);}
 
@@ -602,7 +602,7 @@ if (f !=null &&k !=null){
        }
     }
 
-    private static Graph generate_graph_undirected(int size,int edge_chance,boolean isweighted,boolean can_be_negative_weight){
+    private static Graph generate_graph_undirected(int size,double edge_chance,boolean isweighted,boolean can_be_negative_weight){
         LinkedList<Node> nodes = new LinkedList<>();
         LinkedList<Edge> edges = new LinkedList<>();
 
@@ -610,9 +610,9 @@ if (f !=null &&k !=null){
             size = 0;
         }
 
-        if(edge_chance <= 0){
-            edge_chance = 1;
-        }
+
+            edge_chance = Math.clamp(edge_chance,0,1);
+
 
         Random rand = new Random();
 
@@ -622,7 +622,7 @@ if (f !=null &&k !=null){
 
         for(int i=0;i<size;i++){
             for(int j=i+1;j<size;j++){
-                if(rand.nextInt(edge_chance)==0){
+                if(rand.nextFloat()<edge_chance){
                     int c=rand.nextInt(20)+2;
                     if (isweighted)
                     {
@@ -643,17 +643,12 @@ if (f !=null &&k !=null){
         return new Graph(nodes,edges);
     }
 
-    private static Graph generate_graph_directed(int size,int edge_chance,boolean isweighted,boolean can_be_negative_weight){
+    private static Graph generate_graph_directed(int size,double edge_chance,boolean isweighted,boolean can_be_negative_weight){
         LinkedList<Node> nodes = new LinkedList<>();
         LinkedList<Edge> edges = new LinkedList<>();
 
-        if (size <=0){
-            size = 0;
-        }
 
-        if(edge_chance <= 0){
-            edge_chance = 1;
-        }
+      edge_chance =Math.clamp(edge_chance,0,1);
 
         Random rand = new Random();
 
@@ -665,7 +660,7 @@ if (f !=null &&k !=null){
             for (int j = 0; j < size; j++) {
                 if (i==j) {continue;}
 
-                if (rand.nextInt(edge_chance) == 0) {
+                if (rand.nextFloat()<edge_chance) {
                     int c = rand.nextInt(20) + 2;
                     if (isweighted) {
                         int v = can_be_negative_weight && rand.nextBoolean() ? -1 : 1;
@@ -822,4 +817,25 @@ if (f !=null &&k !=null){
 
         return new EdgeAnimation(timeline);
     }
+
+    public EdgeAnimation colornode(Node node,String hexcode_color) {
+        if (!corrlate.containsKey(node)) {
+            return null;
+        }
+        Group group = corrlate.get(node);
+        Circle circle = (Circle) group.getChildren().getFirst();
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        e -> {
+                            circle.setFill(Color.web(hexcode_color));
+                        }
+                ),
+                new KeyFrame(Duration.millis(50),
+                        e -> {
+                            circle.setFill(Color.web(hexcode_color));
+                        }));
+        return new EdgeAnimation(timeline);
+    }
+
+
 }

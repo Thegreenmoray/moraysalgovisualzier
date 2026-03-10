@@ -43,7 +43,7 @@ public class Main extends Application {
                     "    @Override\n" +
                     "    public void run(GUI_interface api,Visual_part part) {\n" +
                     "        // Your algorithm goes here\n" +
-                    " Graph graph=part.randomgraph_establish(4,1,false,false,false);\n" +
+                    " Graph graph=part.randomgraph_establish(4,0.75,false,false,false);\n" +
                     "    }\n" +
                     "}\n");
 
@@ -118,6 +118,11 @@ public class Main extends Application {
             }
 
             @Override
+            public EdgeAnimation color_nodes(Node node, Visual_part part, String Hexcode_color) {
+                return part.colornode(node,Hexcode_color);
+            }
+
+            @Override
             public <E> SetAnimation updatetile(List<E> list, Visual_part part, int index) {
                 return null;
             }
@@ -186,14 +191,14 @@ public class Main extends Application {
             AlgorithmRunner algorithmRunner = new AlgorithmRunner();
         Button compileButton = new Button("Compile");
         Button runButton = new Button("Run");
-        compileButton.setLayoutX(200);
-        runButton.setLayoutX(200);
+        compileButton.setLayoutX(100);
+        runButton.setLayoutX(100);
         compileButton.setLayoutY(200);
         runButton.setLayoutY(250);
 
         Button clearButton = new Button("Clear");
 
-        clearButton.setLayoutX(200);
+        clearButton.setLayoutX(100);
         clearButton.setLayoutY(300);
         root.getChildren().addAll(codeInput,compileButton,runButton,clearButton);
 

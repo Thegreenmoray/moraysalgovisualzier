@@ -17,7 +17,7 @@ private String hexcode_color;
     public Node(int number) {
     this.number = number;
     vertexState=VertexState.DEFAULT;
-    hexcode_color="#000000";
+    hexcode_color=null;
 
 }
 
@@ -25,7 +25,7 @@ private String hexcode_color;
         this.number = number;
         this.weight = weight;
         vertexState=VertexState.DEFAULT;
-        hexcode_color="#000000";
+        hexcode_color=null;
     }
     public Node(int number, int weight,String hexcode_color) {
         this.number = number;
@@ -67,6 +67,9 @@ public void setVertexState(VertexState vertexState) {
 
    public boolean issamecolor(Node node) {
 
+        if ((node.getHexcode_color()==null||this.hexcode_color ==null)){
+            return false;
+        }
        return node.getHexcode_color().equals(hexcode_color);
    }
 

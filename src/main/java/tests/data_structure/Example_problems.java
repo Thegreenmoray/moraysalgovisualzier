@@ -1195,7 +1195,7 @@ But that's debatable*/
     }
 
 
-    //round two
+
     public static int unbounded_knapsack(int[] values,int[] weights,int weight){
 int[] unbounded_knapsack_array=new int[weight+1];
 int n=values.length;
@@ -1214,7 +1214,7 @@ for(int i=1;i<=weight;i++){
         return unbounded_knapsack_array[weight];
     }
 
-    //round two
+
     public  static int binary_knapsack(int[] values,int[] weights,int weight){
       int n = weights.length;
    int[][] binary_knapsack_matrix=new int[n+1][weight+1];
@@ -1235,20 +1235,205 @@ for(int i=1;i<=n;i++){
         return binary_knapsack_matrix[n][weight];
     }
 
+//probably not this, but definitely some type of matrix np problem
+private static void Matrix_Permanent_of_zero(){}
 
-private static void Matrix_Permanent_of_zero(){
 
+public static int chromatic_number(Graph graph,GUI_interface gui_interface,Visual_part  part
+){
+    Queue<EdgeAnimation> timelineQueue = new LinkedList<>();
+
+
+List<String> colors =Graph_tools.random_unique_colors(graph);
+if (colors==null|| colors.isEmpty()){ //either graph is too big or graph has no nodes
+    return 0;
 }
+    ArrayList<String> colors_list=new ArrayList<>();
+    colors_list.add(colors.get(0));
+ArrayList<Node> uncolored=new ArrayList<>(graph.getVertices());
+     if (graph.getEdges().isEmpty()){
+         chromatic_number_check(graph,
+                 colors_list,0, new ArrayList<>(),
+                gui_interface,part,timelineQueue,uncolored);
+         if (gui_interface !=null&&part!=null) {
+             part.playNext((LinkedList<? extends Animations>) timelineQueue);
+         }
+        return 1;
+}
+
+    colors_list.add(colors.get(1));
+     if (Graph_tools.isbipartite(graph)){
+       for (Node node:graph.getVertices()){
+           node.setHexcode_color(null);
+       }
+         chromatic_number_check(graph,
+                 colors_list,0, new ArrayList<>(),
+                gui_interface,part,timelineQueue,uncolored);
+         if (gui_interface !=null&&part!=null) {
+             part.playNext((LinkedList<? extends Animations>) timelineQueue);
+         }
+         return 2;
+     }
+    for (Node node:graph.getVertices()){
+        node.setHexcode_color(null);
+    }
+
+     if (Graph_tools.is_complete(graph)){
+         for (Node node:graph.getVertices()){
+             node.setHexcode_color(null);
+         }
+         chromatic_number_check(graph,
+                 colors,0, new ArrayList<>(),
+                gui_interface,part,timelineQueue,uncolored);
+         if (gui_interface !=null&&part!=null) {
+             part.playNext((LinkedList<? extends Animations>) timelineQueue);
+         }
+         return graph.getVertices().size();
+     }
+
+graph.getVertices().sort(Comparator.comparingInt(graph::degree).reversed());
+
+
+     for (int i=3;i<graph.getVertices().size();i++){
+        colors_list.add(colors.get(i-1));
+
+
+         chromatic_number_check(graph,
+     colors_list,0, new ArrayList<>(),
+ gui_interface,part,timelineQueue,uncolored);
+
+
+     if (isvaildcoloring(graph)){
+         if (gui_interface !=null&&part!=null) {
+             part.playNext((LinkedList<? extends Animations>) timelineQueue);
+         }
+
+
+     return i;}
+     for (Node  node : graph.getVertices()){
+         node.setHexcode_color(null);
+         if (part!=null&&gui_interface!=null){
+             gui_interface.disable_highlights(node,part);
+         }
+     }
+     }
+
+
+
+    return 0;
+}
+
+    private static boolean isvaildcoloring(Graph graph) {
+    for (Node node : graph.getVertices()) {
+       if (node.getHexcode_color()==null) {
+           return false;
+       }
+    }
+
+        return true;
+    }
+
 
     //round 2.5
-private static void chromatic_number(Graph graph,String[] colorlist,
- ArrayList<String> miniumcolorlist,int colorlimit,ArrayList<String> currentcolorlist){
+private static ArrayList<String> chromatic_number_check(Graph graph,
+  List<String> color_map,int currentsize,
+  ArrayList<String> colorpalette,GUI_interface  gui_interface,Visual_part  part,
+  Queue<EdgeAnimation> timelineQueue,ArrayList<Node> uncolored){
+//improve this later
+
+     if (graph.getVertices().size()==currentsize){
+         if(vaild_color_checking(graph)){
+        colorpalette = (ArrayList<String>) color_map;
+         }
+         return colorpalette;
+     }
+
+    Node node=graph.getVertices().get(currentsize);
+     uncolored.remove(node);
+
+boolean willconflict=false;
+         for (String color : color_map) {
+
+          if (!colorpalette.isEmpty()) {
+              break;
+          }
+
+
+             for (Node neighbor:graph.neighbors(node)) {
+                 if (neighbor.getHexcode_color()!=null&&color.equals(neighbor.getHexcode_color())) {
+                    willconflict=true;
+                 break;  //try another
+                 }
+             }
+
+             if (!willconflict&& forwardCheck(graph, node, (ArrayList<String>) color_map, uncolored, timelineQueue,part,gui_interface)) {
+               node.setHexcode_color(color);
+
+                 if (part!=null&&gui_interface!=null) {
+                     timelineQueue.add(gui_interface.color_nodes(node, part, color));
+                 }
+                 //now proceed
+                 colorpalette= chromatic_number_check(graph,
+                                          color_map,
+                         currentsize+1, colorpalette,gui_interface,part,timelineQueue,uncolored);
+         }
+willconflict=false;
+     }
+
+
+
+
+
+
+    return colorpalette;
+}
+
+
+private static boolean forwardCheck(Graph graph, Node node,  ArrayList<String> currentcolorlist, ArrayList<Node> uncolored,Queue<EdgeAnimation> animations,Visual_part  part,GUI_interface gui_interface) {
+    for (Node neighbor:graph.neighbors(node)) {
+        if (!uncolored.contains(neighbor)) continue;
+
+        int available = 0;
+        for (String color : currentcolorlist) {
+         // animations.add(gui_interface.color_nodes(node, part, color));
+            boolean conflict = false;
+            for (Node neighbor_of_neighbor : graph.neighbors(neighbor)) {
+                if (neighbor_of_neighbor.getHexcode_color() != null &&color.equals(neighbor_of_neighbor.getHexcode_color())) {
+
+                    conflict = true;
+                    break;
+                }
+            }
+            if (!conflict) available++;
+        }
+
+        // If neighbor has no colors left, this assignment fails
+        if (available == 0) {
+            return false;}
+
+    }
+
+
+    return true;
+
 
 }
 
 
 
-private static <G> List<List<G>> set_cover(G[] universalset){
+    private static boolean vaild_color_checking(Graph graph) {
+      for (Node node : graph.getVertices()) {
+          for (Node neighbor:graph.neighbors(node)){
+              if (node.issamecolor(neighbor)) {
+                 return false;
+              }
+          }
+      }
+        return true;
+    }
+
+
+    private static <G> List<List<G>> set_cover(G[] universalset,List<List<G>> elements,List<List<G>> current_cover){
 
     return List.of();
 }
@@ -1379,10 +1564,6 @@ if (!(n==sudoku_size)) {
 
         return true;
     }
-
-
-
-
 
     public static boolean ishamilition(Graph graph,Visual_part part,
  GUI_interface edgeInterface){
@@ -1539,6 +1720,24 @@ one_node.add(allnodesdesending.getFirst());
        }
         return isgood;
     }
+
+
+ private static HashMap<Integer,Boolean> generalSAT(){
+
+     return null;
+ }
+
+ private static String lattice_protein_folding(){
+     return "";
+ }
+
+
+
+private static Graph shortest_path_with_negative_cycles(){
+
+    return null;
+}
+
 
 
 }

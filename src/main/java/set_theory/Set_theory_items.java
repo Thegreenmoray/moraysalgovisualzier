@@ -112,4 +112,14 @@ private Set_theory_items(){}
         return new ArrayList<>(list);
     }
 
+    public static <E,K> List<K> complement(HashMap<E, K> colorMap, ArrayList<K> currentcolorlist) {
+        Set<K> set=new HashSet<>();
+    for(Map.Entry<E, K> entry:colorMap.entrySet()){
+            set.add(entry.getValue());
+       }
+
+    set.removeAll(currentcolorlist);
+
+        return new ArrayList<>(set);
+    }
 }
