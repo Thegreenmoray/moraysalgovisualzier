@@ -10,7 +10,7 @@ private     float weight;
 
 
 
-    EdgeState edgeState;
+
     int pointer;
 
 
@@ -19,7 +19,7 @@ private     float weight;
         this.v1 = v1;
         this.v2 = v2;
         this.weight = 1;
-        edgeState=EdgeState.DEFAULT;
+
 
     }
 
@@ -27,7 +27,7 @@ private     float weight;
         this.v1 = v1;
         this.v2 = v2;
         this.weight = weight;
-        edgeState=EdgeState.DEFAULT;
+
 
     }
 
@@ -35,7 +35,7 @@ private     float weight;
         this.v1 = v1;
         this.v2 = v2;
         this.weight = weight;
-        this.edgeState=EdgeState.DEFAULT;
+
         this.pointer=pointer;
     }
 
@@ -43,14 +43,6 @@ private     float weight;
         return pointer;
     }
 
-
-
-    public EdgeState getEdgeState() {
-        return edgeState;
-    }
-public void setEdgeState(EdgeState edgeState) {
-        this.edgeState = edgeState;
-}
     public Node getV1() {
         return v1;
     }
@@ -92,21 +84,13 @@ public void setEdgeState(EdgeState edgeState) {
                 v2.equals(e.v2);
     }
 
-    public boolean isoppsitedirection(Edge e) {
 
-        return v1.equals(e.v2) && v2.equals(e.v1);
-    }
 
 
     public boolean connects(Node a, Node b) {
         return (v1.equals(a) && v2.equals(b)) ||
                 (v1.equals(b) && v2.equals(a));
     }
-
-
-    public boolean containsonly(Node v){
-        return v1.getNumber() ==v.getNumber();
-}
 
 
     @Override

@@ -9,12 +9,12 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import tests.data_structure.Graph_tools;
 
 import java.util.*;
 
@@ -142,6 +142,54 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
         return List.of();
     };
+
+
+    private Graph randomDAG(int node_number, double probability, boolean isweighted, boolean canbenegative){
+       Graph graph= Graph_tools.empty_graph();
+       for (int i=0;i<node_number;i++) {
+           graph.addVertex(new Node(i));
+       }
+
+       probability=Math.clamp(probability,0,1);
+
+       Random rand=new Random();
+        for(int i=0;i<node_number;i++) {
+            for (int j = i + 1; j < node_number; j++) {
+                if (rand.nextFloat() < probability) {
+                    int c = rand.nextInt(20) + 2;
+                    if (isweighted) {
+                        int v = canbenegative && rand.nextBoolean() ? -1 : 1;
+
+                  graph.addarc(new Edge(graph.getVertices().get(i), graph.getVertices().get(j), v * c));
+
+                    } else {
+                      graph.addarc(new Edge(graph.getVertices().get(i), graph.getVertices().get(j)));
+
+                    }
+
+                }
+            }
+        }
+        return graph;
+    }
+
+    public Graph complement_graph(Graph graph) {
+        Graph Complement_graph=new Graph(graph.getVertices(),new ArrayList<>());
+        for (int i=0;i<graph.getVertices().size();i++) {
+            for(int j=i+1;j<graph.getVertices().size();j++) {
+                Node n=graph.getVertices().get(i);
+                Node n2=graph.getVertices().get(j);
+
+                if(graph.getEdge(n,n2)==null) {
+                    Complement_graph.addEdge(new Edge(n,n2));
+                }
+            }
+        }
+
+        return Complement_graph;
+    }
+
+
 
     public Graph establish(Graph graph,boolean isdirected,boolean isweighted) {
       if (!root.getChildren().contains(edgeLayer)) {
@@ -310,8 +358,6 @@ if (f!=null&&k!=null){
         Node n1=e.getV1();
         Node n2=e.getV2();
 
-        root.applyCss();
-        root.layout();
 
         Group f =corrlate.get(n1);
         Group k =corrlate.get(n2);
@@ -396,7 +442,7 @@ if (f!=null&&k!=null){
     }
 
     public static EdgeAnimation animate_edge(Edge edge, Pane root){
-        edge.setEdgeState(EdgeState.ACTIVE); //will work on this later
+
         Circle circle = new Circle(5);
         Node n1=edge.getV1();
         Node n2=edge.getV2();
@@ -560,22 +606,6 @@ if (f !=null &&k !=null){
    edgeToLine.remove(e);
    graph.removearc(e);
 
-    }
-
-    public  Graph complement_graph(Graph graph) {
-        Graph Complement_graph=new Graph(graph.getVertices(),new ArrayList<>());
-        for (int i=0;i<graph.getVertices().size();i++) {
-            for(int j=i+1;j<graph.getVertices().size();j++) {
-                Node n=graph.getVertices().get(i);
-                Node n2=graph.getVertices().get(j);
-
-                if(graph.getEdge(n,n2)==null) {
-                    Complement_graph.addEdge(new Edge(n,n2));
-                }
-            }
-        }
-
-        return Complement_graph;
     }
 
     //dont ask me how long this took me to figure out

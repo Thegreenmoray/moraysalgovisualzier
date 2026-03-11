@@ -3,7 +3,7 @@ package graph_theory;
 public class Node {
 private final int number;
 private int weight;
-private VertexState vertexState;
+
 private String hexcode_color;
 
     public String getHexcode_color() {
@@ -16,7 +16,7 @@ private String hexcode_color;
 
     public Node(int number) {
     this.number = number;
-    vertexState=VertexState.DEFAULT;
+
     hexcode_color=null;
 
 }
@@ -24,18 +24,17 @@ private String hexcode_color;
     public Node(int number, int weight) {
         this.number = number;
         this.weight = weight;
-        vertexState=VertexState.DEFAULT;
+
         hexcode_color=null;
     }
     public Node(int number, int weight,String hexcode_color) {
         this.number = number;
         this.weight = weight;
-        vertexState=VertexState.DEFAULT;
         this.hexcode_color = hexcode_color;
     }
     public Node(int number,String hexcode_color) {
         this.number = number;
-       vertexState=VertexState.DEFAULT;
+
         this.hexcode_color = hexcode_color;
     }
 
@@ -44,13 +43,7 @@ private String hexcode_color;
         return false;
     }
 
-    public VertexState getVertexState() {
-        return vertexState;
-    }
-public void setVertexState(VertexState vertexState) {
-   this.vertexState = vertexState;
-}
-    public int getNumber() {
+  public int getNumber() {
         return number;
     }
 

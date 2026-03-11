@@ -1366,7 +1366,7 @@ boolean willconflict=false;
                  }
              }
 
-             if (!willconflict&& forwardCheck(graph, node, (ArrayList<String>) color_map, uncolored, timelineQueue,part,gui_interface)) {
+             if (!willconflict&& neighbors_neighbors_are_good(graph, node, (ArrayList<String>) color_map, uncolored, timelineQueue,part,gui_interface)) {
                node.setHexcode_color(color);
 
                  if (part!=null&&gui_interface!=null) {
@@ -1389,8 +1389,9 @@ willconflict=false;
 }
 
 
-private static boolean forwardCheck(Graph graph, Node node,  ArrayList<String> currentcolorlist, ArrayList<Node> uncolored,Queue<EdgeAnimation> animations,Visual_part  part,GUI_interface gui_interface) {
-    for (Node neighbor:graph.neighbors(node)) {
+private static boolean neighbors_neighbors_are_good(Graph graph, Node node,  ArrayList<String> currentcolorlist, ArrayList<Node> uncolored,Queue<EdgeAnimation> animations,Visual_part  part,GUI_interface gui_interface) {
+//^ridiculous name, but more descriptive
+     for (Node neighbor:graph.neighbors(node)) {
         if (!uncolored.contains(neighbor)) continue;
 
         int available = 0;
@@ -1435,7 +1436,7 @@ private static boolean forwardCheck(Graph graph, Node node,  ArrayList<String> c
 
     private static <G> List<List<G>> set_cover(G[] universalset,List<List<G>> elements,List<List<G>> current_cover){
 
-    return List.of();
+    return current_cover;
 }
 
 
@@ -1727,8 +1728,8 @@ one_node.add(allnodesdesending.getFirst());
      return null;
  }
 
- private static String lattice_protein_folding(){
-     return "";
+ private static float lattice_protein_folding(){
+     return 0;
  }
 
 
@@ -1737,6 +1738,8 @@ private static Graph shortest_path_with_negative_cycles(){
 
     return null;
 }
+
+private static void minesweeper(){}
 
 
 
