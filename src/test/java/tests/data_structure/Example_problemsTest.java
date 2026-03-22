@@ -78,7 +78,7 @@ import static org.junit.jupiter.api.Assertions.*;
        graph.addEdge(new Edge(graph.getVertices().get(3),graph.getVertices().get(4)),20,false);
 
 
-      Graph prim=Example_problems.Prim(graph,null,null, true);
+      Graph prim=Example_problems.Prim(graph,null,null);
       int expected=60;
       int total=0;
       for(int i=0;i<prim.getEdges().size();i++){
@@ -199,8 +199,8 @@ assertArrayEquals(dfs_test,visited);
         graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(4)));
 
 
-    //    boolean b= Example_problems.ishamilition(graph,null,null);
-       // assertEquals(true,b);
+        boolean b= Example_problems.ishamilition(graph,null,null);
+        assertEquals(true,b);
      }
 
      @Test

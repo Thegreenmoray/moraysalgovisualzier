@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+   id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.14'
 }
@@ -9,32 +9,47 @@ repositories {
 }
 
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21) // or 17, or 11
+// Configure Java compilation to use the toolchain
+tasks.withType(JavaCompile).configureEach {
+    javaCompiler = javaToolchains.compilerFor {
+        languageVersion = JavaLanguageVersion.of(24)
+      //  vendor = JvmVendorSpec.GRAAL_VM
     }
 }
 
 
+
 javafx {
-    version = "21"
+    version = "25"
     modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics' ]
 }
 
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation "org.graalvm.sdk:graal-sdk:24.2.2"
+    // Core polyglot API
+    implementation 'org.graalvm.polyglot:polyglot:24.2.2'
+    implementation 'org.graalvm.truffle:truffle-enterprise:24.2.2'
+    implementation 'org.graalvm.polyglot:js:24.2.2'        // JavaScript
+  //  implementation 'org.graalvm.polyglot:python:24.1.1'    // Python (GraalPy)
+  //  implementation 'org.graalvm.polyglot:java:24.2.2'      // Java on Truffle
 
+    implementation 'org.graalvm.polyglot:tools:24.2.2'
 
 }
+
+
 
 test {
     useJUnitPlatform()
 }
 
+
+
 application {
-    applicationDefaultJvmArgs = ['--enable-native-access=javafx.graphics', '-Djava.security.manager=allow']
-    mainClass = 'runner.Main'
+   mainClass = 'runner.Main'
 }
 
 

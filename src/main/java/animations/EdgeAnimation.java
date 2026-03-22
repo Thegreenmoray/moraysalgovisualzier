@@ -8,7 +8,7 @@ import javafx.scene.shape.Circle;
         public Timeline timeline;
         public Circle circle;
 
-     public    EdgeAnimation(Timeline t, Circle c) {
+     public EdgeAnimation(Timeline t, Circle c) {
             this.timeline = t;
             this.circle = c;
         }

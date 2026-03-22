@@ -30,7 +30,7 @@ public interface GUI_interface {
     EdgeAnimation disable_highlights(Node node,Visual_part part);
     EdgeAnimation highlight_edge(Edge e, Visual_part part);
     EdgeAnimation disable_edge(Edge e,Visual_part part);
-    EdgeAnimation color_nodes(Node node,Visual_part part,String Hexcode_color);
+    EdgeAnimation color_nodes(int node,Visual_part part,String Hexcode_color);
     <E> SetAnimation updatetile(List<E> list,Visual_part part,int index);
 }
 

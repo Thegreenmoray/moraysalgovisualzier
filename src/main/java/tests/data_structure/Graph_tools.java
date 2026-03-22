@@ -26,23 +26,6 @@ public static Graph empty_graph(){
 }
 
 
-public static int[][] degree_matrix(Graph graph){
-    if (graph.getVertices().isEmpty()){
-        //not valid let user know
-        return null;
-    }
-    return degree_matrix_creation(graph,new int[graph.getVertices().size()][graph.getVertices().size()]);
-}
-
-private static int[][] degree_matrix_creation(Graph graph,int[][] matrix){
-
-        for (int i = 0; i<graph.getVertices().size(); i++){
-          matrix[i][i]=graph.degree(graph.getVertices().get(i));
-        }
-
-    return matrix;
-}
-
 public static float[][] arc_incident_matrix(Graph graph){
    if (graph.getVertices().isEmpty()||graph.getEdges().isEmpty()){
       //not valid let user know
@@ -290,30 +273,6 @@ private static boolean[] dfs(boolean[] visted,Graph graph,int node_number) {
         return visted;
     }
 
-public static boolean is_eulerian(Graph graph){
-    boolean is_eulerian=true;
-    if(!is_connected(graph)){
-        return false;
-    }
 
-    for(Node n:graph.getVertices()){
-        if(graph.degree(n)%2 !=0){
-            is_eulerian=false;
-            break;
-        }
-    }
 
-    return is_eulerian;
-}
-
-    public static boolean[][] colormatrix(Graph graph, List<String> colors) {
-    boolean[][] color_matrix=new boolean[graph.getVertices().size()][colors.size()];
-    for(int i=0;i<graph.getVertices().size();i++){
-        for(int j=0;j<colors.size();j++){
-            color_matrix[i][j]=true;  //by defualt we should be able to use all colors
-        }
-    }
-
-        return color_matrix;
-    }
 }

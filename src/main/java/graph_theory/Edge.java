@@ -11,7 +11,7 @@ private     float weight;
 
 
 
-    int pointer;
+    //int pointer;
 
 
 
@@ -31,17 +31,17 @@ private     float weight;
 
     }
 
-    public Edge(Node v1, Node v2, float weight, int pointer) {
-        this.v1 = v1;
-        this.v2 = v2;
-        this.weight = weight;
+   // public Edge(Node v1, Node v2, float weight, int pointer) {
+     //   this.v1 = v1;
+     //   this.v2 = v2;
+    //    this.weight = weight;
 
-        this.pointer=pointer;
-    }
+      //  this.pointer=pointer;
+   // }
 
-    public int getPointer() {
-        return pointer;
-    }
+    //public int getPointer() {
+   //     return pointer;
+   // }
 
     public Node getV1() {
         return v1;
@@ -59,10 +59,10 @@ private     float weight;
         return (int)weight;
     }
 
-    public float getWeight_float() {
+  //  public float getWeight_float() {
 
-        return weight;
-    }
+  //      return weight;
+   // }
 
     public void setWeight(float weight) {
         this.weight = weight;

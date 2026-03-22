@@ -8,11 +8,11 @@ public class Set_theory_items {
 private Set_theory_items(){}
 
     public static <T> boolean isSubset(List<T> A, List<T> B) {
-        return B.containsAll(A);
+        return new HashSet<>(B).containsAll(A);
     }
 
     public static <T> boolean isProperSubset(List<T> A, List<T> B) {
-        return B.containsAll(A) && A.size() < B.size();
+        return new HashSet<>(B).containsAll(A) && A.size() < B.size();
     }
 
     public static <T,K> List<Pair<T,K>> cartesian_product(List<T> tList,List<K> kList){
@@ -61,15 +61,6 @@ private Set_theory_items(){}
     }
 
 
-    public static <T> List<T> complement(List<T> U,HashSet<T> A) {
-        //can also be used as difference
-        Set<T> list = new HashSet<>(U);
-
-        list.removeAll(A);
-
-        return new ArrayList<>(list);
-    }
-
 
     public static <T> int cardinality(List<T> A){
 
@@ -104,22 +95,4 @@ private Set_theory_items(){}
         return  powerset(i+1,base_set,current_subsets,subset);
     }
 
-    public static <E> List<E> complement(E[] listed, ArrayList<E> reconstructed) {
-        Set<E> list = new HashSet<>(List.of(listed));
-
-        list.removeAll(reconstructed);
-
-        return new ArrayList<>(list);
-    }
-
-    public static <E,K> List<K> complement(HashMap<E, K> colorMap, ArrayList<K> currentcolorlist) {
-        Set<K> set=new HashSet<>();
-    for(Map.Entry<E, K> entry:colorMap.entrySet()){
-            set.add(entry.getValue());
-       }
-
-    set.removeAll(currentcolorlist);
-
-        return new ArrayList<>(set);
-    }
 }

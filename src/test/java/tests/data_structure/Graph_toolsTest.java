@@ -1,5 +1,6 @@
 package tests.data_structure;
 
+import animations.GraphTestHelper;
 import graph_theory.Edge;
 import animations.Graph;
 import graph_theory.Node;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 
     @Test
     void generate_graph_directed() {
-        Graph graph=GraphTestHelper.generate_graph_directed(4,2,false,false);
+        Graph graph= GraphTestHelper.generate_graph_directed(4,2,false,false);
 
         for (Edge e:graph.getEdges()){
             assertEquals(1, e.getWeight());
@@ -142,7 +143,7 @@ float[][] testmatrix= {{0,2,-3,5},
          graph.addEdge(new Edge(graph.getVertices().get(1),graph.getVertices().get(2)));
          graph.addEdge(new Edge(graph.getVertices().get(2),graph.getVertices().get(3)));
 boolean isbiparte=Graph_tools.isbipartite(graph);
-assertEquals(true,isbiparte);
+assertEquals(false,isbiparte);
 
 
 

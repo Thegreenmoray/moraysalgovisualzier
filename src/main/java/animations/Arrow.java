@@ -5,7 +5,6 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 
 import static java.lang.Math.atan2;
-import static java.lang.Math.toDegrees;
 
 public class Arrow extends Group {
 Line line;

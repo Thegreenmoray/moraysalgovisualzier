@@ -26,7 +26,7 @@ public class Visual_part {
    private static Pane nodeLayer = new Pane();
    private static Pane textLayer = new Pane();
 
-    private static Map<Node,Group> corrlate=new HashMap<>();
+    private static Map<Integer,Group> corrlate=new HashMap<>();
    private static Map<Edge, javafx.scene.Node> edgeToLine =new HashMap<>();
    private static Map<Edge, Text> edgeToText =new HashMap<>();
     private Pane root;
@@ -36,6 +36,15 @@ public class Visual_part {
     public Visual_part(Pane root) {
         this.root = root;
     }
+
+
+    public Node get_node_from_number(int number) {
+
+        return null;
+    }
+
+
+
 
 
     public Graph randomgraph_establish(int size, double edgechance, boolean isweighted, boolean canbenegative, boolean isdirected) {
@@ -74,7 +83,7 @@ public class Visual_part {
           }while (!good&&current_attempts<max_attempts); /*we do not want this looping forever!*/
           mina_distance.add(new Point2D(distance_X,distance_Y));
            group.relocate(distance_X,distance_Y);
-          corrlate.put(node, group);
+          corrlate.put(node.getNumber(), group);
          nodeLayer.getChildren().add(group);
        }
 
@@ -98,8 +107,8 @@ public class Visual_part {
          Node n1=edge.getV1();
          Node n2=edge.getV2();
 
-           Group f =corrlate.get(n1);
-         Group k =corrlate.get(n2);
+           Group f =corrlate.get(n1.getNumber());
+         Group k =corrlate.get(n2.getNumber());
 
            Bounds b = f.localToScene(f.getBoundsInLocal());
            Bounds c = k.localToScene(k.getBoundsInLocal());
@@ -227,7 +236,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
             }while (!good&&current_attempts<max_attempts); /*we do not want this looping forever!*/
             mina_distance.add(new Point2D(distance_X,distance_Y));
             pane.relocate(distance_X,distance_Y);
-            corrlate.put(node, pane);
+            corrlate.put(node.getNumber(), pane);
             nodeLayer.getChildren().add(pane);
         }
 
@@ -251,8 +260,8 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
                 Node n1=edge.getV1();
                 Node n2=edge.getV2();
 
-                Group f =corrlate.get(n1);
-                Group k =corrlate.get(n2);
+                Group f =corrlate.get(n1.getNumber());
+                Group k =corrlate.get(n2.getNumber());
 
                 Bounds b = f.getBoundsInParent();
                 Bounds c = k.getBoundsInParent();
@@ -353,8 +362,6 @@ if (f!=null&&k!=null){
     public void addedge(Graph graph, Edge e, float weight) {
         Line line = new Line();
 
-
-
         Node n1=e.getV1();
         Node n2=e.getV2();
 
@@ -388,8 +395,6 @@ if (f!=null&&k!=null){
 
     public void addnode(Graph graph, Node n) {
 
-
-
         Circle circle = new Circle(10);
         circle.setFill(Color.BLACK);
 
@@ -417,7 +422,7 @@ if (f!=null&&k!=null){
         }while (!good&&current_attempts<max_attempts); /*we do not want this looping forever!*/
         mina_distance.add(new Point2D(distance_X,distance_Y));
         pane.relocate(distance_X,distance_Y);
-        corrlate.put(n, pane);
+        corrlate.put(n.getNumber(), pane);
         graph.addVertex(n);
         nodeLayer.getChildren().add(pane);
 
@@ -848,7 +853,7 @@ if (f !=null &&k !=null){
         return new EdgeAnimation(timeline);
     }
 
-    public EdgeAnimation colornode(Node node,String hexcode_color) {
+    public EdgeAnimation colornode(int node,String hexcode_color) {
         if (!corrlate.containsKey(node)) {
             return null;
         }

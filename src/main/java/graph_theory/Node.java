@@ -2,7 +2,7 @@ package graph_theory;
 
 public class Node {
 private final int number;
-private int weight;
+
 
 private String hexcode_color;
 
@@ -21,40 +21,20 @@ private String hexcode_color;
 
 }
 
-    public Node(int number, int weight) {
-        this.number = number;
-        this.weight = weight;
-
-        hexcode_color=null;
-    }
-    public Node(int number, int weight,String hexcode_color) {
-        this.number = number;
-        this.weight = weight;
-        this.hexcode_color = hexcode_color;
-    }
     public Node(int number,String hexcode_color) {
         this.number = number;
-
         this.hexcode_color = hexcode_color;
     }
 
     //wip, if it is invalid default to black and alert user
-    private boolean isvaildhexcode(String hexcode_color) {
-        return false;
-    }
+   // private boolean isvaildhexcode(String hexcode_color) {
+    //    return false;
+   // }
 
   public int getNumber() {
         return number;
     }
 
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
 
 
 

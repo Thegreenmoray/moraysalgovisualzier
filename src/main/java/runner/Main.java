@@ -31,21 +31,13 @@ public class Main extends Application {
             Scene scene = new Scene(root,800,600);
             stage.setScene(scene);
             TextArea codeInput = new TextArea();
-            codeInput.setText("import graph_theory.*;\n" +
-                    "import animations.*;\n" +
-                    "import java.util.*;\n" +
-                    "import tests.data_structure.*;\n" +
-                    "import set_theory.*;\n" +
-                    "public class UserAlgorithm implements GraphAlgorithm {\n" +
-                    "\n" +
-                    "    // You can add helper methods here\n" +
-                    "\n" +
-                    "    @Override\n" +
-                    "    public void run(GUI_interface api,Visual_part part) {\n" +
-                    "        // Your algorithm goes here\n" +
-                    " Graph graph=part.randomgraph_establish(4,0.75,false,false,false);\n" +
-                    "    }\n" +
-                    "}\n");
+            codeInput.setText( """
+for (let i = 0; i < 10; i++) {
+
+}
+"""
+
+);
 
               codeInput.setLayoutX(300);
               codeInput.setLayoutY(300);
@@ -117,7 +109,7 @@ public class Main extends Application {
             }
 
             @Override
-            public EdgeAnimation color_nodes(Node node, Visual_part part, String Hexcode_color) {
+            public EdgeAnimation color_nodes(int node, Visual_part part, String Hexcode_color) {
                 return part.colornode(node,Hexcode_color);
             }
 
@@ -211,20 +203,25 @@ public class Main extends Application {
 
 
         runButton.setOnAction(e -> {
-            try {
-                algorithmRunner.run( edgeInterface,part);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            Thread t = new Thread(() -> {
+                try {
+                    algorithmRunner.run(edgeInterface, part);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            });
+            t.start();
         });
-       clearButton.setOnAction(e -> {
+
+
+        clearButton.setOnAction(e -> {
           part.clearboard();
        });
 
         stage.show();
     }
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         launch(args);
     }
 
