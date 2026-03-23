@@ -2,9 +2,14 @@ package runner;
 
 import animations.*;
 
+import javafx.application.Platform;
 import org.graalvm.polyglot.*;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 
 public class AlgorithmRunner {
 
@@ -75,14 +80,36 @@ String currentAlgorithm;
         this.currentAlgorithm = code;
     }
 
-    public void run(GUI_interface api, Visual_part part) {
+    public void run( GUI_interface gui_interface,Visual_part part) {
         if (currentAlgorithm == null) {
             throw new IllegalStateException("No algorithm loaded. Call setup() first.");
         }
+        final Graph[] graphHolder = new Graph[1];
+
+        CountDownLatch latch = new CountDownLatch(1);
+
+        Platform.runLater(() -> {
+            graphHolder[0] = part.establish();
+            latch.countDown();
+        });
+
+        try {
+            latch.await(); // Wait until graph is created
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        Graph graph = graphHolder[0];
+
+        // 2. Create safe API with real graph + part
+        User_safe_interface_api userSafeInterfaceApi =
+                new User_safe_interface_api(graph,new LinkedList<Animations>(),part);
+
+
 
         // Inject API into sandbox BEFORE executing user code
         sandbox.getBindings("js")
-                .putMember("user_safe", new User_safe_interface_api(part, api));
+                .putMember("User_safe_interface_api", userSafeInterfaceApi);
 
         // Now you can safely evaluate the user code
         sandbox.eval("js", currentAlgorithm);

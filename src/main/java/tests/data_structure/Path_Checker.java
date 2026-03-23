@@ -16,15 +16,9 @@ public class Path_Checker {
         return current_path;
     }
 
-    public void setCurrent_path(List<Node> current_path) {
-        this.current_path = current_path;
-    }
-
     public boolean isPath_or_cycle_found() {
         return path_or_cycle_found;
     }
 
-    public void setPath_or_cycle_found(boolean path_or_cycle_found) {
-        this.path_or_cycle_found = path_or_cycle_found;
-    }
+
 }

@@ -15,7 +15,7 @@ class Visual_partTest {
 
     @Test
     void remove_edge() {
-        Graph graph=new Graph(new ArrayList<>(),new ArrayList<>());
+        Graph graph=visualPart.establish();
         for (int i=0;i<4;i++){
             graph.addVertex(new Node(i));
         }
@@ -23,7 +23,7 @@ class Visual_partTest {
         graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(2)));
         graph.addEdge(new Edge(graph.getVertices().get(1),graph.getVertices().get(2)));
         graph.addEdge(new Edge(graph.getVertices().get(2),graph.getVertices().get(3)));
-      visualPart.remove_edge(graph.getEdges().getFirst(),graph);
+      visualPart.remove_edge(graph.getEdges().getFirst());
         Graph graph2=new Graph(new ArrayList<>(),new ArrayList<>());
         for (int i=0;i<4;i++){
             graph.addVertex(new Node(i));
@@ -69,12 +69,12 @@ for (int i = 0; i < expected.getEdges().size(); i++) {
 
     @Test
     void removenode() {
-        Graph graph=new Graph(new ArrayList<>(),new ArrayList<>());
+        Graph graph=visualPart.establish();
         for (int i=0;i<4;i++){
             graph.addVertex(new Node(i));
         }
 
-        visualPart.removenode(graph,graph.getVertices().getLast());
+        visualPart.removenode(graph.getVertices().getLast());
         Graph graph2=new Graph(new ArrayList<>(),new ArrayList<>());
         for (int i=0;i<3;i++){
             graph.addVertex(new Node(i));
@@ -86,7 +86,7 @@ for (int i = 0; i < expected.getEdges().size(); i++) {
 
     @Test
     void addedge() {
-        Graph graph=new Graph(new ArrayList<>(),new ArrayList<>());
+        Graph graph=visualPart.establish();
         for (int i=0;i<4;i++){
             graph.addVertex(new Node(i));
         }
@@ -94,7 +94,8 @@ for (int i = 0; i < expected.getEdges().size(); i++) {
         graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(2)));
         graph.addEdge(new Edge(graph.getVertices().get(1),graph.getVertices().get(2)));
         graph.addEdge(new Edge(graph.getVertices().get(2),graph.getVertices().get(3)));
-        visualPart.addedge(graph, new Edge(graph.getVertices().get(0),graph.getVertices().get(3)));
+
+        visualPart.addedge( new Edge(graph.getVertices().get(0),graph.getVertices().get(3)));
         Graph graph2=new Graph(new ArrayList<>(),new ArrayList<>());
         for (int i=0;i<4;i++){
             graph.addVertex(new Node(i));
@@ -110,41 +111,16 @@ for (int i = 0; i < expected.getEdges().size(); i++) {
             assertEquals(graph.getEdges().get(j),graph2.getEdges().get(j));}
     }
 
-    @Test
-    void testAddedge() {
-        Graph graph=new Graph(new ArrayList<>(),new ArrayList<>());
-        for (int i=0;i<4;i++){
-            graph.addVertex(new Node(i));
-        }
-        graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(1),2));
-        graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(2),2));
-        graph.addEdge(new Edge(graph.getVertices().get(1),graph.getVertices().get(2),5));
-        graph.addEdge(new Edge(graph.getVertices().get(2),graph.getVertices().get(3),5));
-        visualPart.addedge(graph, new Edge(graph.getVertices().get(0),graph.getVertices().get(3)),5);
-        Graph graph2=new Graph(new ArrayList<>(),new ArrayList<>());
-        for (int i=0;i<4;i++){
-            graph.addVertex(new Node(i));
-        }
-        graph2.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(1),2));
-        graph2.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(2),2));
-        graph2.addEdge(new Edge(graph.getVertices().get(1),graph.getVertices().get(2),5));
-        graph2.addEdge(new Edge(graph.getVertices().get(2),graph.getVertices().get(3),5));
-        graph2.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(3),5));
 
-
-        for (int j=0;j<graph2.getEdges().size();j++){
-            assertEquals(graph.getEdges().get(j),graph2.getEdges().get(j));
-        assertEquals(graph2.getEdges().get(j).getWeight(),graph.getEdges().get(j).getWeight());}
-    }
 
     @Test
     void addnode() {
-        Graph graph=new Graph(new ArrayList<>(),new ArrayList<>());
+        Graph graph=visualPart.establish();
         for (int i=0;i<4;i++){
             graph.addVertex(new Node(i));
         }
 
-        visualPart.addnode(graph,new Node(4));
+        visualPart.addnode(new Node(4));
         Graph graph2=new Graph(new ArrayList<>(),new ArrayList<>());
         for (int i=0;i<5;i++){
             graph.addVertex(new Node(i));
@@ -156,7 +132,7 @@ for (int i = 0; i < expected.getEdges().size(); i++) {
 
     @Test
     void addarc() {
-        Graph graph=new Graph(new ArrayList<>(),new ArrayList<>());
+        Graph graph=visualPart.establish();
         for (int i=0;i<4;i++){
             graph.addVertex(new Node(i));
         }
@@ -164,7 +140,7 @@ for (int i = 0; i < expected.getEdges().size(); i++) {
         graph.addarc(new Edge(graph.getVertices().get(0),graph.getVertices().get(2)));
         graph.addarc(new Edge(graph.getVertices().get(1),graph.getVertices().get(2)));
         graph.addarc(new Edge(graph.getVertices().get(2),graph.getVertices().get(3)));
-        visualPart.addarc(graph, new Edge(graph.getVertices().get(0),graph.getVertices().get(3)));
+        visualPart.addarc( new Edge(graph.getVertices().get(0),graph.getVertices().get(3)));
         Graph graph2=new Graph(new ArrayList<>(),new ArrayList<>());
         for (int i=0;i<4;i++){
             graph.addVertex(new Node(i));
@@ -183,7 +159,7 @@ for (int i = 0; i < expected.getEdges().size(); i++) {
 
     @Test
     void testAddarc() {
-        Graph graph=new Graph(new ArrayList<>(),new ArrayList<>());
+        Graph graph=visualPart.establish();
         for (int i=0;i<4;i++){
             graph.addVertex(new Node(i));
         }
@@ -191,7 +167,7 @@ for (int i = 0; i < expected.getEdges().size(); i++) {
         graph.addarc(new Edge(graph.getVertices().get(0),graph.getVertices().get(2),2));
         graph.addarc(new Edge(graph.getVertices().get(1),graph.getVertices().get(2),5));
         graph.addarc(new Edge(graph.getVertices().get(2),graph.getVertices().get(3),5));
-        visualPart.addarc(graph, new Edge(graph.getVertices().get(0),graph.getVertices().get(3)),5);
+        visualPart.addarc(new Edge(graph.getVertices().get(0),graph.getVertices().get(3)),5);
         Graph graph2=new Graph(new ArrayList<>(),new ArrayList<>());
         for (int i=0;i<4;i++){
             graph.addVertex(new Node(i));
@@ -210,7 +186,7 @@ for (int i = 0; i < expected.getEdges().size(); i++) {
 
     @Test
     void removearc() {
-        Graph graph=new Graph(new ArrayList<>(),new ArrayList<>());
+        Graph graph=visualPart.establish();
         for (int i=0;i<4;i++){
             graph.addVertex(new Node(i));
         }
@@ -218,7 +194,7 @@ for (int i = 0; i < expected.getEdges().size(); i++) {
         graph.addarc(new Edge(graph.getVertices().get(0),graph.getVertices().get(2)));
         graph.addarc(new Edge(graph.getVertices().get(1),graph.getVertices().get(2)));
         graph.addarc(new Edge(graph.getVertices().get(2),graph.getVertices().get(3)));
-        visualPart.removearc(graph,graph.getEdges().getFirst());
+        visualPart.removearc(graph.getEdges().getFirst());
         Graph graph2=new Graph(new ArrayList<>(),new ArrayList<>());
         for (int i=0;i<4;i++){
             graph.addVertex(new Node(i));

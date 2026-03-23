@@ -153,12 +153,62 @@ public void addEdge(Edge e){
 
 }
 
+    public void addEdge(Edge e,float weight){
+
+        Node v1 = e.getV1();
+        Node v2 = e.getV2();
+
+        // Ensure vertices exist
+        if (!vertices.contains(v1)) addVertex(v1);
+        if (!vertices.contains(v2)) addVertex(v2);
+
+        // Prevent duplicates without indexing
+        for (Edge existing : edges) {
+            if (existing.connects(v1, v2)) {
+                return;
+            }
+        }
+        e.setWeight(weight);
+        edges.add(e);
+        edges.add(new Edge(v2, v1, weight));
+
+        updateincidentedges();
+        updateadjencylist();
+
+    }
+
+
 private void deletednodesedges(Node v){
     for(Edge e:indenctedges(v)){
         edges.remove(e);
     }
 
 }
+
+    public int nextAvailableNodeNumber() {
+        boolean[] used = new boolean[vertices.size() + 1];
+
+        for (Node n : vertices) {
+            if (n.getNumber() >= 0 && n.getNumber() < used.length) {
+                used[n.getNumber()] = true;
+            }
+        }
+
+        for (int i = 0; i < used.length; i++) {
+            if (!used[i]) return i;
+        }
+
+        return used.length; // append at end
+    }
+
+    public Node addVertexWithNumber(int number) {
+        Node v = new Node(number);
+        addVertex(v); // your existing method
+        return v;
+    }
+
+
+
 
 
     private void updateadjencylist() {
@@ -169,73 +219,16 @@ private void deletednodesedges(Node v){
     indencent_list= createindcendcelist();
     }
 
-    public void addEdge(Edge e,float weight,boolean allowdulipcates,int pointer){
-
-        Node v1 = e.getV1();
-        Node v2 = e.getV2();
-        e.setWeight(weight);
-
-        // Ensure vertices exist
-        if (!vertices.contains(v1)) addVertex(v1);
-        if (!vertices.contains(v2)) addVertex(v2);
-
-        // Prevent duplicates without indexing
-        for (Edge existing : edges) {
-            if (existing.connects(v1, v2)) {
-                return;
-            }
-        }
-
-       edges.add(new Edge(v1, v2, weight));
-       edges.add(new Edge(v2, v1, weight));
-
-        updateincidentedges();
-        updateadjencylist();
-
-
-    }
-
-    public void addEdge(Edge e,float weight,boolean allowdulipcates){
-
-        Node v1 = e.getV1();
-        Node v2 = e.getV2();
-        e.setWeight(weight);
-
-        // Ensure vertices exist
-        if (!vertices.contains(v1)) addVertex(v1);
-        if (!vertices.contains(v2)) addVertex(v2);
-
-
-        if (allowdulipcates){
-            //should you need a multigraph here it is
-            for (Edge existing : edges) {
-                if (existing.connects(v1, v2)){
-
-                    edges.add(new Edge(v1, v2,weight));
-                    edges.add(new Edge(v2, v1, weight));
-                    updateincidentedges();
-                    updateadjencylist();
-                    return;
-                }}}
-        // Prevent duplicates without indexing
-        for (Edge existing : edges) {
-            if (existing.connects(v1, v2)) {
-                return;
-            }
-        }
-
-        edges.add(new Edge(v1, v2, weight));
-        edges.add(new Edge(v2, v1, weight));
-
-        updateincidentedges();
-        updateadjencylist();
-
-
-    }
 
     public void addVertex(Node v){
     if (!this.containsnode(v)){
-    this.vertices.add(v);}
+    this.vertices.add(v);
+        adjacencyList.put(v, new ArrayList<>());
+        indencent_list.put(v, new ArrayList<>());
+        updateincidentedges();
+        updateadjencylist();
+
+    }
 
 }
 public void removeEdge(Edge e){

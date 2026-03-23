@@ -21,11 +21,11 @@ Other notes: unless you are unit testing you can ignore the
 if (part != null&&edgeInterface!=null) {} these only exist for unit tests
 and aren't required for your code.
 */
-
+/*
 public class Example_problems {
 
 //------------------------------To start------------------------------
-
+/*
 
     //use the new one
 public static void Adding_and_removing_nodes(Visual_part part, User_safe_interface_api api){
@@ -125,12 +125,12 @@ api.setallvisible(g,part);
         api.addarc(g,edge,part,4);
         api.addarc(g,edge2,part,-8);
     }
-
+*/
 
 
 
 //------------------------set probelms-----------------------
-
+/*
     public static List<Integer> bubble_sort(List<Integer> e){
 
 //how to deal with sets
@@ -189,7 +189,7 @@ for showing how to introduce multiple matrices
     }
 */
 
-
+/*
     private static int partition(List<Integer> e,int low,int high){
 
         int pivot=e.get(high);
@@ -381,16 +381,16 @@ if (!(n==sudoku_size)) {
 */
 
 //--------------------------Graph problems----------------------------
+/*
+    private static boolean[] bfs(Graph graph, int start, boolean[] visted, User_safe_interface_api userSafeInterfaceApi) {
 
-    private static boolean[] bfs(Graph graph, int start, boolean[] visted, GUI_interface graphTheoryInterface, Visual_part visualPart) {
-        Queue<EdgeAnimation> timelineQueue = new LinkedList<>();
         Queue<Node> q=new LinkedList<>();
 
         Node node=graph.getVertices().get(start);
         visted[node.getNumber()]=true;
         q.add(node);
-        if (graphTheoryInterface !=null&&visualPart!=null){
-        timelineQueue.add(graphTheoryInterface.highlightNode(node));}
+        if (userSafeInterfaceApi !=null){
+            userSafeInterfaceApi.highlight_node(node);}
         while(!q.isEmpty()){
             Node polled=q.poll();
             List<Node> neighbors = graph.neighbors(polled);
@@ -411,8 +411,8 @@ if (!(n==sudoku_size)) {
             }
 
         }
-        if (graphTheoryInterface !=null&&visualPart!=null) {
-            visualPart.playNext((LinkedList<? extends Animations>) timelineQueue);
+        if (userSafeInterfaceApi !=null) {
+
         }
         return visted;
     }
@@ -472,7 +472,7 @@ if (!(n==sudoku_size)) {
         }
 
         if (graphTheoryInterface !=null&&visualPart!=null) {
-            visualPart.playNext((LinkedList<? extends Animations>) timelineQueue);
+
         }
 
 
@@ -574,7 +574,7 @@ if (!(n==sudoku_size)) {
          }
      }
      if (edgeInterface !=null&&part!=null) {
-         part.playNext((LinkedList<? extends Animations>) timelineQueue);
+         part.playNext(timelineQueue);
      }
 
      return list;
@@ -628,7 +628,7 @@ if (!(n==sudoku_size)) {
  and a node can never be adjacent to itself so unless
  you do something like this it will never stop.*/
 
-
+/*
          for (int j=i+1;j<candidates.size();j++){
              //^ this forces you to look at other nodes
              //and prevent an infinite loop
@@ -660,369 +660,36 @@ if (!(n==sudoku_size)) {
 then running clique, no need to worry about ordering.
 this may not be great for sparse graphs though because the complement will be dense
 But that's debatable*/
-
+/*
         return best_set;
     }
-
-public static int chromatic_number(Graph graph,GUI_interface gui_interface,Visual_part  part
-){
-    Queue<EdgeAnimation> timelineQueue = new LinkedList<>();
-
-
-List<String> colors =Graph_tools.random_unique_colors(graph);
-if (colors==null|| colors.isEmpty()){ //either graph is too big or graph has no nodes
-    return 0;
-}
-    ArrayList<String> colors_list=new ArrayList<>();
-    colors_list.add(colors.get(0));
-ArrayList<Node> uncolored=new ArrayList<>(graph.getVertices());
-     if (graph.getEdges().isEmpty()){
-         chromatic_number_check(graph,
-                 colors_list,0, new ArrayList<>(),
-                gui_interface,part,timelineQueue,uncolored);
-         if (gui_interface !=null&&part!=null) {
-             part.playNext((LinkedList<? extends Animations>) timelineQueue);
-         }
-        return 1;
-}
-
-    colors_list.add(colors.get(1));
-     if (Graph_tools.isbipartite(graph)){
-       for (Node node:graph.getVertices()){
-           node.setHexcode_color(null);
-       }
-         chromatic_number_check(graph,
-                 colors_list,0, new ArrayList<>(),
-                gui_interface,part,timelineQueue,uncolored);
-         if (gui_interface !=null&&part!=null) {
-             part.playNext((LinkedList<? extends Animations>) timelineQueue);
-         }
-         return 2;
-     }
-    for (Node node:graph.getVertices()){
-        node.setHexcode_color(null);
-    }
-
-     if (Graph_tools.is_complete(graph)){
-         for (Node node:graph.getVertices()){
-             node.setHexcode_color(null);
-         }
-         chromatic_number_check(graph,
-                 colors,0, new ArrayList<>(),
-                gui_interface,part,timelineQueue,uncolored);
-         if (gui_interface !=null&&part!=null) {
-             part.playNext((LinkedList<? extends Animations>) timelineQueue);
-         }
-         return graph.getVertices().size();
-     }
-
-graph.getVertices().sort(Comparator.comparingInt(graph::degree).reversed());
-
-
-     for (int i=3;i<graph.getVertices().size();i++){
-        colors_list.add(colors.get(i-1));
-
-
-         chromatic_number_check(graph,
-     colors_list,0, new ArrayList<>(),
- gui_interface,part,timelineQueue,uncolored);
-
-
-     if (isvaildcoloring(graph)){
-         if (gui_interface !=null&&part!=null) {
-             part.playNext((LinkedList<? extends Animations>) timelineQueue);
-         }
-
-
-     return i;}
-     for (Node  node : graph.getVertices()){
-         node.setHexcode_color(null);
-         if (part!=null&&gui_interface!=null){
-             gui_interface.disable_highlights(node,part);
-         }
-     }
-     }
-
-
-
-    return 0;
-}
-
-    private static boolean isvaildcoloring(Graph graph) {
-    for (Node node : graph.getVertices()) {
-       if (node.getHexcode_color()==null) {
-           return false;
-       }
-    }
-
-        return true;
-    }
-
-
-    //round 2.5
-private static ArrayList<String> chromatic_number_check(Graph graph,
-  List<String> color_map,int currentsize,
-  ArrayList<String> colorpalette,GUI_interface  gui_interface,Visual_part  part,
-  Queue<EdgeAnimation> timelineQueue,ArrayList<Node> uncolored){
-//how to color nodes
-     if (graph.getVertices().size()==currentsize){
-         if(vaild_color_checking(graph)){
-        colorpalette = (ArrayList<String>) color_map;
-         }
-         return colorpalette;
-     }
-
-    Node node=graph.getVertices().get(currentsize);
-     uncolored.remove(node);
-
-boolean willconflict=false;
-         for (String color : color_map) {
-
-          if (!colorpalette.isEmpty()) {
-              break;
-          }
-
-
-             for (Node neighbor:graph.neighbors(node)) {
-                 if (neighbor.getHexcode_color()!=null&&color.equals(neighbor.getHexcode_color())) {
-                    willconflict=true;
-                 break;  //try another
-                 }
-             }
-
-             if (!willconflict&& neighbors_neighbors_are_good(graph, node, (ArrayList<String>) color_map, uncolored, timelineQueue,part,gui_interface)) {
-               node.setHexcode_color(color);
-
-                 if (part!=null&&gui_interface!=null) {
-                     timelineQueue.add(gui_interface.color_nodes(node.getNumber(), part, color));
-                 }
-                 //now proceed
-                 colorpalette= chromatic_number_check(graph,
-                                          color_map,
-                         currentsize+1, colorpalette,gui_interface,part,timelineQueue,uncolored);
-         }
-willconflict=false;
-     }
-
-
-
-
-
-
-    return colorpalette;
-}
-
-
-private static boolean neighbors_neighbors_are_good(Graph graph, Node node,  ArrayList<String> currentcolorlist, ArrayList<Node> uncolored,Queue<EdgeAnimation> animations,Visual_part  part,GUI_interface gui_interface) {
-//^ridiculous name, but more descriptive
-     for (Node neighbor:graph.neighbors(node)) {
-        if (!uncolored.contains(neighbor)) continue;
-
-        int available = 0;
-        for (String color : currentcolorlist) {
-         // animations.add(gui_interface.color_nodes(node, part, color));
-            boolean conflict = false;
-            for (Node neighbor_of_neighbor : graph.neighbors(neighbor)) {
-                if (neighbor_of_neighbor.getHexcode_color() != null &&color.equals(neighbor_of_neighbor.getHexcode_color())) {
-
-                    conflict = true;
-                    break;
-                }
-            }
-            if (!conflict) available++;
-        }
-
-        // If neighbor has no colors left, this assignment fails
-        if (available == 0) {
-            return false;}
-
-    }
-
-
-    return true;
-
-
-}
-
-
-
-    private static boolean vaild_color_checking(Graph graph) {
-      for (Node node : graph.getVertices()) {
-          for (Node neighbor:graph.neighbors(node)){
-              if (node.issamecolor(neighbor)) {
-                 return false;
-              }
-          }
-      }
-        return true;
-    }
 /*
-//maybe?
-    private static <G> List<List<G>> set_cover(G[] universalset,List<List<G>> elements,List<List<G>> current_cover){
 
-    return current_cover;
-}*/
+   private static Graph Greedy_coloring(Graph graph){
+    if (graph.getVertices().isEmpty()) {return graph;}
+       ArrayList<String> list = (ArrayList<String>) Graph_tools.random_unique_colors(graph);
+    if (list == null) {return graph;}
 
+    for (Node n1:graph.getVertices()) {
 
-    public static boolean ishamilition(Graph graph,Visual_part part,
- GUI_interface edgeInterface){
-        Queue<EdgeAnimation> timelineQueue = new LinkedList<>();
-//highlighting edges
-     if (!Graph_tools.is_connected(graph)){
-         return false;
-     }
-     if (Graph_tools.is_tree(graph)){
-         return false;
-     }
-
-    if (graph.getVertices().size()<=2){
-        return false;
-    }
-
-    for (Node v : graph.getVertices()){
-        if (graph.degree(v)==1){
-            return false;
-        }
-    }
-
-    if (Dirac_check(graph)){
-        for (Node node : graph.getVertices()){
-            if (edgeInterface !=null&&part!=null) {
-                timelineQueue.add(edgeInterface.highlight_semi_permant(node, part));
-            }
+        HashSet<String> no_no_colors=new HashSet<>();
+            for (Node node : graph.neighbors(n1)){
+                no_no_colors.add(node.getHexcode_color());
         }
 
-        return true;
-    }
-
-
-ArrayList<Node> allnodesdesending = new ArrayList<>(graph.getVertices());
-allnodesdesending.sort(Comparator.comparingInt(graph::degree));
-ArrayList<Node> one_node = new ArrayList<>();
-one_node.add(allnodesdesending.getFirst());
-
-        if (edgeInterface !=null&&part!=null) {
-            timelineQueue.add(edgeInterface.highlight_semi_permant(one_node.getFirst(),part));
-        }
-        Path_Checker path_checker = check_if_hamilition(graph,
-            Graph_tools.adjacency_matrix(graph),allnodesdesending,
-                new Path_Checker(one_node,false),
-                part,edgeInterface,timelineQueue);
-
-        if (!path_checker.isPath_or_cycle_found()){
-            for (Node node : allnodesdesending){
-                if (edgeInterface !=null&&part!=null) {
-                    timelineQueue.add(edgeInterface.disable_highlights(node, part));
-                }
-            }
-        for (Edge edge : graph.getEdges()){
-            if (edgeInterface !=null&&part!=null) {
-                timelineQueue.add(edgeInterface.disable_edge(edge, part));
-            }
-        }
-
-        }
-
-        if (edgeInterface !=null&&part!=null) {
-            part.playNext((LinkedList<? extends Animations>) timelineQueue);
-        }
-
-
-
-        return path_checker.isPath_or_cycle_found();
-    }
-
-    private static boolean Dirac_check(Graph graph) {
-      int nodes = graph.getVertices().size();
-      float condition= (float) nodes /2;
-      boolean check=true;
-     for (Node node : graph.getVertices()){
-         if (graph.degree(node) < condition){
-             //just because this fails this does not guarantee non-hamilition
-             //you need to look
-             check=false;
-             break;
-         }}
-
-     return check;
-    }
-
-
-    private static Path_Checker check_if_hamilition(Graph graph,
-                                                   float[][] adjacency_matrix, List<Node> total_list_of_nodes, Path_Checker path_checker
-   , Visual_part  part, GUI_interface edgeInterface, Queue<EdgeAnimation> timelineQueue) {
-
-     if (total_list_of_nodes.size()==path_checker.getCurrent_path().size()&&isacycle(path_checker.getCurrent_path(),
-             adjacency_matrix,timelineQueue,edgeInterface,graph,part)) {
-         //if we find a ham cycle dont bother couniting
-         return new Path_Checker(path_checker.getCurrent_path(),true);
-     }
-
-     List<Node> remaining_node=Set_theory_items.complement(total_list_of_nodes, path_checker.getCurrent_path());
-
-     for (Node node : remaining_node) {
-         if (path_checker.isPath_or_cycle_found()) {
-           //declare victory and stop
-             break;
-         }
-         if (adjacency_matrix[path_checker.getCurrent_path().getLast().getNumber()][node.getNumber()]!=Float.POSITIVE_INFINITY) {
-
-                 if (edgeInterface!=null&&part!=null) {
-                     timelineQueue.add(edgeInterface.highlight_edge(graph.getEdge(path_checker.getCurrent_path().getLast(),node),part));
-                     timelineQueue.add( edgeInterface.highlight_semi_permant(node,part));
-               }
-                 path_checker.getCurrent_path().add(node);
-                path_checker=check_if_hamilition(graph,adjacency_matrix,total_list_of_nodes,path_checker,part,edgeInterface,timelineQueue);
-                if (!path_checker.isPath_or_cycle_found()) {
-                    path_checker.getCurrent_path().remove(node);
-                if (edgeInterface!=null&&part!=null) {
-                    timelineQueue.add(edgeInterface.disable_edge(graph.getEdge(path_checker.getCurrent_path().getLast(),node), part));
-                 timelineQueue.add(edgeInterface.disable_highlights(node,part));}
-                }
-             }
-         }
-
-
-     return path_checker;
-   }
-
-    private static boolean isacycle(List<Node> nodes, float[][] adjacencyMatrix, Queue<EdgeAnimation> timelineQueue,
-                                    GUI_interface edgeInterface, Graph graph,Visual_part part) {
-       Node prev=null;
-       Node curr;
-       Node last=nodes.getLast();
-       Node first=nodes.getFirst();
-       boolean isgood=false;
-
-       for (Node node : nodes) {
-           curr=node;
-
-         if (node.equals(last)) {
-             if (adjacencyMatrix[last.getNumber()][first.getNumber()]!=Float.POSITIVE_INFINITY) {
-               isgood=true;
-                 if (edgeInterface !=null&&part!=null) {
-                     timelineQueue.add(edgeInterface.highlight_edge(graph.getEdge(last, first), part));
-                     timelineQueue.add(edgeInterface.onEdgesearched(graph.getEdge(last, first)));
-                 }
+       for (String color:list){
+           if (!no_no_colors.contains(color)){
+               n1.setHexcode_color(color);
                break;
-             }else {
-                 return false;
-             }
-         }
-           if (prev != null) {
-               if (adjacencyMatrix[prev.getNumber()][curr.getNumber()]==Float.POSITIVE_INFINITY) {
-                break;
-               }
-               if (edgeInterface !=null&&part!=null) {
-                   timelineQueue.add(edgeInterface.highlight_edge(graph.getEdge(prev, curr), part));
-               }
            }
-           prev=curr;
+
        }
-        return isgood;
+
     }
 
-
-
-
+    return graph;
 }
+
+
+
+}*/

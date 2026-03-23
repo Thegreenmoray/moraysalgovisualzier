@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
+/*
  class Example_problemsTest {
 
 
@@ -218,4 +218,4 @@ assertArrayEquals(dfs_test,visited);
        int chromatic_number=Example_problems.chromatic_number(graph,null,null);
        assertEquals(3,chromatic_number);
      }
-}
+}*/

@@ -3,8 +3,7 @@ package animations;
 import javafx.animation.Timeline;
 import javafx.scene.shape.Circle;
 
-    public class EdgeAnimation extends Animations
-    {
+    public class EdgeAnimation extends Animations {
         public Timeline timeline;
         public Circle circle;
 

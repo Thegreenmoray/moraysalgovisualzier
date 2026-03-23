@@ -21,7 +21,95 @@ import java.util.List;
 
 
 public class Main extends Application {
-    Pane root = new Pane();
+  protected   static Pane root = new Pane();
+
+
+    protected static GUI_interface edgeInterface=new GUI_interface() {
+        @Override
+        public EdgeAnimation onEdgesearched(Edge e) {
+            return Visual_part.animate_edge(e, root);
+        }
+
+        @Override
+        public EdgeAnimation highlightNode(Node u) {
+
+            return Visual_part.highlightNode(u);}
+
+        @Override
+        public EdgeAnimation pause(int ms) {
+            Timeline t = new Timeline(new KeyFrame(Duration.millis(ms)));
+            return new EdgeAnimation(t);
+
+
+        }
+
+
+        @Override
+        public EdgeAnimation highlight_semi_permant( Node node, Visual_part part) {
+            return part.highlightnode(node);
+        }
+
+        @Override
+        public EdgeAnimation disable_highlights(Node node, Visual_part part) {
+            return part.disablenodes(node);
+        }
+
+        @Override
+        public EdgeAnimation highlight_edge(Edge e, Visual_part part) {
+            return part.highlightedge(e);
+        }
+
+        @Override
+        public EdgeAnimation disable_edge(Edge e, Visual_part part) {
+            return part.disableedge(e);
+        }
+
+        @Override
+        public EdgeAnimation color_nodes(Node node, Visual_part part, String Hexcode_color) {
+            return part.colornode(node,Hexcode_color);
+        }
+
+        @Override
+        public <E> SetAnimation updatetile(List<E> list, Visual_part part, int index) {
+            return null;
+        }
+
+
+        @Override
+        public EdgeAnimation makenodevisible(Node node, Visual_part part) {
+            return part.make_node_visible(node);
+
+        }
+
+        @Override
+        public EdgeAnimation makeedgevisible(Edge edge, Visual_part part) {
+         return    part.make_edge_visible(edge);
+        }
+
+        @Override
+        public EdgeAnimation makeedgeinvisible(Edge e, Visual_part part) {
+          return   part.make_edge_invisible(e);
+        }
+
+        @Override
+        public EdgeAnimation makenodeinvisible(Node node, Visual_part part) {
+           return part.make_node_invisible(node);
+        }
+
+
+
+        @Override
+        public EdgeAnimation makarcinvisible(Edge edge,Visual_part part) {
+          return  part.makearcinvisible(edge);
+        }
+
+        @Override
+        public EdgeAnimation makearcvisible( Edge edge, Visual_part part) {
+            return part.makearcvisible(edge);
+        }
+
+
+    };
     @Override
     public void start(Stage stage) throws InterruptedException, IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
             stage.setTitle("Moray's Algo visualizer");
@@ -32,9 +120,7 @@ public class Main extends Application {
             stage.setScene(scene);
             TextArea codeInput = new TextArea();
             codeInput.setText( """
-for (let i = 0; i < 10; i++) {
-
-}
+let n = User_safe_interface_api.safely_add_a_node();
 """
 
 );
@@ -44,138 +130,6 @@ for (let i = 0; i < 10; i++) {
         codeInput.setFont(Font.font("Consolas", 16)); // readable monospaced font
         codeInput.setWrapText(true);
 
-
-        GUI_interface edgeInterface=new GUI_interface() {
-                @Override
-                public EdgeAnimation onEdgesearched(Edge e) {
-                    return Visual_part.animate_edge(e, root);
-                }
-
-                @Override
-                public EdgeAnimation highlightNode(Node u) {
-
-                return Visual_part.highlightNode(u);}
-
-                @Override
-                public EdgeAnimation pause(int ms) {
-                    Timeline t = new Timeline(new KeyFrame(Duration.millis(ms)));
-                    return new EdgeAnimation(t);
-
-
-                }
-                @Override
-            public void addNode(Graph graph, Node n, Visual_part part) {
-                part.addnode(graph,n);
-            }
-
-            @Override
-            public void removeNode(Graph graph, Node n, Visual_part part) {
-                part.removenode(graph,n);
-            }
-
-            @Override
-            public void addEdge(Graph graph, Edge e, Visual_part part) {
-                 part.addedge(graph,e);
-            }
-
-            @Override
-            public void addEdge(Graph graph, Edge e, Visual_part part,float weight) {
-                part.addedge(graph,e,weight);
-            }
-
-            @Override
-            public void addarc(Graph graph, Edge e, Visual_part part, float weight) {
-                  part.addarc(graph,e,weight);
-            }
-
-            @Override
-            public EdgeAnimation highlight_semi_permant( Node node, Visual_part part) {
-                return part.highlightnode(node);
-            }
-
-            @Override
-            public EdgeAnimation disable_highlights(Node node, Visual_part part) {
-                return part.disablenodes(node);
-            }
-
-            @Override
-            public EdgeAnimation highlight_edge(Edge e, Visual_part part) {
-                return part.highlightedge(e);
-            }
-
-            @Override
-            public EdgeAnimation disable_edge(Edge e, Visual_part part) {
-                return part.disableedge(e);
-            }
-
-            @Override
-            public EdgeAnimation color_nodes(int node, Visual_part part, String Hexcode_color) {
-                return part.colornode(node,Hexcode_color);
-            }
-
-            @Override
-            public <E> SetAnimation updatetile(List<E> list, Visual_part part, int index) {
-                return null;
-            }
-
-            @Override
-            public void removeEdge(Graph graph, Edge e, Visual_part part) {
-               part.remove_edge(e, graph);
-            }
-
-            @Override
-            public void setallinvisible( Graph graph, Visual_part part) {
-              part.makeallofgraphinvisible(graph);
-            }
-
-            @Override
-            public void setallvisible(Graph graph,Visual_part part) {
-                part.makeallofgraphvisible(graph);
-            }
-
-            @Override
-            public EdgeAnimation makenodevisible(Graph graph,Node node, Visual_part part) {
-           return part.make_node_visible(graph,node);
-
-            }
-
-            @Override
-            public void makeedgevisible(Graph graph,Edge edge, Visual_part part) {
-           part.make_edge_visible(graph,edge);
-            }
-
-            @Override
-            public void makeedgeinvisible(Graph graph,Edge e, Visual_part part) {
-           part.make_edge_invisible(graph,e);
-            }
-
-            @Override
-            public void makenodeinvisible(Graph graph,Node node, Visual_part part) {
-          part.make_node_invisible(graph,node);
-            }
-
-            @Override
-            public void addarc(Graph graph, Edge e, Visual_part part) {
-                part.addarc(graph,e);
-            }
-
-            @Override
-            public void removearc(Graph graph, Edge e, Visual_part part) {
-               part.removearc(graph,e);
-            }
-
-            @Override
-            public void makarcinvisible(Graph graph, Edge edge, Visual_part part) {
-              part.makearcinvisible(edge);
-            }
-
-            @Override
-            public EdgeAnimation makearcvisible(Graph graph, Edge edge, Visual_part part) {
-                return part.makearcvisible(edge);
-            }
-
-
-        };
 
 
 
@@ -215,7 +169,7 @@ for (let i = 0; i < 10; i++) {
 
 
         clearButton.setOnAction(e -> {
-          part.clearboard();
+          //User_safe_interface_api.clearGraph();
        });
 
         stage.show();

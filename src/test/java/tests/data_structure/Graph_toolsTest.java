@@ -79,12 +79,12 @@ import java.util.ArrayList;
             graph.addVertex(new Node(i));
         }
 
-        graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(1)),2,false);
-        graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(2)),-3,false);
-        graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(3)),5,false);
+        graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(1)),2);
+        graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(2)),-3);
+        graph.addEdge(new Edge(graph.getVertices().get(0),graph.getVertices().get(3)),5);
         //no edge for 1,2, infinty
-        graph.addEdge(new Edge(graph.getVertices().get(1),graph.getVertices().get(3)),1,false);
-        graph.addEdge( new Edge(graph.getVertices().get(2),graph.getVertices().get(3)),2,false);
+        graph.addEdge(new Edge(graph.getVertices().get(1),graph.getVertices().get(3)),1);
+        graph.addEdge( new Edge(graph.getVertices().get(2),graph.getVertices().get(3)),2);
 
 float[][] testmatrix= {{0,2,-3,5},
         {2,0,Float.POSITIVE_INFINITY,1},
@@ -98,7 +98,7 @@ float[][] testmatrix= {{0,2,-3,5},
                 assertEquals(adjency[i][j], testmatrix[i][j]);
             }
         }
-        //caught an error with the graph class works perfect now.
+
     }
 
 

@@ -5,20 +5,15 @@ package tests.data_structure;
 public class Color_package {
     boolean bool;
     boolean[] lists;
-    String[]  colors;
+
 
 
 
     public Color_package(boolean bool, boolean[] lists) {
         this.bool = bool;
         this.lists = lists;
-        this.colors = null;
     }
-public Color_package(boolean bool, String[] colors) {
-        this.bool = bool;
-        this.colors = colors;
-        this.lists = null;
-}
+
 
 
 
@@ -37,15 +32,6 @@ public Color_package(boolean bool, String[] colors) {
     public void setLists(boolean[] lists) {
         this.lists = lists;
     }
-
-    public String[] getColors() {
-        return colors;
-    }
-
-    public void setColors(String[] colors) {
-        this.colors = colors;
-    }
-
 
 
 }

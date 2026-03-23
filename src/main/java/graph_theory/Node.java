@@ -28,12 +28,10 @@ private String hexcode_color;
 
     //wip, if it is invalid default to black and alert user
    // private boolean isvaildhexcode(String hexcode_color) {
-    //    return false;
-   // }
+    //    return false;}
 
   public int getNumber() {
-        return number;
-    }
+        return number;}
 
 
 

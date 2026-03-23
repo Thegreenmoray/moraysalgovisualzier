@@ -5,15 +5,18 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import runner.User_safe_interface_api;
 import tests.data_structure.Graph_tools;
 
 import java.util.*;
@@ -26,24 +29,17 @@ public class Visual_part {
    private static Pane nodeLayer = new Pane();
    private static Pane textLayer = new Pane();
 
-    private static Map<Integer,Group> corrlate=new HashMap<>();
+    private static Map<Node,Group> corrlate=new HashMap<>();
    private static Map<Edge, javafx.scene.Node> edgeToLine =new HashMap<>();
    private static Map<Edge, Text> edgeToText =new HashMap<>();
     private Pane root;
+
    private static ArrayList<Point2D> mina_distance=new ArrayList<>();
   private static double minDist = 40;
 
     public Visual_part(Pane root) {
         this.root = root;
     }
-
-
-    public Node get_node_from_number(int number) {
-
-        return null;
-    }
-
-
 
 
 
@@ -83,7 +79,7 @@ public class Visual_part {
           }while (!good&&current_attempts<max_attempts); /*we do not want this looping forever!*/
           mina_distance.add(new Point2D(distance_X,distance_Y));
            group.relocate(distance_X,distance_Y);
-          corrlate.put(node.getNumber(), group);
+          corrlate.put(node, group);
          nodeLayer.getChildren().add(group);
        }
 
@@ -200,137 +196,40 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
 
 
-    public Graph establish(Graph graph,boolean isdirected,boolean isweighted) {
-      if (!root.getChildren().contains(edgeLayer)) {
-        root.getChildren().addAll(edgeLayer, nodeLayer,textLayer);}
-
-        edgeLayer.setMouseTransparent(true);
-        nodeLayer.setMouseTransparent(true);
-        textLayer.setMouseTransparent(true);
-        for (int i=0;i<graph.getVertices().size();i++) {
-            Node node= graph.getVertices().get(i);
-            Circle circle = new Circle(10);
-            circle.setFill(Color.RED);
-
-            Text text=new Text(""+node.getNumber());
-            Group pane = new Group(circle,text);
-            Random random=new Random();
-            int distance_X;
-            int distance_Y;
-            boolean good;
-            int max_attempts=100;
-            int current_attempts=0;
-            do{
-                good=true;
-                distance_X=random.nextInt(500)+100;
-                distance_Y=random.nextInt(500)+100;
-
-                for (Point2D p : mina_distance) {
-                    if (p.distance(distance_X, distance_Y) < minDist) {
-                        current_attempts++;
-                        good = false;
-                        break;
-                    }
-                }
-
-            }while (!good&&current_attempts<max_attempts); /*we do not want this looping forever!*/
-            mina_distance.add(new Point2D(distance_X,distance_Y));
-            pane.relocate(distance_X,distance_Y);
-            corrlate.put(node.getNumber(), pane);
-            nodeLayer.getChildren().add(pane);
-        }
+    public Graph establish() {
 
 
-
-            for (int i=0;i<graph.getEdges().size();i++) {
-                Edge edge= graph.getEdges().get(i);
-
-
-                Line line = null;
-
-                Arrow arrow=null;
-                if(isdirected){
-                    arrow=new Arrow();
-                }else {
-                    line=new Line();
-                }
-
-
-
-                Node n1=edge.getV1();
-                Node n2=edge.getV2();
-
-                Group f =corrlate.get(n1.getNumber());
-                Group k =corrlate.get(n2.getNumber());
-
-                Bounds b = f.getBoundsInParent();
-                Bounds c = k.getBoundsInParent();
-
-                if (isdirected) {
-                    edgeToLine.put(edge,arrow);}else {
-                    edgeToLine.put(edge,line);
-                }
-
-                if (arrow==null){
-                    line.setStartX(b.getMinX()+b.getWidth()/2);
-                    line.setStartY(b.getMinY()+b.getHeight()/2);
-                    line.setEndX(c.getMinX() +c.getWidth()/2);
-                    line.setEndY(c.getMinY() +c.getHeight()/2);}
-                else {
-                    arrow.start((float) (b.getMinX()+b.getWidth()/2), (float) (b.getMinY()+b.getHeight()/2));
-                    arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeight()/2));
-
-                }
-                if(isweighted){
-                    Text text=new Text(""+edge.getWeight());
-                    text.setX((b.getMinX()+c.getMinX())/2);
-                    text.setY((b.getMinY()+c.getMinY())/2);
-                    textLayer.getChildren().add(text);
-                    edgeToText.put(edge,text);
-                }
-                if (isdirected) {
-                    edgeLayer.getChildren().add(arrow);}else{
-                    edgeLayer.getChildren().add(line);
-                }
-
-
+            if (!root.getChildren().contains(edgeLayer)) {
+                root.getChildren().addAll(edgeLayer, nodeLayer, textLayer);
             }
-        ;return graph;
+
+            edgeLayer.setMouseTransparent(true);
+            nodeLayer.setMouseTransparent(true);
+            textLayer.setMouseTransparent(true);
+
+        return new Graph(new ArrayList<>(),new ArrayList<>());
     }
 
-    public void remove_edge(Edge edge, Graph graph) {
-     Edge edge1 =graph.getEdge(edge.getV1(),edge.getV2());
+    public void remove_edge(Edge edge) {
 
-     if(edge1!=null){
-       Line line = (Line) edgeToLine.get(edge1);
+       Line line = (Line) edgeToLine.get(edge);
          edgeLayer.getChildren().remove(line);
-       edgeToLine.remove(edge1);
-       graph.removeEdge(edge);
+       edgeToLine.remove(edge);
 
-     }
+
+
     }
 
-    public void removenode(Graph graph, Node n) {
-   Node noodle=graph.getVertices().get(n.getNumber());
-   if (noodle!=null){
-       Group f =corrlate.get(noodle);
-       if (f!=null){
-       nodeLayer.getChildren().remove(f);}
-       for (Edge edge:graph.indenctedges(noodle)){
-           if(edge!=null){
-               Line line = (Line) edgeToLine.get(edge);
-               root.getChildren().remove(line);
-               edgeToLine.remove(edge);
-               graph.removeEdge(edge);
+    public void removenode( Node n) {
 
-           }
-       }
-       corrlate.remove(noodle);
-       graph.removeVertex(noodle);
-   }
+       Group f =corrlate.get(n);
+       nodeLayer.getChildren().remove(f);
+       corrlate.remove(n);
+
+
     }
 
-    public void addedge(Graph graph, Edge e) {
+    public void addedge( Edge e) {
         Line line = new Line();
 
 
@@ -340,7 +239,6 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
         Group f =corrlate.get(n1);
         Group k =corrlate.get(n2);
-if (f!=null&&k!=null){
         Bounds b = f.getBoundsInParent();
         Bounds c = k.getBoundsInParent();
 
@@ -352,14 +250,14 @@ if (f!=null&&k!=null){
         line.setStartY(b.getMinY()+b.getHeight()/2);
         line.setEndX(c.getMinX() +c.getWidth()/2);
         line.setEndY(c.getMinY() +c.getHeight()/2);
-        edgeLayer.getChildren().add(line);}
-        graph.addEdge(e);
+        edgeLayer.getChildren().add(line);
+
 
 
 
     }
 
-    public void addedge(Graph graph, Edge e, float weight) {
+    public void addedge( Edge e, float weight) {
         Line line = new Line();
 
         Node n1=e.getV1();
@@ -368,7 +266,7 @@ if (f!=null&&k!=null){
 
         Group f =corrlate.get(n1);
         Group k =corrlate.get(n2);
-        if (f!=null&&k!=null){
+
         Bounds b = f.getBoundsInParent();
         Bounds c = k.getBoundsInParent();
 
@@ -385,15 +283,15 @@ if (f!=null&&k!=null){
         text.setY((b.getMinY()+c.getMinY())/2);
         edgeLayer.getChildren().add(line);
        textLayer.getChildren().add(text);
-}
-        e.setWeight(weight);
-        graph.addEdge(e);
+
+
+
 
 
 
     }
 
-    public void addnode(Graph graph, Node n) {
+    public void addnode( Node n) {
 
         Circle circle = new Circle(10);
         circle.setFill(Color.BLACK);
@@ -422,8 +320,7 @@ if (f!=null&&k!=null){
         }while (!good&&current_attempts<max_attempts); /*we do not want this looping forever!*/
         mina_distance.add(new Point2D(distance_X,distance_Y));
         pane.relocate(distance_X,distance_Y);
-        corrlate.put(n.getNumber(), pane);
-        graph.addVertex(n);
+        corrlate.put(n, pane);
         nodeLayer.getChildren().add(pane);
 
 
@@ -487,30 +384,27 @@ if (f!=null&&k!=null){
 
     public void makeallofgraphinvisible(Graph graph) {
     for (Node node:graph.getVertices()){
-        make_node_invisible(graph,node);
+        make_node_invisible(node);
     }
     for (Edge e:graph.getEdges()){
-        make_edge_invisible(graph,e);
+        make_edge_invisible(e);
     }
 
-
+/// do these v^ on their own move to the safe api
 
     }
 
     public void makeallofgraphvisible(Graph graph) {
         for (Node node:graph.getVertices()){
-            make_node_visible(graph,node);
+            make_node_visible(node);
         }
         for (Edge e:graph.getEdges()){
-            make_edge_visible(graph,e);
+            make_edge_visible(e);
         }
     }
 
-    public EdgeAnimation make_node_visible(Graph graph, Node node) {
-    if(!graph.containsnode(node)){
-       return null;
+    public EdgeAnimation make_node_visible( Node node) {
 
-    }
         Group stackPane =corrlate.get(node);
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO,
@@ -522,44 +416,63 @@ if (f!=null&&k!=null){
     return new EdgeAnimation(timeline);
     }
 
-    public void make_node_invisible(Graph graph, Node node) {
-        if(graph.containsnode(node)){
-            corrlate.get(node).setVisible(false);
-            for (Edge e : graph.indenctedges(node)) {
-              if (edgeToLine.containsKey(e)){
-                edgeToLine.get(e).setVisible(false);}
-            }
+    public EdgeAnimation make_node_invisible( Node node) {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        e -> {}
+                ),
+                new KeyFrame(Duration.millis(200),
+                        e ->{corrlate.get(node).setVisible(false);}));
 
 
-        }
+        return new EdgeAnimation(timeline);
     }
 
-    public void make_edge_visible(Graph graph, Edge edge) {
-  if (graph.containsedge(edge)) {
-       edgeToLine.get(edge).setVisible(true);}
+
+    public EdgeAnimation make_edge_visible( Edge edge) {
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        e -> {}
+                ),
+                new KeyFrame(Duration.millis(200),
+                        e ->{edgeToLine.get(edge).setVisible(true);}));
+
+        return new EdgeAnimation(timeline);
+
+
     }
 
-    public void make_edge_invisible(Graph graph, Edge e) {
-   if (graph.containsedge(e)) {
-    if (edgeToLine.containsKey(e)) {
-       edgeToLine.get(e).setVisible(false);}
-       if (edgeToText.containsKey(e)) {
-           edgeToText.get(e).setVisible(false);
+    public EdgeAnimation make_edge_invisible(Edge edge) {
+
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        e -> {}
+                ),
+                new KeyFrame(Duration.millis(200),
+                        e ->{
+        if (edgeToLine.containsKey(edge)) {
+       edgeToLine.get(edge).setVisible(false);}
+       if (edgeToText.containsKey(edge)) {
+           edgeToText.get(edge).setVisible(false);
        }
-   }
 
+
+    }));
+
+
+        return new EdgeAnimation(timeline);
     }
 
-    public void addarc(Graph graph, Edge e) {
+    public void addarc( Edge e) {
         Arrow arrow=new Arrow();
         Node n1=e.getV1();
         Node n2=e.getV2();
-               if (e.getV1()==null||e.getV2()==null){
-                   return;
-               }
+
         Group f =corrlate.get(n1);
         Group k =corrlate.get(n2);
-if (f !=null &&k !=null){
+
         Bounds b = f.getBoundsInParent();
         Bounds c = k.getBoundsInParent();
         edgeToLine.put(e,arrow);
@@ -570,17 +483,15 @@ if (f !=null &&k !=null){
         text.setX((b.getMinX()+c.getMinX())/2);
         text.setY((b.getMinY()+c.getMinY())/2);
         textLayer.getChildren().add(text);
-        edgeLayer.getChildren().add(arrow);}
-        graph.addarc(e);
+        edgeLayer.getChildren().add(arrow);
+
     }
 
-    public void addarc(Graph graph, Edge e,float weight) {
+    public void addarc( Edge e,float weight) {
         Arrow arrow=new Arrow();
         Node n1=e.getV1();
         Node n2=e.getV2();
-        if (e.getV1()==null||e.getV2()==null){
-            return;
-        }
+
         Group f =corrlate.get(n1);
         Group k =corrlate.get(n2);
         e.setWeight(weight);
@@ -596,25 +507,22 @@ if (f !=null &&k !=null){
         text.setY((b.getMinY()+c.getMinY())/2);
         textLayer.getChildren().add(text);
         edgeLayer.getChildren().add(arrow);}
-        graph.addarc(e);
+
     }
 
-    public void removearc(Graph graph, Edge e) {
+    public void removearc( Edge e) {
    if (!edgeToText.containsKey(e)){
        edgeToLine.remove(e);
-       graph.removearc(e);
 
-       return;
    }
   Text text= edgeToText.get(e);
    textLayer.getChildren().remove(text);
    edgeToLine.remove(e);
-   graph.removearc(e);
 
     }
 
     //dont ask me how long this took me to figure out
-    public  void playNext(LinkedList<? extends Animations> time) {
+    public  void playNext(Queue<Animations> time) {
      //will later expand this to sets when ready
 
        Animations polled =time.poll();
@@ -718,21 +626,32 @@ if (f !=null &&k !=null){
    edgeToLine.clear();
    edgeToText.clear();
    textLayer.getChildren().clear();
-
+      // User_safe_interface_api.clearGraph();
 
     }
 
-    public void makearcinvisible(Edge edge) {
+    public EdgeAnimation makearcinvisible(Edge edge) {
     if (!edgeToLine.containsKey(edge)) {
-        return;
+        return null;
     }
     if (edgeToText.containsKey(edge)) {
         edgeToText.get(edge).setVisible(false);
     }
+
     edgeToLine.get(edge).setVisible(false);
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        e -> {}
+                ),
+                new KeyFrame(Duration.millis(200),
+                        e ->{if (edgeToText.containsKey(edge)) {
+                            edgeToText.get(edge).setVisible(false);
+                        }
+                            }));
 
 
 
+        return new EdgeAnimation(timeline);
     }
 
     public EdgeAnimation makearcvisible(Edge edge) {
@@ -853,7 +772,7 @@ if (f !=null &&k !=null){
         return new EdgeAnimation(timeline);
     }
 
-    public EdgeAnimation colornode(int node,String hexcode_color) {
+    public EdgeAnimation colornode(Node node,String hexcode_color) {
         if (!corrlate.containsKey(node)) {
             return null;
         }

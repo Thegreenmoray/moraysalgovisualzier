@@ -9,17 +9,17 @@ Perhaps sometime in the future this may become a suggestion board
  ̶-̶i̶m̶p̶l̶e̶m̶e̶n̶t̶ ̶t̶h̶e̶ ̶v̶i̶s̶u̶a̶l̶i̶z̶e̶r̶s̶ ̶i̶n̶t̶o̶ ̶t̶h̶e̶ ̶e̶x̶a̶m̶p̶l̶e̶ ̶c̶o̶d̶e̶ ̶(̶T̶h̶a̶t̶ ̶h̶a̶s̶ ̶b̶e̶e̶n̶ ̶u̶n̶i̶t̶ ̶t̶e̶s̶t̶e̶d̶)̶//done
  ̶-̶s̶e̶c̶o̶n̶d̶ ̶r̶o̶u̶n̶d̶ ̶u̶n̶i̶t̶ ̶t̶e̶s̶t̶s̶(̶ ̶̶̶G̶̶̶r̶̶̶a̶̶̶p̶̶̶h̶̶̶,̶̶̶̶̶E̶̶̶d̶̶̶g̶̶̶e̶̶̶,̶̶̶ ̶̶̶N̶̶̶o̶̶̶d̶̶̶e̶̶̶,̶̶̶ ̶̶̶E̶̶̶d̶̶̶g̶̶̶e̶̶̶ ̶̶̶I̶̶̶n̶̶̶t̶̶̶e̶̶̶r̶̶̶f̶̶̶a̶̶̶c̶̶̶e̶̶̶ ̶̶̶i̶̶̶m̶̶̶p̶̶̶l̶̶̶e̶̶̶m̶̶̶e̶̶̶n̶̶̶t̶̶̶a̶̶̶t̶̶̶i̶̶̶o̶̶̶n̶̶̶s̶̶̶(̶̶̶o̶̶̶f̶̶̶ ̶̶̶v̶̶̶i̶̶̶s̶̶̶u̶̶̶a̶̶̶l̶̶̶p̶̶̶a̶̶̶r̶̶̶t̶̶̶)̶̶̶-̶̶̶V̶̶̶i̶̶̶s̶̶̶u̶̶̶a̶̶̶l̶̶̶p̶̶̶a̶̶̶r̶̶̶t̶̶̶ ̶̶̶̶̶,̶̶̶I̶̶̶s̶̶̶t̶̶̶r̶̶̶e̶̶̶e̶̶̶,̶̶̶i̶̶̶s̶̶̶b̶̶̶i̶̶̶p̶̶̶a̶̶̶r̶̶̶t̶̶̶i̶̶̶t̶̶̶e̶̶̶,̶̶̶ ̶̶̶C̶̶̶a̶̶̶r̶̶̶t̶̶̶e̶̶̶a̶̶̶s̶̶̶i̶̶̶a̶̶̶n̶̶̶ ̶̶̶P̶̶̶r̶̶̶o̶̶̶d̶̶̶u̶̶̶c̶̶̶t̶̶̶,̶̶̶i̶̶̶s̶̶̶c̶̶̶o̶̶̶m̶̶̶p̶̶̶e̶̶̶l̶̶̶t̶̶̶e̶̶̶,̶̶̶
 ̶ ̶̶̶Q̶̶̶s̶̶̶o̶̶̶r̶̶̶t̶̶̶,̶̶̶B̶̶̶o̶̶̶t̶̶̶h̶̶̶ ̶̶̶D̶̶̶P̶̶̶ ̶̶̶k̶̶̶n̶̶̶a̶̶̶p̶̶̶s̶̶̶a̶̶̶c̶̶̶k̶̶̶s̶̶̶)̶
- ̶-̶b̶u̶i̶l̶d̶ ̶c̶h̶r̶o̶m̶a̶t̶i̶c̶ ̶c̶o̶l̶o̶r̶ ̶a̶l̶g̶o̶ ̶u̶n̶i̶t̶ ̶t̶e̶s̶t̶ ̶i̶t̶ ̶(̶2̶.̶5̶)̶
 -Sandbox environment with GraalVM //done
 -set visuals up for sets/arrays/lists/matricies
--view thread use (????)
+-Hook up algorithms unit tested algorithms
+-third round unit tests(All previous tests but more edge cases, first round was rather shallow, achieve 75% or higher code coverage,new stuff)
+-build and test generalized Sudoku and test it //last complex example problem (maybe even just last one along with matrix multiplication)
+-final checks //intial release
+-view thread use (????) //1.0+
 -view memory use
 -view core use
--Hook up algorithms unit tested algorithms
--third round unit tests(All previous tests but more edge cases, first round was rather shallow, achieve 75% or higher code coverage)
--build and test generalized Sudoku and test it //last complex example problem (maybe even just last one)
 -fix overlapping issues
 -Improve background more instead just being a white screen
--Maybe more unit tests/coverage?
+-Maybe more unit tests/coverage?(95%+?)
 -inclusive features (color blindness accommodation, other things)
--something else? (might post this to issues) //intial release
+-something else? (might post this to issues) //will likely stop here unless i get requests to add things
