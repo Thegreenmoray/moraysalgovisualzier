@@ -28,8 +28,6 @@ public Graph(List<Node> vertex, List<Edge> edge){
              adjencylist.put(v,adjenctnodes(v));
         }
 
-
-
         return adjencylist;
 
 
@@ -95,7 +93,7 @@ public void removearc(Edge e){
     updateadjencylist();
 }
 
-    public void addarc(Edge e,int weight){
+    public void addarc(Edge e,float weight){
     if (!edges.contains(e)){
        e.setWeight(weight);
         this.edges.add(e);
@@ -103,8 +101,6 @@ public void removearc(Edge e){
         updateadjencylist();}
 
     }
-
-
 
   private List<Edge> incidentEdges(Node v) {
         List<Edge> result = new ArrayList<>();
@@ -115,9 +111,6 @@ public void removearc(Edge e){
         }
         return result;
     }
-
-
-
 
     public List<Node> neighbors(Node v){
 
@@ -208,9 +201,6 @@ private void deletednodesedges(Node v){
     }
 
 
-
-
-
     private void updateadjencylist() {
    adjacencyList=createadjencylist();
     }
@@ -231,6 +221,7 @@ private void deletednodesedges(Node v){
     }
 
 }
+
 public void removeEdge(Edge e){
     Node e1 = e.getV1();
     Node e2 = e.getV2();
@@ -240,6 +231,7 @@ public void removeEdge(Edge e){
     updateadjencylist();
 
 }
+
 public void removeVertex(Node v){
   deletednodesedges(v);
    this.vertices.remove(v);
@@ -260,12 +252,10 @@ public boolean isadjacent(Node v1, Node v2){
     return false;
 }
 
- public boolean isincident(Node v1, Node v2){
+ public boolean isincident(Node v1, Edge edge){
 
-    for(Edge e1:indenctedges(v1)){
-        if (e1.getV2().getNumber()==v2.getNumber()){
-          return true;
-        }
+    if (v1.equals(edge.getV1())||v1.equals(edge.getV2())){
+      return true;
     }
 
      return false;
@@ -280,11 +270,6 @@ for(Node node:this.vertices){
 }
     return false;
 }
-
-
-
-
-
 
 
     public boolean containsedge(Edge e) {

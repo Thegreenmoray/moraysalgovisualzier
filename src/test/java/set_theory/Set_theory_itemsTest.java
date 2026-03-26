@@ -114,17 +114,6 @@ class Set_theory_itemsTest {
 
     }
 
-    @Test
-    void cardinality() {
-        ArrayList<Character> A = new ArrayList<>();
-        A.add('a');
-        A.add('b');
-        A.add('r');
-        A.add('j');
-        int actaul=Set_theory_items.cardinality(A);
-        assertEquals(4,actaul);
-
-    }
 
     @Test
     void symmetric_difference() {

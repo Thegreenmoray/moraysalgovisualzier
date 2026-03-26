@@ -270,7 +270,7 @@ class GraphTest {
         graph.addEdge(new Edge(graph.getVertices().get(1),graph.getVertices().get(2)));
         graph.addEdge(new Edge(graph.getVertices().get(2),graph.getVertices().get(3)));
 
-        assertTrue(graph.isincident(graph.getVertices().get(0),graph.getVertices().get(1)));
+        assertTrue(graph.isincident(graph.getVertices().get(0),graph.getEdges().getFirst()));
 
     }
 
@@ -302,4 +302,10 @@ class GraphTest {
         assertTrue(graph.containsedge(graph.getEdge(graph.getVertices().get(0),graph.getVertices().get(1))));
     }
 
+@Test
+    void graphs(){
+          Graph graph= Graph_tools.randomgraph(3,1,true,true,true);
+        Graph graph1= Graph_tools.randomgraph(3,1,true,true,false);
+
+    }
 }

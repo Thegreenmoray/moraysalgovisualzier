@@ -5,14 +5,7 @@ import java.util.Objects;
 public class Edge {
   private final Node v1;
  private final Node v2;
-private     float weight;
-
-
-
-
-
-    //int pointer;
-
+private float weight;
 
 
     public Edge(Node v1, Node v2) {
@@ -31,17 +24,7 @@ private     float weight;
 
     }
 
-   // public Edge(Node v1, Node v2, float weight, int pointer) {
-     //   this.v1 = v1;
-     //   this.v2 = v2;
-    //    this.weight = weight;
 
-      //  this.pointer=pointer;
-   // }
-
-    //public int getPointer() {
-   //     return pointer;
-   // }
 
     public Node getV1() {
         return v1;

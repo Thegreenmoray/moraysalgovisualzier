@@ -22,96 +22,8 @@ import java.util.List;
 
 public class Main extends Application {
   protected   static Pane root = new Pane();
-
-
-    protected static GUI_interface edgeInterface=new GUI_interface() {
-        @Override
-        public EdgeAnimation onEdgesearched(Edge e) {
-            return Visual_part.animate_edge(e, root);
-        }
-
-        @Override
-        public EdgeAnimation highlightNode(Node u) {
-
-            return Visual_part.highlightNode(u);}
-
-        @Override
-        public EdgeAnimation pause(int ms) {
-            Timeline t = new Timeline(new KeyFrame(Duration.millis(ms)));
-            return new EdgeAnimation(t);
-
-
-        }
-
-
-        @Override
-        public EdgeAnimation highlight_semi_permant( Node node, Visual_part part) {
-            return part.highlightnode(node);
-        }
-
-        @Override
-        public EdgeAnimation disable_highlights(Node node, Visual_part part) {
-            return part.disablenodes(node);
-        }
-
-        @Override
-        public EdgeAnimation highlight_edge(Edge e, Visual_part part) {
-            return part.highlightedge(e);
-        }
-
-        @Override
-        public EdgeAnimation disable_edge(Edge e, Visual_part part) {
-            return part.disableedge(e);
-        }
-
-        @Override
-        public EdgeAnimation color_nodes(Node node, Visual_part part, String Hexcode_color) {
-            return part.colornode(node,Hexcode_color);
-        }
-
-        @Override
-        public <E> SetAnimation updatetile(List<E> list, Visual_part part, int index) {
-            return null;
-        }
-
-
-        @Override
-        public EdgeAnimation makenodevisible(Node node, Visual_part part) {
-            return part.make_node_visible(node);
-
-        }
-
-        @Override
-        public EdgeAnimation makeedgevisible(Edge edge, Visual_part part) {
-         return    part.make_edge_visible(edge);
-        }
-
-        @Override
-        public EdgeAnimation makeedgeinvisible(Edge e, Visual_part part) {
-          return   part.make_edge_invisible(e);
-        }
-
-        @Override
-        public EdgeAnimation makenodeinvisible(Node node, Visual_part part) {
-           return part.make_node_invisible(node);
-        }
-
-
-
-        @Override
-        public EdgeAnimation makarcinvisible(Edge edge,Visual_part part) {
-          return  part.makearcinvisible(edge);
-        }
-
-        @Override
-        public EdgeAnimation makearcvisible( Edge edge, Visual_part part) {
-            return part.makearcvisible(edge);
-        }
-
-
-    };
     @Override
-    public void start(Stage stage) throws InterruptedException, IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public void start(Stage stage) {
             stage.setTitle("Moray's Algo visualizer");
 
             root.setPrefSize(2000,2000);
@@ -120,9 +32,23 @@ public class Main extends Application {
             stage.setScene(scene);
             TextArea codeInput = new TextArea();
             codeInput.setText( """
-let n = User_safe_interface_api.safely_add_a_node();
-"""
+for (let i = 0; i < 5; i++) {
+   User_safe_interface_api.safely_add_a_node();
+}
+for (var i = 0; i < 5; i++) {
+for (var j = i+1; j < 5; j++) {
+User_safe_interface_api.safely_add_edge(User_safe_interface_api.obtain_existing_node(i),
+User_safe_interface_api.obtain_existing_node(j));
+}
+}
 
+var setkey=User_safe_interface_api.establishlist([10, 20, 30]);
+var matrixkey=User_safe_interface_api.establishmatrix([[10, 20, 30],[1,4,46]]);
+var matrixkey2=User_safe_interface_api.establishmatrix([[11, 67, 30],[134,4,46]]);
+var nope=User_safe_interface_api.obtain_existing_node(0);
+User_safe_interface_api.remove_node(nope);
+
+"""
 );
 
               codeInput.setLayoutX(300);
@@ -145,7 +71,12 @@ let n = User_safe_interface_api.safely_add_a_node();
 
         clearButton.setLayoutX(100);
         clearButton.setLayoutY(300);
-        root.getChildren().addAll(codeInput,compileButton,runButton,clearButton);
+
+        Button exitButton = new Button("Exit");
+        exitButton.setLayoutX(100);
+        exitButton.setLayoutY(350);
+
+        root.getChildren().addAll(codeInput,compileButton,runButton,clearButton,exitButton);
 
         compileButton.setOnAction(e -> {
             try {
@@ -159,7 +90,7 @@ let n = User_safe_interface_api.safely_add_a_node();
         runButton.setOnAction(e -> {
             Thread t = new Thread(() -> {
                 try {
-                    algorithmRunner.run(edgeInterface, part);
+                    algorithmRunner.run( part);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -169,8 +100,13 @@ let n = User_safe_interface_api.safely_add_a_node();
 
 
         clearButton.setOnAction(e -> {
-          //User_safe_interface_api.clearGraph();
-       });
+            part.clearboard();
+        });
+
+
+        exitButton.setOnAction(e -> {
+            System.exit(0);
+        });
 
         stage.show();
     }

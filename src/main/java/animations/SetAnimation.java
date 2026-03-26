@@ -7,8 +7,10 @@ public class SetAnimation extends Animations {
 //todo when working on sets
 
 public  SetAnimation(Timeline t) {
-this.t=t;
+    super(t);
+    this.t=t;
 }
+
 
 
 

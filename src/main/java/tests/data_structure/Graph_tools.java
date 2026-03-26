@@ -12,14 +12,6 @@ public class Graph_tools {
     
 private Graph_tools(){};
 
-
-public static boolean Willcreateacycle(Graph mst, Node n, Node m){
-
-
-        return (!mst.containsnode(n)&&!mst.containsnode(m));
-    }
-
-
 public static Graph empty_graph(){
 
     return new Graph(new ArrayList<>(),new ArrayList<>());
@@ -173,9 +165,8 @@ public static List<String> random_unique_colors(Graph graph){
             return true;
         }
       int nodes=graph.getVertices().size();
-Graph copy_of_graph=graph;
 //^here to prevent "contamination" of graph
-for(Node n:copy_of_graph.getVertices()){
+for(Node n: graph.getVertices()){
     n.setHexcode_color(yellow);
 }
    boolean[] lists =new boolean[nodes];
@@ -184,15 +175,17 @@ for(int i=0;i<nodes;i++) {
 
 
     if (!lists[i]&&booleanPackage.isBool()) {
-        copy_of_graph.getVertices().get(i).setHexcode_color(cyan);
-        booleanPackage = bfs_bipartite(copy_of_graph, i, lists, yellow, magenta, cyan);
+        graph.getVertices().get(i).setHexcode_color(cyan);
+        booleanPackage = bfs_bipartite(graph, i, lists, yellow, magenta, cyan);
         lists = booleanPackage.getLists();
     }
 
 
 }
 
-
+     for(Node n: graph.getVertices()){
+         n.setHexcode_color(null);
+     }
 
 
     return booleanPackage.isBool();
@@ -273,6 +266,84 @@ private static boolean[] dfs(boolean[] visted,Graph graph,int node_number) {
         return visted;
     }
 
+
+    public static Graph randomgraph(int size, double edgechance, boolean isweighted, boolean canbenegative, boolean isdirected) {
+        return isdirected? generate_graph_directed(size,edgechance,isweighted,canbenegative):generate_graph_undirected(size,edgechance,isweighted,canbenegative);
+    }
+
+    private static Graph generate_graph_undirected(int size,double edge_chance,boolean isweighted,boolean can_be_negative_weight){
+        LinkedList<Node> nodes = new LinkedList<>();
+        LinkedList<Edge> edges = new LinkedList<>();
+
+        if (size <=0){
+            size = 0;
+        }
+
+
+        edge_chance = Math.clamp(edge_chance,0,1);
+
+
+        Random rand = new Random();
+
+        for(int i=0;i<size;i++){
+            nodes.add(new Node(i));
+        }
+
+        for(int i=0;i<size;i++){
+            for(int j=i+1;j<size;j++){
+                if(rand.nextFloat()<edge_chance){
+                    int c=rand.nextInt(20)+2;
+                    if (isweighted)
+                    {
+                        int v=can_be_negative_weight&&rand.nextBoolean()?-1:1;
+                        edges.add(new Edge(nodes.get(i), nodes.get(j), v*c));
+                        edges.add(new Edge(nodes.get(j), nodes.get(i), v*c));
+                    }
+                    else
+                    {
+                        edges.add(new Edge(nodes.get(i), nodes.get(j)));
+                        edges.add(new Edge(nodes.get(j), nodes.get(i)));
+                    }
+
+                }
+            }
+        }
+
+        return new Graph(nodes,edges);
+    }
+
+    private static Graph generate_graph_directed(int size,double edge_chance,boolean isweighted,boolean can_be_negative_weight){
+        LinkedList<Node> nodes = new LinkedList<>();
+        LinkedList<Edge> edges = new LinkedList<>();
+
+
+        edge_chance =Math.clamp(edge_chance,0,1);
+
+        Random rand = new Random();
+
+        for(int i=0;i<size;i++){
+            nodes.add(new Node(i));
+        }
+
+        for(int i=0;i<size;i++) {
+            for (int j = 0; j < size; j++) {
+                if (i==j) {continue;}
+
+                if (rand.nextFloat()<edge_chance) {
+                    int c = rand.nextInt(20) + 2;
+                    if (isweighted) {
+                        int v = can_be_negative_weight && rand.nextBoolean() ? -1 : 1;
+                        edges.add(new Edge(nodes.get(i), nodes.get(j), v * c));
+                    } else {
+                        edges.add(new Edge(nodes.get(i), nodes.get(j)));
+                    }
+
+                }
+
+            }
+        }
+        return new Graph(nodes,edges);
+    }
 
 
 }

@@ -5,35 +5,38 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import runner.User_safe_interface_api;
-import tests.data_structure.Graph_tools;
 
+import java.awt.*;
 import java.util.*;
-
-
+import java.util.List;
 
 
 public class Visual_part {
   private static Pane edgeLayer = new Pane();
    private static Pane nodeLayer = new Pane();
    private static Pane textLayer = new Pane();
-
+   private static GridPane Squarevisuallayer=new GridPane();
     private static Map<Node,Group> corrlate=new HashMap<>();
    private static Map<Edge, javafx.scene.Node> edgeToLine =new HashMap<>();
    private static Map<Edge, Text> edgeToText =new HashMap<>();
+    private int setnextID = 0;
+    private int matrixnextID=0;
+    private Map<Integer, List_setup> list_visuals = new HashMap<>();
+    private Map<Integer,Matrix_setup> matrix_visuals = new HashMap<>();
     private Pane root;
-
    private static ArrayList<Point2D> mina_distance=new ArrayList<>();
   private static double minDist = 40;
 
@@ -41,10 +44,7 @@ public class Visual_part {
         this.root = root;
     }
 
-
-
-    public Graph randomgraph_establish(int size, double edgechance, boolean isweighted, boolean canbenegative, boolean isdirected) {
-    Graph graph =isdirected? generate_graph_directed(size,edgechance,isweighted,canbenegative):generate_graph_undirected(size,edgechance,isweighted,canbenegative);
+    public Graph visualizegraph( Graph graph,boolean isweighted, boolean isdirected) {
      if (!root.getChildren().contains(edgeLayer)) {
         root.getChildren().addAll(edgeLayer, nodeLayer,textLayer);}
         edgeLayer.setMouseTransparent(true);
@@ -103,8 +103,8 @@ public class Visual_part {
          Node n1=edge.getV1();
          Node n2=edge.getV2();
 
-           Group f =corrlate.get(n1.getNumber());
-         Group k =corrlate.get(n2.getNumber());
+           Group f =corrlate.get(n1);
+         Group k =corrlate.get(n2);
 
            Bounds b = f.localToScene(f.getBoundsInLocal());
            Bounds c = k.localToScene(k.getBoundsInLocal());
@@ -141,14 +141,86 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
        return graph;
     }
 
-    public <E> List<E> randomset_establish(int size,E itemused){
+
+   //int size,E itemused
+    public <E> int establishset(List<E> list) {
+        if (!root.getChildren().contains(Squarevisuallayer)) {
+            root.getChildren().add(Squarevisuallayer);
+        }
+        List_setup<E> listSetup=new List_setup<>(list,setnextID);
 
 
+        int pointer=0;
+        for (E e : list) {
+            Rectangle rectangle=new Rectangle(25,25);
 
-        return List.of();
+            Text text=new Text();
+            text.setText(e.toString());
+            rectangle.setFill(Color.GREEN);
+            StackPane cell = new StackPane(rectangle, text);
+
+            listSetup.getRoot().getChildren().add(cell);
+
+listSetup.getCells().put(pointer,cell);
+pointer++;
+
+        }
+//not at all efficient but good for now
+        if (!Squarevisuallayer.getChildren().contains(listSetup.getRoot())) {
+            listSetup.getRoot().setLayoutX(80*(matrix_visuals.size()+1));
+            Squarevisuallayer.getChildren().add(listSetup.getRoot());
+        }
+
+        list_visuals.put(setnextID,listSetup);
+      int to_be_returned=setnextID;
+        setnextID++;
+
+        return to_be_returned;
     };
 
 
+    public <E> int establishmatrix(E[][] matrix) {
+        if (!root.getChildren().contains(Squarevisuallayer)) {
+            root.getChildren().add(Squarevisuallayer);
+        }
+
+        Matrix_setup<E> martixSetup=new Matrix_setup<>(matrix,setnextID);
+        martixSetup.getRoot().setHgap(1);
+        martixSetup.getRoot().setVgap(1);
+        for (int i = 0; i < matrix.length; i++) {
+
+            for (int j = 0; j < matrix[i].length; j++) {
+                Rectangle rectangle=new Rectangle(25,25);
+
+                Text text=new Text();
+                text.setText(matrix[i][j].toString());
+                rectangle.setFill(Color.GREEN);
+                StackPane cell = new StackPane(rectangle, text);
+
+                martixSetup.getCells().put(new Point(i,j),cell);
+
+                martixSetup.getRoot().add(cell,j,i);
+
+            }
+
+        }
+        //not at all efficient but good for now
+        if (!Squarevisuallayer.getChildren().contains(martixSetup.getRoot())) {
+            martixSetup.getRoot().setLayoutY(80*(matrix_visuals.size()+1));
+            Squarevisuallayer.getChildren().add(martixSetup.getRoot());
+        }
+
+
+
+     int save_id=matrixnextID;
+        matrix_visuals.put(matrixnextID, martixSetup);
+        matrixnextID++;
+
+
+        return save_id;
+    };
+
+/*
     private Graph randomDAG(int node_number, double probability, boolean isweighted, boolean canbenegative){
        Graph graph= Graph_tools.empty_graph();
        for (int i=0;i<node_number;i++) {
@@ -192,9 +264,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         }
 
         return Complement_graph;
-    }
-
-
+    }*/
 
     public Graph establish() {
 
@@ -326,7 +396,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
     }
 
-    public static EdgeAnimation highlightNode(Node u) {
+    public EdgeAnimation highlightNode(Node u) {
 
         Group f = Visual_part.corrlate.get(u);
       Circle circle = (Circle) f.getChildren().getFirst();
@@ -343,7 +413,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         return new EdgeAnimation(timeline);
     }
 
-    public static EdgeAnimation animate_edge(Edge edge, Pane root){
+    public EdgeAnimation animate_edge(Edge edge){
 
         Circle circle = new Circle(5);
         Node n1=edge.getV1();
@@ -390,7 +460,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         make_edge_invisible(e);
     }
 
-/// do these v^ on their own move to the safe api
+
 
     }
 
@@ -428,7 +498,6 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         return new EdgeAnimation(timeline);
     }
 
-
     public EdgeAnimation make_edge_visible( Edge edge) {
 
         Timeline timeline = new Timeline(
@@ -448,21 +517,23 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO,
-                        e -> {}
-                ),
+                        e -> {}),
                 new KeyFrame(Duration.millis(200),
-                        e ->{
-        if (edgeToLine.containsKey(edge)) {
-       edgeToLine.get(edge).setVisible(false);}
-       if (edgeToText.containsKey(edge)) {
-           edgeToText.get(edge).setVisible(false);
-       }
-
-
-    }));
+                        e ->{if (edgeToLine.containsKey(edge))
+                        {edgeToLine.get(edge).setVisible(false);}
+                            if (edgeToText.containsKey(edge))
+                            {edgeToText.get(edge).setVisible(false);}}));
 
 
         return new EdgeAnimation(timeline);
+    }
+
+    public boolean edge_is_visible(Edge edge) {
+        return edgeToLine.get(edge).isVisible();
+    }
+
+    public boolean node_is_visible(Node node) {
+        return corrlate.get(node).isVisible();
     }
 
     public void addarc( Edge e) {
@@ -495,7 +566,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         Group f =corrlate.get(n1);
         Group k =corrlate.get(n2);
         e.setWeight(weight);
-        if (f != null&&k != null){
+
         Bounds b = f.getBoundsInParent();
         Bounds c = k.getBoundsInParent();
         edgeToLine.put(e,arrow);
@@ -506,7 +577,7 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         text.setX((b.getMinX()+c.getMinX())/2);
         text.setY((b.getMinY()+c.getMinY())/2);
         textLayer.getChildren().add(text);
-        edgeLayer.getChildren().add(arrow);}
+        edgeLayer.getChildren().add(arrow);
 
     }
 
@@ -525,98 +596,36 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
     public  void playNext(Queue<Animations> time) {
      //will later expand this to sets when ready
 
-       Animations polled =time.poll();
-
-       if (polled==null){
-           return;
-       }
-       if (polled instanceof EdgeAnimation next) {
+        Animations polled = null;
+       while (!time.isEmpty()&&polled==null)
+       {polled =time.poll();}
 
 
-           next.timeline.setOnFinished(e -> {
-               if (next.circle != null) {
-                   root.getChildren().remove(next.circle);
-               }
-               playNext(time);
-           });
 
-           next.timeline.play();
-
-       }
-    }
-
-    private static Graph generate_graph_undirected(int size,double edge_chance,boolean isweighted,boolean can_be_negative_weight){
-        LinkedList<Node> nodes = new LinkedList<>();
-        LinkedList<Edge> edges = new LinkedList<>();
-
-        if (size <=0){
-            size = 0;
-        }
+           if (polled instanceof EdgeAnimation next) {
 
 
-            edge_chance = Math.clamp(edge_chance,0,1);
+               next.timeline.setOnFinished(e -> {
+                   if (next.circle != null) {
+                       root.getChildren().remove(next.circle);
+                   }
+                   playNext(time);
+               });
+
+               next.timeline.play();
+
+           }
+           if (polled instanceof SetAnimation next){
+               next.t.setOnFinished(e -> {
+                   playNext(time);
+               });
+
+               next.t.play();
+
+           }
 
 
-        Random rand = new Random();
 
-        for(int i=0;i<size;i++){
-            nodes.add(new Node(i));
-        }
-
-        for(int i=0;i<size;i++){
-            for(int j=i+1;j<size;j++){
-                if(rand.nextFloat()<edge_chance){
-                    int c=rand.nextInt(20)+2;
-                    if (isweighted)
-                    {
-                        int v=can_be_negative_weight&&rand.nextBoolean()?-1:1;
-                        edges.add(new Edge(nodes.get(i), nodes.get(j), v*c));
-                        edges.add(new Edge(nodes.get(j), nodes.get(i), v*c));
-                    }
-                    else
-                    {
-                        edges.add(new Edge(nodes.get(i), nodes.get(j)));
-                        edges.add(new Edge(nodes.get(j), nodes.get(i)));
-                    }
-
-                }
-            }
-        }
-
-        return new Graph(nodes,edges);
-    }
-
-    private static Graph generate_graph_directed(int size,double edge_chance,boolean isweighted,boolean can_be_negative_weight){
-        LinkedList<Node> nodes = new LinkedList<>();
-        LinkedList<Edge> edges = new LinkedList<>();
-
-
-      edge_chance =Math.clamp(edge_chance,0,1);
-
-        Random rand = new Random();
-
-        for(int i=0;i<size;i++){
-            nodes.add(new Node(i));
-        }
-
-        for(int i=0;i<size;i++) {
-            for (int j = 0; j < size; j++) {
-                if (i==j) {continue;}
-
-                if (rand.nextFloat()<edge_chance) {
-                    int c = rand.nextInt(20) + 2;
-                    if (isweighted) {
-                        int v = can_be_negative_weight && rand.nextBoolean() ? -1 : 1;
-                        edges.add(new Edge(nodes.get(i), nodes.get(j), v * c));
-                    } else {
-                        edges.add(new Edge(nodes.get(i), nodes.get(j)));
-                    }
-
-                }
-
-            }
-        }
-        return new Graph(nodes,edges);
     }
 
     public void clearboard() {
@@ -626,8 +635,11 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
    edgeToLine.clear();
    edgeToText.clear();
    textLayer.getChildren().clear();
-      // User_safe_interface_api.clearGraph();
-
+   Squarevisuallayer.getChildren().clear();
+   matrix_visuals.clear();
+   list_visuals.clear();
+  setnextID=0;
+  matrixnextID=0;
     }
 
     public EdgeAnimation makearcinvisible(Edge edge) {
@@ -683,16 +695,11 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         }
         Group group = corrlate.get(node);
         Circle circle = (Circle) group.getChildren().getFirst();
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.ZERO,
-                        e -> {
-                            circle.setFill(Color.web( "#0000FF"));
-                        }
+        Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO,
+                        e -> {circle.setFill(Color.web( "#0000FF"));}
                 ),
                 new KeyFrame(Duration.millis(100),
-                        e -> {
-                     circle.setFill(Color.web("#0000FF"));
-                        }));
+                        e -> {circle.setFill(Color.web("#0000FF"));}));
 
 
 
@@ -791,5 +798,100 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
         return new EdgeAnimation(timeline);
     }
 
+
+    public SetAnimation listsquarehighlight(List_setup<?> list, int index) {
+
+       Rectangle cell = (Rectangle) list.getCells().get(index).getChildren().getFirst();
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        e -> {
+                            cell.setFill(Color.BROWN);
+                        }
+                ),
+                new KeyFrame(Duration.millis(50),
+                        e -> {
+                          cell.setFill(Color.GREEN);
+                        }));
+
+
+
+        return new SetAnimation(timeline);
+    }
+
+    public SetAnimation pause(int pause) {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        e -> {
+
+                        }
+                ),
+                new KeyFrame(Duration.millis(pause),
+                        e -> {
+
+                        }));
+        return new SetAnimation(timeline);
+    }
+
+    public List_setup<?> getsetid(int key) {
+        return list_visuals.get(key);
+    }
+
+    public Matrix_setup<?> getmatrix(int key) {
+        return matrix_visuals.get(key);
+    }
+
+    public <E>SetAnimation edit_square_value(List_setup<?> list, int index,E value) {
+
+
+        Text cell = (Text) list.getCells().get(index).getChildren().get(1);
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        e -> {
+
+                        }
+                ),
+                new KeyFrame(Duration.millis(50),
+                        e -> {
+                            cell.setText(value.toString());
+                        }));
+
+
+
+        return new SetAnimation(timeline);
+    }
+
+
+    public SetAnimation highlightmatrixsquare(Matrix_setup<?> matrix,Point point) {
+    Rectangle rectangle = (Rectangle) matrix.getCells().get(point).getChildren().getFirst();
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        e -> {
+                            rectangle.setFill(Color.BROWN);
+                        }
+                ),
+                new KeyFrame(Duration.millis(200),
+                        e -> {
+                            rectangle.setFill(Color.GREEN);
+                        }));
+
+        return new SetAnimation(timeline);
+    }
+
+
+    public <E> SetAnimation edit_matrix_square_value(Matrix_setup<?> matrixSetup,Point point, E value) {
+        Text box = (Text) matrixSetup.getCells().get(point).getChildren().get(1);
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        e -> {
+
+                        }
+                ),
+                new KeyFrame(Duration.millis(50),
+                        e -> {
+                            box.setText(value.toString());
+                        }));
+
+        return new SetAnimation(timeline);
+    }
 
 }

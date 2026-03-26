@@ -25,16 +25,17 @@ public class AlgorithmRunner {
             .allowHostClassLookup(AlgorithmRunner::isSafeClass)
             .allowIO(false)
     .allowCreateThread(false)
-    .allowNativeAccess(true)
+    .allowNativeAccess(false)
    .allowAllAccess(false)
             .option("sandbox.MaxHeapMemory", "128MB")     // Prevents memory bombs
-            .option("sandbox.MaxCPUTime", "10s")           // Prevents infinite loops
-            .option("sandbox.MaxStatements", "50000")     // Prevents algorithmic attack
+            .option("sandbox.MaxCPUTime", "30s")           // Prevents infinite loops
+            .option("sandbox.MaxStatements", "100000")     // Prevents algorithmic attack
+            //50k otherwise,100,000 for debugging
     .option("engine.WarnInterpreterOnly", "false")
     .build();
 
 
-    private static boolean isSafeClass(String className) {
+    public static boolean isSafeClass(String className) {
         // Whitelist approach for maximum security
         Set<String> allowedPrefixes = Set.of(
                 "java.lang.Object",
@@ -64,11 +65,11 @@ public class AlgorithmRunner {
             }
         }
 
-        // Allow GraalVM internal classes
+
         if (className.startsWith("com.oracle.truffle.")) return true;
         if (className.startsWith("org.graalvm.")) return true;
 
-        // Block everything else
+
         return false;
     }
 
@@ -80,7 +81,7 @@ String currentAlgorithm;
         this.currentAlgorithm = code;
     }
 
-    public void run( GUI_interface gui_interface,Visual_part part) {
+    public void run(Visual_part part) {
         if (currentAlgorithm == null) {
             throw new IllegalStateException("No algorithm loaded. Call setup() first.");
         }
@@ -101,13 +102,13 @@ String currentAlgorithm;
 
         Graph graph = graphHolder[0];
 
-        // 2. Create safe API with real graph + part
+
         User_safe_interface_api userSafeInterfaceApi =
                 new User_safe_interface_api(graph,new LinkedList<Animations>(),part);
 
 
 
-        // Inject API into sandbox BEFORE executing user code
+
         sandbox.getBindings("js")
                 .putMember("User_safe_interface_api", userSafeInterfaceApi);
 

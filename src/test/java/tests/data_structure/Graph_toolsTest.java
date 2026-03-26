@@ -1,23 +1,21 @@
 package tests.data_structure;
 
-import animations.GraphTestHelper;
 import graph_theory.Edge;
 import animations.Graph;
 import graph_theory.Node;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.*;
 
 
-
- class Graph_toolsTest {
+class Graph_toolsTest {
 
     @Test
     void generate_graph_undirected() {
                                  //one in two
-   Graph graph=GraphTestHelper.generate_graph_undirected(4,2,false,false);
+   Graph graph=Graph_tools.randomgraph(4,2,false,false,false);
 
     for (Edge e:graph.getEdges()){
         assertEquals(1, e.getWeight());
@@ -30,7 +28,7 @@ import java.util.ArrayList;
 
     @Test
     void generate_graph_directed() {
-        Graph graph= GraphTestHelper.generate_graph_directed(4,2,false,false);
+        Graph graph= Graph_tools.randomgraph(4,2,false,false,true);
 
         for (Edge e:graph.getEdges()){
             assertEquals(1, e.getWeight());
@@ -103,10 +101,6 @@ float[][] testmatrix= {{0,2,-3,5},
 
 
      @Test
-     void degree_matrix() {
-     }
-
-     @Test
      void is_tree() {
         Graph graph=new Graph(new ArrayList<>(),new ArrayList<>());
         for (int i=0;i<4;i++){
@@ -123,13 +117,25 @@ float[][] testmatrix= {{0,2,-3,5},
 
      @Test
      void is_complete() {
-      Graph graph= animations.GraphTestHelper.generate_graph_undirected(4,1,false,false);
+      Graph graph= Graph_tools.randomgraph(4,1,false,false,false);
    boolean iscompelte=Graph_tools.is_complete(graph);
    assertEquals(true,iscompelte);
      }
 
      @Test
      void random_unique_colors() {
+     Graph graph=Graph_tools.empty_graph();
+     Graph_tools.random_unique_colors(graph);
+     Graph graph1=Graph_tools.randomgraph(4,1,false,false,false);
+     Graph_tools.random_unique_colors(graph1);
+    }
+
+     @Test
+     void connected(){
+      Graph graph=Graph_tools.randomgraph(4,1,false,false,false);
+      assertTrue(Graph_tools.is_connected(graph));
+      Graph graph2=Graph_tools.randomgraph(4,0,false,false,true);
+      assertFalse(Graph_tools.is_connected(graph2));
      }
 
      @Test

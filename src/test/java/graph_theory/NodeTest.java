@@ -48,7 +48,7 @@ class NodeTest {
         }
         graph.getVertices().getFirst().setHexcode_color("#0000FF");
         Node node1= new Node(5);
-        assertFalse(node1.equals(graph.getVertices().getFirst()));
+        assertFalse(node1.issamecolor(graph.getVertices().getFirst()));
     }
 
     @Test
@@ -60,5 +60,7 @@ class NodeTest {
         Node node1= new Node(0);
         assertTrue(node1.equals(graph.getVertices().getFirst()));
     }
+
+
 
 }

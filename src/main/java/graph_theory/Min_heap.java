@@ -6,9 +6,10 @@ public class Min_heap {
     //do this for a global heap;
 
 
-public  static void add_to_heap(Edge edge,List<Edge> edges) {
+public  static List<Edge> add_to_heap(Edge edge,List<Edge> edges) {
     edges.add(edge);
    form_heap(edges);
+    return edges;
 }
 
 
@@ -48,7 +49,7 @@ public static Edge extract_from_heap(List<Edge> edges) {
 
 
 
-    private static void fix_heap(List<Edge> edges,int index) {
+private static void fix_heap(List<Edge> edges,int index) {
      int child;
     while (2*index+1<edges.size()) {
         int left=2*index+1;

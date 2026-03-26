@@ -1,4 +1,3 @@
-package tests.data_structure;
 
 import animations.Animations;
 import animations.EdgeAnimation;
@@ -14,118 +13,12 @@ import set_theory.Set_theory_items;
 import java.util.*;
 
 
-/*The comments for the other algorithms are predominantly meant for newbies,
-for more experienced developers these are just
+/*just
 here to show how to visualize your code with the compiler.
-Other notes: unless you are unit testing you can ignore the
-if (part != null&&edgeInterface!=null) {} these only exist for unit tests
-and aren't required for your code.
+will be converted to js
 */
 /*
 public class Example_problems {
-
-//------------------------------To start------------------------------
-/*
-
-    //use the new one
-public static void Adding_and_removing_nodes(Visual_part part, User_safe_interface_api api){
-    Graph g=part.randomgraph_establish(4,3,true,false,true);
-    Node node=new Node(6);
-//api.addNode(g,node,part);
-         //   api.removeNode(g,g.getVertices().get(2),part);
-//api.removeNode(g,node,part);
- }
-
-public static void Adding_and_removing_edges(Visual_part part, GUI_interface api){
-        Graph g=part.randomgraph_establish(4,3,true,false,false);
-        Node node=new Node(6);
-        api.addNode(g,node,part);
-        Edge edge=new Edge(g.getVertices().get(3),node);
-        Edge edge2=new Edge(g.getVertices().get(2),node);
-        api.addEdge(g,edge,part);
-        api.addEdge(g,edge2,part);
-        api.removeEdge(g,edge2,part);}
-
-
-    public static void Adding_and_removing_arcs(Visual_part part, GUI_interface api){
-        Graph g=part.randomgraph_establish(4,3,true,false,true);
-        Node node=new Node(6);
-        api.addNode(g,node,part);
-        Edge edge=new Edge(g.getVertices().get(3),node);
-        Edge edge2=new Edge(g.getVertices().get(2),node);
-        api.addarc(g,edge,part);
-        api.addarc(g,edge2,part);
-        api.removearc(g,edge2,part);}
-
-
-    public static void Make_graph_invisible_visible(Visual_part part, GUI_interface api){
-        Graph g=part.randomgraph_establish(4,3,true,false,true);
-
-api.setallinvisible(g,part);
-api.setallvisible(g,part);
-}
-
-
-
-    public static void making_edges_invisible_visible(Visual_part part, GUI_interface api){
-        Graph g=part.randomgraph_establish(4,3,true,false,false);
-        Node node=new Node(6);
-        api.addNode(g,node,part);
-        Edge edge=new Edge(g.getVertices().get(3),node);
-        Edge edge2=new Edge(g.getVertices().get(2),node);
-        api.addEdge(g,edge,part);
-        api.addEdge(g,edge2,part);
-        api.makeedgeinvisible(g,edge,part);
-        api.makeedgevisible(g,edge,part);
-}
-
-    public static void Making_arcs_visible_invisible(Visual_part part, GUI_interface api){
-        Queue<EdgeAnimation> timelineQueue=new LinkedList<>();
-        Graph g=part.randomgraph_establish(4,3,true,false,true);
-        Node node=new Node(6);
-        api.addNode(g,node,part);
-        Edge edge=new Edge(g.getVertices().get(3),node);
-        Edge edge2=new Edge(g.getVertices().get(2),node);
-        api.addarc(g,edge,part);
-        api.addarc(g,edge2,part);
-        api.removearc(g,edge2,part);
-        api.makarcinvisible(g,edge,part);
-       timelineQueue.add( api.makearcvisible(g,edge,part));
-       part.playNext((LinkedList<? extends Animations>) timelineQueue);
-}
-
-
-    public static void Making_nodes_visible_invisible(Visual_part part, GUI_interface api){
-        Queue<EdgeAnimation> timelineQueue=new LinkedList<>();
-        Graph g=part.randomgraph_establish(4,3,true,false,false);
-        Node node=new Node(6);
-        api.addNode(g,node,part);
-        api.makenodeinvisible(g,node,part);
-       timelineQueue.add( api.makenodevisible(g,node,part));
-        part.playNext((LinkedList<? extends Animations>) timelineQueue);
-    }
-
-
-    public static void making_edges_weighted(Visual_part part, GUI_interface api){
-        Graph g=part.randomgraph_establish(4,3,true,true,false);
-        Node node=new Node(6);
-        api.addNode(g,node,part);
-        Edge edge=new Edge(g.getVertices().get(3),node);
-        Edge edge2=new Edge(g.getVertices().get(2),node);
-        api.addEdge(g,edge,part,9);
-        api.addEdge(g,edge2,part,-1);
-    }
-
-    public static void Making_arcs_weighted(Visual_part part, GUI_interface api){
-        Graph g=part.randomgraph_establish(4,3,true,false,true);
-        Node node=new Node(6);
-        api.addNode(g,node,part);
-        Edge edge=new Edge(g.getVertices().get(3),node);
-        Edge edge2=new Edge(g.getVertices().get(2),node);
-        api.addarc(g,edge,part,4);
-        api.addarc(g,edge2,part,-8);
-    }
-*/
 
 
 
@@ -183,8 +76,6 @@ for showing how to introduce multiple matrices
         }
 
 
-//this might good
-
         return product_matrix;
     }
 */
@@ -228,7 +119,7 @@ for showing how to introduce multiple matrices
         return unbounded_knapsack_array[weight];
     }
 
-
+//matrices and lists
     public  static int binary_knapsack(int[] values,int[] weights,int weight){
       //manipulate matrices
         int n = weights.length;
@@ -252,134 +143,8 @@ for showing how to introduce multiple matrices
 
 
 
-/*
-    //and deal with matrices with recursion (the queue otfen has issues with recursion)
- private static void generalized_sudoku(char[][] sudoku,char[] total_chars,char[] vaild_char_list){
-        if (!isboardvaild(sudoku)){
-            return;
-            //invaild board!
-        }
-   generalized_sudoku_slover(sudoku,0,0,total_chars,vaild_char_list, sudoku.length);
-    }
 
- private static boolean isboardvaild(char[][] sudoku){
-        return issolved_or_is_vaild_sudoku_board(sudoku, true);
-    }
-
-//work on this
-private static void generalized_sudoku_slover(char[][] sudoku, int n,int k,char[] total_chars,char[] vaild_char_list,int sudoku_size){
-if (issolved_or_is_vaild_sudoku_board(sudoku,false)){
-    return;
-}
-
-    if (k ==sudoku_size&&!(n==sudoku_size)) {
-        k=0;
-        n++;
-    }
-
-
-        if (sudoku[n][k] == ' ') {
-          //candidate selector
-        }
-
-
-        k++;
-if (!(n==sudoku_size)) {
-        generalized_sudoku_slover(sudoku,n,k,total_chars,vaild_char_list,sudoku_size);
-    }}
-
- private static boolean issolved_or_is_vaild_sudoku_board(char[][] sudoku,boolean accepts_blank_characters) {
-
-        for(int i=0;i<sudoku.length;i++){
-            if (!valid_row(sudoku,i,accepts_blank_characters)){
-                    return false;
-                }
-
-        }
-        for(int j=0;j<sudoku[0].length;j++) {
-            if (!vaild_column(sudoku,j,accepts_blank_characters)){
-                return false;
-            }
-        }
-
-        int n_sqrt= (int) Math.sqrt(sudoku.length);
-
-
-        for(int i=0;i<n_sqrt;i++){
-            for(int j=0;j<n_sqrt;j++){
-                if (!vaild_sqrtn_by_sqrtn(sudoku,i*n_sqrt,j*n_sqrt,n_sqrt,accepts_blank_characters)){
-                    return false;
-                }
-            }}
-
-
-
-
-        return true;
-    }
-
- private static boolean vaild_column(char[][] sudoku, int col,boolean accepts_blank_characters) {
-        HashSet<Character> set = new HashSet<>();
-        for(int i=0;i<sudoku[col].length;i++){
-          char c = sudoku[i][col];
-          if(c==' '&&!accepts_blank_characters){
-              return false;
-          }
-          if (set.contains(c)){
-              return false;
-          }else {set.add(c);}
-
-      }
-
-
-        return true;
-    }
-
- private static boolean vaild_sqrtn_by_sqrtn(char[][] sudoku,int row,int col,int n_sqrt,boolean accepts_blank_characters) {
-        HashSet<Character> set = new HashSet<>();
-
-
-        int intdivision_row=(row/n_sqrt)* n_sqrt;
-        int intdivision_col=(col/n_sqrt)* n_sqrt;
-
-        for(int i=0;i<n_sqrt;i++){
-            for(int j=0;j<n_sqrt;j++){
-              char c =sudoku[i+intdivision_row][j+intdivision_col];
-                if(c==' '&&!accepts_blank_characters){
-                    return false;
-                }
-            if (set.contains(c)){
-         return false;
-            }else {set.add(c);}
-
-            }
-
-}
-
-
-        return true;
-    }
-
- private static boolean valid_row(char[][] sudoku,int row,boolean accepts_blank_characters) {
-
-        HashSet<Character> set = new HashSet<>();
-        for (int i=0;i<sudoku.length;i++){
-            char c =sudoku[row][i];
-            if (c==' '&&!accepts_blank_characters){
-           return false;
-       }
-
-            if (set.contains(c)){
-                return false;
-            }else {set.add(c);}
-
-        }
-
-
-        return true;
-    }
 */
-
 //--------------------------Graph problems----------------------------
 /*
     private static boolean[] bfs(Graph graph, int start, boolean[] visted, User_safe_interface_api userSafeInterfaceApi) {
@@ -416,7 +181,11 @@ if (!(n==sudoku_size)) {
         }
         return visted;
     }
+public static boolean Willcreateacycle(Graph mst, Node n, Node m){
 
+
+        return (!mst.containsnode(n)&&!mst.containsnode(m));
+    }
     public static Graph Prim(Graph graph, GUI_interface graphTheoryInterface, Visual_part visualPart){
        //shows how to use other functions
         Queue<EdgeAnimation> timelineQueue=new LinkedList<>();
@@ -462,20 +231,7 @@ if (!(n==sudoku_size)) {
 
 
                   for (Edge e:graph.indenctedges(other_edges.getV2())) {
-                      Min_heap.add_to_heap(e,heap);
-
-                  }
-              }
-
-
-
-        }
-
-        if (graphTheoryInterface !=null&&visualPart!=null) {
-
-        }
-
-
+                      Min_heap.add_to_heap(e,heap); }} }
 
         return mst;
     }
@@ -503,7 +259,7 @@ if (!(n==sudoku_size)) {
     public static float[][] Floyd_Warshall(float[][] adjacency_matrix, Graph graph, GUI_interface graphTheoryInterface, Visual_part visualPart){
 // searching the all pairs of shortest paths,
 // good for finding the diameter on smaller graphs
-        //how to calculate distances
+        //matrices and graphs
         Queue<EdgeAnimation> timelineQueue = new LinkedList<>();
         for (int k = 0; k < graph.getVertices().size(); k++) {
             for (int i = 0; i < graph.getVertices().size(); i++) {
@@ -559,7 +315,7 @@ if (!(n==sudoku_size)) {
         return visted;
     }
 
-
+//stress test
  public static List<Node> independent_set(Graph graph,Visual_part  part,
                                     GUI_interface edgeInterface) {
      Queue<EdgeAnimation> timelineQueue = new LinkedList<>();
@@ -649,7 +405,6 @@ if (!(n==sudoku_size)) {
 
          }
 
-
             best_set=independent_set_calculation(graph,best_set,current_set,nextCandidates,part,edgeInterface,timelineQueue);
             current_set.remove(candidate);
          if (part != null&&edgeInterface!=null) {
@@ -682,14 +437,9 @@ But that's debatable*/
                n1.setHexcode_color(color);
                break;
            }
-
        }
-
     }
 
     return graph;
 }
-
-
-
 }*/
