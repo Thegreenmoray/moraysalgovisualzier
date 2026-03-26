@@ -8,6 +8,9 @@ Graph class functions for user-
 
 safelyaddnode- add nodes to graph
 
+getnodes - returns list of nodes
+getedges - returns list of edges
+
 remove_node- removes nodes along with any edges attached to it (needs node)
 
 remove_edge- removes an edge (needs edge)
