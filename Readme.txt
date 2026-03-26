@@ -20,6 +20,8 @@ safely_add_arc- add directed edge, variant with weight (needs two nodes and floa
 
 obtain_existing_node- get node from the graph (needs an int)
 
+obtain_node_number -get number of the node from the graph(needs a node)
+
 Getedge-extracts specific edge from graph (needs two nodes)
 
 arc_visiblility and make_arc_invisible-Makes an arc visible/invisible if it isnt already (needs an edge)

@@ -1,42 +1,10 @@
 
-import animations.Animations;
-import animations.EdgeAnimation;
-import animations.Visual_part;
-import graph_theory.Edge;
-import animations.Graph;
-import graph_theory.Min_heap;
-import graph_theory.Node;
-import animations.*;
-import runner.User_safe_interface_api;
-import set_theory.Set_theory_items;
-
-import java.util.*;
-
-
 /*just
 here to show how to visualize your code with the compiler.
-will be converted to js
+will be converted to js  remaining: 8
 */
 /*
 public class Example_problems {
-
-
-
-//------------------------set probelms-----------------------
-/*
-    public static List<Integer> bubble_sort(List<Integer> e){
-
-//how to deal with sets
-        for (int i=0;i<e.size();i++){
-            for (int j=0;j<e.size()-1;j++){
-                if (e.get(j)>=e.get(j+1)){
-                    int hold = e.get(j);
-                    e.set(j,e.get(j+1));
-                    e.set(j+1,hold);}}}
-
-        return e;
-    }
-
 
     //round two
     public static  List<Integer> quicksort(List<Integer> e,int low,int high){
@@ -146,47 +114,13 @@ for showing how to introduce multiple matrices
 
 */
 //--------------------------Graph problems----------------------------
-/*
-    private static boolean[] bfs(Graph graph, int start, boolean[] visted, User_safe_interface_api userSafeInterfaceApi) {
 
-        Queue<Node> q=new LinkedList<>();
+public static boolean Willcreateacycle( Node n, Node m){
 
-        Node node=graph.getVertices().get(start);
-        visted[node.getNumber()]=true;
-        q.add(node);
-        if (userSafeInterfaceApi !=null){
-            userSafeInterfaceApi.highlight_node(node);}
-        while(!q.isEmpty()){
-            Node polled=q.poll();
-            List<Node> neighbors = graph.neighbors(polled);
-
-            for (Node n:neighbors) {
-
-                if(!visted[n.getNumber()]) {
-
-                    if (graphTheoryInterface !=null&&visualPart!=null){Edge edge = graph.getEdge(polled, n);
-                    timelineQueue.add(graphTheoryInterface.pause(200));
-                        timelineQueue.add(graphTheoryInterface.onEdgesearched(edge));
-                    timelineQueue.add(graphTheoryInterface.highlightNode(n));
-                }
-                    q.add(n);
-                    visted[n.getNumber()]=true;
-                }
-
-            }
-
-        }
-        if (userSafeInterfaceApi !=null) {
-
-        }
-        return visted;
-    }
-public static boolean Willcreateacycle(Graph mst, Node n, Node m){
-
-
+     ???
         return (!mst.containsnode(n)&&!mst.containsnode(m));
     }
-    public static Graph Prim(Graph graph, GUI_interface graphTheoryInterface, Visual_part visualPart){
+    public static Graph Prim(){
        //shows how to use other functions
         Queue<EdgeAnimation> timelineQueue=new LinkedList<>();
         ArrayList<Edge> heap=new ArrayList<>();
@@ -194,16 +128,10 @@ public static boolean Willcreateacycle(Graph mst, Node n, Node m){
         for(Edge e:graph.indenctedges(graph.getVertices().getFirst())){
             Min_heap.add_to_heap(e,heap);
         }
-     if (graphTheoryInterface !=null&&visualPart!=null){
-       graphTheoryInterface.setallinvisible(graph,visualPart);
-        timelineQueue.add(graphTheoryInterface.pause(200));}
+
 
         mst.addVertex(graph.getVertices().getFirst());
-        if (graphTheoryInterface !=null&&visualPart!=null) {
-            timelineQueue.add(graphTheoryInterface.pause(200));
-            timelineQueue.add(graphTheoryInterface.makenodevisible(graph, graph.getVertices().getFirst(), visualPart));
-            timelineQueue.add(graphTheoryInterface.highlightNode(graph.getVertices().getFirst()));
-        }
+
         while(!heap.isEmpty()&&mst.getVertices().size()<graph.getVertices().size()){
             Edge other_edges=Min_heap.extract_from_heap(heap);
 
@@ -218,16 +146,9 @@ public static boolean Willcreateacycle(Graph mst, Node n, Node m){
 
               if (!mst.containsnode(other_edges.getV2())) {
                   mst.addVertex(other_edges.getV2());
-                  if (graphTheoryInterface !=null&&visualPart!=null) {
-                      timelineQueue.add(graphTheoryInterface.makenodevisible(graph, other_edges.getV2(), visualPart));
-                      timelineQueue.add(graphTheoryInterface.pause(200));
-                      timelineQueue.add(graphTheoryInterface.highlightNode(other_edges.getV2()));
-                  }
+
                       mst.addarc(other_edges,other_edges.getWeight());
-                      if (graphTheoryInterface !=null&&visualPart!=null) {
-                          timelineQueue.add(graphTheoryInterface.pause(200));
-                          timelineQueue.add(graphTheoryInterface.makearcvisible(graph, other_edges, visualPart));
-                      }
+
 
 
                   for (Edge e:graph.indenctedges(other_edges.getV2())) {
@@ -316,12 +237,11 @@ public static boolean Willcreateacycle(Graph mst, Node n, Node m){
     }
 
 //stress test
- public static List<Node> independent_set(Graph graph,Visual_part  part,
-                                    GUI_interface edgeInterface) {
-     Queue<EdgeAnimation> timelineQueue = new LinkedList<>();
+ public static List<Node> independent_set() {
+
 
    List<Node> list= independent_set_calculation(graph,new ArrayList<>(),
-             new ArrayList<>(),new ArrayList<>(),part,edgeInterface,timelineQueue);
+             new ArrayList<>(),new ArrayList<>());
 
      if (edgeInterface !=null&&part!=null) {
          for (Node node : list) {
@@ -338,9 +258,8 @@ public static boolean Willcreateacycle(Graph mst, Node n, Node m){
 
 
 
-    private static List<Node> independent_set_calculation(Graph graph, List<Node> best_set,
-                                                          List<Node> current_set, List<Node> candidates, Visual_part  part,
-                                                          GUI_interface edgeInterface, Queue<EdgeAnimation> timelineQueue){
+    private static List<Node> independent_set_calculation( List<Node> best_set,
+                                                          List<Node> current_set, List<Node> candidates){
 
 //other features such as permantly lighting nodes
 
@@ -420,26 +339,5 @@ But that's debatable*/
     }
 /*
 
-   private static Graph Greedy_coloring(Graph graph){
-    if (graph.getVertices().isEmpty()) {return graph;}
-       ArrayList<String> list = (ArrayList<String>) Graph_tools.random_unique_colors(graph);
-    if (list == null) {return graph;}
 
-    for (Node n1:graph.getVertices()) {
-
-        HashSet<String> no_no_colors=new HashSet<>();
-            for (Node node : graph.neighbors(n1)){
-                no_no_colors.add(node.getHexcode_color());
-        }
-
-       for (String color:list){
-           if (!no_no_colors.contains(color)){
-               n1.setHexcode_color(color);
-               break;
-           }
-       }
-    }
-
-    return graph;
-}
 }*/

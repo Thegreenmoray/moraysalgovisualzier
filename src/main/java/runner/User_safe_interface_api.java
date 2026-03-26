@@ -27,6 +27,14 @@ public class User_safe_interface_api {
    this.part = part;
     }
 
+    public List<Node> getnodes(){
+
+        return graph.getVertices();
+    }
+
+    public List<Edge> getedges(){
+        return graph.getEdges();
+    }
 
     public Node safely_add_a_node(){
         int num = graph.nextAvailableNodeNumber();
@@ -128,6 +136,16 @@ public void light_node(Node node){
     EdgeAnimation animation=part.highlightnode(node);
 queue.add(animation);});
     }
+
+public int obtain_node_number(Node node){
+    if(!graph.containsnode(node)){
+        return -1;
+    }
+
+        return node.getNumber();
+}
+
+
 
 public void delight_node(Node node){
 
@@ -378,7 +396,7 @@ public Edge safely_add_arc(Node node,Node node2,float weight){
      return graph.getEdge(node, node2);
  }
 
- public List<Node> neigbors(Node node){
+ public List<Node> neighbors(Node node){
 if (!graph.containsnode(node)){
     return new ArrayList<>();
 }
@@ -457,12 +475,10 @@ public List<Edge> add_to_heap(Edge e, List<Edge> edges){
     return Min_heap.add_to_heap(e,sanisatized);
 }
 
-
 public Edge extract_from_heap(List<Edge> edges){
     List<Edge> sanisatized = new ArrayList<>(edges);
         return Min_heap.extract_from_heap(sanisatized);
 }
-
 
 public <E> List<E> complement(List<E> univerisal_set,List<E> list){
     List<E> sanisatized = new ArrayList<>(list);

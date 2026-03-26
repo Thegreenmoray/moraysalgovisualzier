@@ -153,7 +153,7 @@ class User_safe_interface_apiTest {
     user_safe_interface_api.isadjenct(user_safe_interface_api.obtain_existing_node(0),user_safe_interface_api.obtain_existing_node(1));
     user_safe_interface_api.isincident(user_safe_interface_api.obtain_existing_node(0),user_safe_interface_api.get_speficedge(user_safe_interface_api.obtain_existing_node(0),user_safe_interface_api.obtain_existing_node(1)));
     user_safe_interface_api.degree(user_safe_interface_api.obtain_existing_node(0));
-    user_safe_interface_api.neigbors(user_safe_interface_api.obtain_existing_node(0));
+    user_safe_interface_api.neighbors(user_safe_interface_api.obtain_existing_node(0));
     user_safe_interface_api.indence_edges(user_safe_interface_api.obtain_existing_node(0));
      user_safe_interface_api.get_speficedge(user_safe_interface_api.obtain_existing_node(0),user_safe_interface_api.obtain_existing_node(1));
      user_safe_interface_api.getspeficarc(user_safe_interface_api.obtain_existing_node(0),user_safe_interface_api.obtain_existing_node(1));
