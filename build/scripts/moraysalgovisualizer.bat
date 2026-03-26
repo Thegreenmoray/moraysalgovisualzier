@@ -36,7 +36,7 @@ set APP_HOME=%DIRNAME%..
 for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
 
 @rem Add default JVM options here. You can also use JAVA_OPTS and MORAYSALGOVISUALIZER_OPTS to pass JVM options to this script.
-set DEFAULT_JVM_OPTS="--enable-native-access=javafx.graphics" "-Djava.security.manager=allow"
+set DEFAULT_JVM_OPTS=
 
 @rem Find java.exe
 if defined JAVA_HOME goto findJavaFromJavaHome
@@ -70,7 +70,7 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\moraysalgovisualizer.jar;%APP_HOME%\lib\javafx-fxml-21-win.jar;%APP_HOME%\lib\javafx-controls-21-win.jar;%APP_HOME%\lib\javafx-controls-21.jar;%APP_HOME%\lib\javafx-graphics-21-win.jar;%APP_HOME%\lib\javafx-graphics-21.jar;%APP_HOME%\lib\javafx-base-21-win.jar;%APP_HOME%\lib\javafx-base-21.jar
+set CLASSPATH=%APP_HOME%\lib\moraysalgovisualizer.jar;%APP_HOME%\lib\javafx-fxml-25-win.jar;%APP_HOME%\lib\javafx-controls-25-win.jar;%APP_HOME%\lib\javafx-controls-25.jar;%APP_HOME%\lib\javafx-graphics-25-win.jar;%APP_HOME%\lib\javafx-graphics-25.jar;%APP_HOME%\lib\javafx-base-25-win.jar;%APP_HOME%\lib\javafx-base-25.jar;%APP_HOME%\lib\graal-sdk-24.2.2.jar;%APP_HOME%\lib\js-24.2.2.pom;%APP_HOME%\lib\coverage-24.2.2.pom;%APP_HOME%\lib\dap-24.2.2.pom;%APP_HOME%\lib\heap-24.2.2.pom;%APP_HOME%\lib\inspect-24.2.2.pom;%APP_HOME%\lib\insight-24.2.2.pom;%APP_HOME%\lib\lsp-24.2.2.pom;%APP_HOME%\lib\profiler-24.2.2.pom;%APP_HOME%\lib\truffle-enterprise-24.2.2.jar;%APP_HOME%\lib\js-community-24.2.2.pom;%APP_HOME%\lib\coverage-community-24.2.2.pom;%APP_HOME%\lib\dap-community-24.2.2.pom;%APP_HOME%\lib\heap-community-24.2.2.pom;%APP_HOME%\lib\inspect-community-24.2.2.pom;%APP_HOME%\lib\insight-community-24.2.2.pom;%APP_HOME%\lib\lsp-community-24.2.2.pom;%APP_HOME%\lib\profiler-community-24.2.2.pom;%APP_HOME%\lib\truffle-runtime-24.2.2.jar;%APP_HOME%\lib\js-language-24.2.2.jar;%APP_HOME%\lib\coverage-tool-24.2.2.jar;%APP_HOME%\lib\dap-tool-24.2.2.jar;%APP_HOME%\lib\insight-heap-tool-24.2.2.jar;%APP_HOME%\lib\chromeinspector-tool-24.2.2.jar;%APP_HOME%\lib\insight-tool-24.2.2.jar;%APP_HOME%\lib\profiler-tool-24.2.2.jar;%APP_HOME%\lib\regex-24.2.2.jar;%APP_HOME%\lib\lsp-tool-24.2.2.jar;%APP_HOME%\lib\lsp_api-24.2.2.jar;%APP_HOME%\lib\truffle-api-24.2.2.jar;%APP_HOME%\lib\polyglot-24.2.2.jar;%APP_HOME%\lib\nativebridge-24.2.2.jar;%APP_HOME%\lib\jniutils-24.2.2.jar;%APP_HOME%\lib\collections-24.2.2.jar;%APP_HOME%\lib\icu4j-24.2.2.jar;%APP_HOME%\lib\nativeimage-24.2.2.jar;%APP_HOME%\lib\word-24.2.2.jar;%APP_HOME%\lib\truffle-compiler-24.2.2.jar;%APP_HOME%\lib\json-24.2.2.jar;%APP_HOME%\lib\xz-24.2.2.jar
 
 
 @rem Execute moraysalgovisualizer
