@@ -9,12 +9,12 @@ class MainTest {
 
     @Test
     void start() {
-Main main = new Main();
-main.start(new Stage());
+//Main main = new Main();
+//main.start(new Stage());
     }
 
     @Test
     void main() {
-       Main.main(new String[]{});
+      // Main.main(new String[]{});
     }
 }

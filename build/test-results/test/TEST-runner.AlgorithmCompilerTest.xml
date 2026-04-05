@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="runner.AlgorithmCompilerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-03-26T19:02:54.054Z" hostname="JUSTIN-WORK-SCH" time="0.732">
+  <properties/>
+  <testcase name="compile()" classname="runner.AlgorithmCompilerTest" time="0.732"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[C:\Users\Justi\AppData\Local\Temp\algovis7985384018903806688\UserAlgorithm.java:1: error: implicitly declared classes are a preview feature and are disabled by default.
+let n = User_safe_interface_api.safely_add_a_node();
+^
+  (use --enable-preview to enable implicitly declared classes)
+1 error
+]]></system-err>
+</testsuite>

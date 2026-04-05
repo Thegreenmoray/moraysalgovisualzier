@@ -14,15 +14,20 @@ Perhaps sometime in the future this may become a suggestion board
  ̶-̶t̶h̶i̶r̶d̶ ̶r̶o̶u̶n̶d̶ ̶u̶n̶i̶t̶ ̶t̶e̶s̶t̶s̶(̶ ̶a̶c̶h̶i̶e̶v̶e̶ ̶7̶5̶%̶ ̶o̶r̶ ̶h̶i̶g̶h̶e̶r̶ ̶c̶o̶d̶e̶ ̶c̶o̶v̶e̶r̶a̶g̶e̶,̶n̶e̶w̶ ̶s̶t̶u̶f̶f̶)̶
  ̶-̶f̶i̶n̶a̶l̶ ̶c̶h̶e̶c̶k̶s̶ ̶/̶/̶i̶n̶t̶i̶a̶l̶ ̶r̶e̶l̶e̶a̶s̶e̶
 
--convert remaining unit tested algorithms to js //1.0+
--Improve background more instead just being a white screen
--fix overlapping issues
--Matrix plus recursion example
+-note to self learn about CI/CD pipeline (github actions)
 
--inclusive features (color blindness accommodation, other things)//1.1+
--view thread use (????)
--view memory use
--view core use
+-convert remaining unit tested algorithms to js //1.0+
+-Matrix plus recursion example
+-fix overlapping issues
+-Improve background more instead just being a white screen
+
+//1.1+
+-Highlight code as it's selecting it
+-ability to Run algothrims side by side (will likely be race condition hell here)
+-connected to proir one use bsort and qsort and nn vs tsp as the lessons
 -Maybe more unit tests/coverage?(90%+?)
+
+//1.2+
+-inclusive features (color blindness accommodation, other things)
 
 -something else? (might post this to issues/pull requests) //will likely stop here unless i get requests to add things or major bug pops up, may make this a pull request
