@@ -10,10 +10,9 @@ repositories {
 
 
 // Configure Java compilation to use the toolchain
-tasks.withType(JavaCompile).configureEach {
-    javaCompiler = javaToolchains.compilerFor {
+java {
+    toolchain {
         languageVersion = JavaLanguageVersion.of(24)
-      //  vendor = JvmVendorSpec.GRAAL_VM
     }
 }
 
@@ -33,8 +32,7 @@ dependencies {
     implementation 'org.graalvm.polyglot:polyglot:24.2.2'
     implementation 'org.graalvm.truffle:truffle-enterprise:24.2.2'
     implementation 'org.graalvm.polyglot:js:24.2.2'        // JavaScript
-  //  implementation 'org.graalvm.polyglot:python:24.1.1'    // Python (GraalPy)
-  //  implementation 'org.graalvm.polyglot:java:24.2.2'      // Java on Truffle
+
 
     implementation 'org.graalvm.polyglot:tools:24.2.2'
 
