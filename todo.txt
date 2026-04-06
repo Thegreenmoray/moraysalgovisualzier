@@ -14,7 +14,7 @@ Perhaps sometime in the future this may become a suggestion board
  ̶-̶t̶h̶i̶r̶d̶ ̶r̶o̶u̶n̶d̶ ̶u̶n̶i̶t̶ ̶t̶e̶s̶t̶s̶(̶ ̶a̶c̶h̶i̶e̶v̶e̶ ̶7̶5̶%̶ ̶o̶r̶ ̶h̶i̶g̶h̶e̶r̶ ̶c̶o̶d̶e̶ ̶c̶o̶v̶e̶r̶a̶g̶e̶,̶n̶e̶w̶ ̶s̶t̶u̶f̶f̶)̶
  ̶-̶f̶i̶n̶a̶l̶ ̶c̶h̶e̶c̶k̶s̶ ̶/̶/̶i̶n̶t̶i̶a̶l̶ ̶r̶e̶l̶e̶a̶s̶e̶
 
--note to self learn about CI/CD pipeline (github actions)
+-note to self learn about CI/CD pipeline (github actions, learning now just trying to get it to work)
 
 -convert remaining unit tested algorithms to js //1.0+
 -Matrix plus recursion example
