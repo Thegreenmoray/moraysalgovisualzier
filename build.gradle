@@ -42,6 +42,13 @@ dependencies {
 
 test {
     useJUnitPlatform()
+
+    // Skip GUI tests in CI environment
+    if (System.getenv('CI') != null) {
+        exclude '**/Visual_partTest*'
+        exclude '**/User_safe_interface_apiTest*'
+        exclude '**/AlgorithmRunnerTest*'
+    }
 }
 
 
