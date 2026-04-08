@@ -8,78 +8,68 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Install JDK 24 via Foojay
-      run: |
-       DOWNLOAD_URL=$(curl -s "https://api.foojay.io/disco/v3.0/packages?distro=openjdk&version=24&archive_type=tar.gz&operating_system=linux&architecture=x64&package_type=jdk" \
-       | grep -oP '"direct_download_uri"\s*:\s*"\K[^"]+')
+      - name: Install JDK 24 via Foojay
+        run: |
+          DOWNLOAD_URL=$(curl -s "https://api.foojay.io/disco/v3.0/packages?distro=openjdk&version=24&archive_type=tar.gz&operating_system=linux&architecture=x64&package_type=jdk" \
+            | grep -oP '"direct_download_uri"\s*:\s*"\K[^"]+')
 
-       echo "Download URL: $DOWNLOAD_URL"
+          echo "Download URL: $DOWNLOAD_URL"
 
-       wget "$DOWNLOAD_URL" -O jdk24.tar.gz
-       tar -xzf jdk24.tar.gz
+          wget "$DOWNLOAD_URL" -O jdk24.tar.gz
+          tar -xzf jdk24.tar.gz
 
-       JDK_DIR=$(tar -tf jdk24.tar.gz | head -1 | cut -f1 -d"/")
+          JDK_DIR=$(tar -tf jdk24.tar.gz | head -1 | cut -f1 -d"/")
 
-       sudo mv "$JDK_DIR" /usr/lib/jvm/jdk-24
-       echo "JAVA_HOME=/usr/lib/jvm/jdk-24" >> $GITHUB_ENV
-       echo "/usr/lib/jvm/jdk-24/bin" >> $GITHUB_PATH
+          sudo mv "$JDK_DIR" /usr/lib/jvm/jdk-24
+          echo "JAVA_HOME=/usr/lib/jvm/jdk-24" >> $GITHUB_ENV
+          echo "/usr/lib/jvm/jdk-24/bin" >> $GITHUB_PATH
 
+      - name: Verify Java version
+        run: java -version
 
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582
 
-
-
-    - name: Verify Java version
-      run: java -version
-
-    # Gradle setup (keep this)
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582
-
-    - name: Build with Gradle Wrapper
-      run: ./gradlew build
+      - name: Build with Gradle Wrapper
+        run: ./gradlew build
 
   dependency-submission:
-
     runs-on: ubuntu-latest
     permissions:
       contents: write
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    # Install Java 24 manually again for dependency submission
-    - name: Install JDK 24 via Foojay
-      run: |
-       DOWNLOAD_URL=$(curl -s "https://api.foojay.io/disco/v3.0/packages?distro=openjdk&version=24&archive_type=tar.gz&operating_system=linux&architecture=x64&package_type=jdk" \
-       | grep -oP '"direct_download_uri"\s*:\s*"\K[^"]+')
+      - name: Install JDK 24 via Foojay
+        run: |
+          DOWNLOAD_URL=$(curl -s "https://api.foojay.io/disco/v3.0/packages?distro=openjdk&version=24&archive_type=tar.gz&operating_system=linux&architecture=x64&package_type=jdk" \
+            | grep -oP '"direct_download_uri"\s*:\s*"\K[^"]+')
 
-       echo "Download URL: $DOWNLOAD_URL"
+          echo "Download URL: $DOWNLOAD_URL"
 
-       wget "$DOWNLOAD_URL" -O jdk24.tar.gz
-       tar -xzf jdk24.tar.gz
+          wget "$DOWNLOAD_URL" -O jdk24.tar.gz
+          tar -xzf jdk24.tar.gz
 
-       JDK_DIR=$(tar -tf jdk24.tar.gz | head -1 | cut -f1 -d"/")
+          JDK_DIR=$(tar -tf jdk24.tar.gz | head -1 | cut -f1 -d"/")
 
-       sudo mv "$JDK_DIR" /usr/lib/jvm/jdk-24
-       echo "JAVA_HOME=/usr/lib/jvm/jdk-24" >> $GITHUB_ENV
-       echo "/usr/lib/jvm/jdk-24/bin" >> $GITHUB_PATH
+          sudo mv "$JDK_DIR" /usr/lib/jvm/jdk-24
+          echo "JAVA_HOME=/usr/lib/jvm/jdk-24" >> $GITHUB_ENV
+          echo "/usr/lib/jvm/jdk-24/bin" >> $GITHUB_PATH
+
+      - name: Verify Java version
+        run: java -version
+
+      - name: Generate and submit dependency graph
+        uses: gradle/actions/dependency-submission@af1da67850ed9a4cedd57bfd976089dd991e2582
 
 
-
-
-
-    - name: Verify Java version
-      run: java -version
-
-    - name: Generate and submit dependency graph
-      uses: gradle/actions/dependency-submission@af1da67850ed9a4cedd57bfd976089dd991e2582
 
 
