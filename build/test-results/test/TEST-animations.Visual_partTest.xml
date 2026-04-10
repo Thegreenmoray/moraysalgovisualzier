@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="animations.Visual_partTest" tests="21" skipped="0" failures="0" errors="0" timestamp="2026-03-26T19:02:51.334Z" hostname="JUSTIN-WORK-SCH" time="0.337">
+<testsuite name="animations.Visual_partTest" tests="21" skipped="0" failures="0" errors="0" timestamp="2026-04-10T16:33:22.579Z" hostname="JUSTIN-WORK-SCH" time="0.612">
   <properties/>
-  <testcase name="make_node_invisible()" classname="animations.Visual_partTest" time="0.141"/>
-  <testcase name="addedgetwo()" classname="animations.Visual_partTest" time="0.025"/>
-  <testcase name="setoperations()" classname="animations.Visual_partTest" time="0.027"/>
+  <testcase name="make_node_invisible()" classname="animations.Visual_partTest" time="0.316"/>
+  <testcase name="addedgetwo()" classname="animations.Visual_partTest" time="0.011"/>
+  <testcase name="setoperations()" classname="animations.Visual_partTest" time="0.039"/>
   <testcase name="makeallofgraphinvisible()" classname="animations.Visual_partTest" time="0.001"/>
-  <testcase name="addarc()" classname="animations.Visual_partTest" time="0.021"/>
-  <testcase name="addedge()" classname="animations.Visual_partTest" time="0.01"/>
+  <testcase name="addarc()" classname="animations.Visual_partTest" time="0.044"/>
+  <testcase name="addedge()" classname="animations.Visual_partTest" time="0.011"/>
   <testcase name="addnode()" classname="animations.Visual_partTest" time="0.003"/>
-  <testcase name="remove_edge()" classname="animations.Visual_partTest" time="0.009"/>
-  <testcase name="extranode()" classname="animations.Visual_partTest" time="0.007"/>
-  <testcase name="set_and_matrices()" classname="animations.Visual_partTest" time="0.004"/>
-  <testcase name="visualizegraph()" classname="animations.Visual_partTest" time="0.006"/>
-  <testcase name="pointers()" classname="animations.Visual_partTest" time="0.001"/>
-  <testcase name="disableedgeandnodes()" classname="animations.Visual_partTest" time="0.006"/>
-  <testcase name="animate_edge()" classname="animations.Visual_partTest" time="0.01"/>
-  <testcase name="removenode()" classname="animations.Visual_partTest" time="0.006"/>
-  <testcase name="testAddarc()" classname="animations.Visual_partTest" time="0.015"/>
-  <testcase name="removearc()" classname="animations.Visual_partTest" time="0.005"/>
-  <testcase name="highlightNode()" classname="animations.Visual_partTest" time="0.002"/>
-  <testcase name="makearcvisible()" classname="animations.Visual_partTest" time="0.004"/>
-  <testcase name="makeallofgraphvisible()" classname="animations.Visual_partTest" time="0.0"/>
-  <testcase name="make_edge_invisible()" classname="animations.Visual_partTest" time="0.004"/>
+  <testcase name="remove_edge()" classname="animations.Visual_partTest" time="0.013"/>
+  <testcase name="extranode()" classname="animations.Visual_partTest" time="0.014"/>
+  <testcase name="set_and_matrices()" classname="animations.Visual_partTest" time="0.011"/>
+  <testcase name="visualizegraph()" classname="animations.Visual_partTest" time="0.01"/>
+  <testcase name="pointers()" classname="animations.Visual_partTest" time="0.003"/>
+  <testcase name="disableedgeandnodes()" classname="animations.Visual_partTest" time="0.022"/>
+  <testcase name="animate_edge()" classname="animations.Visual_partTest" time="0.027"/>
+  <testcase name="removenode()" classname="animations.Visual_partTest" time="0.007"/>
+  <testcase name="testAddarc()" classname="animations.Visual_partTest" time="0.013"/>
+  <testcase name="removearc()" classname="animations.Visual_partTest" time="0.009"/>
+  <testcase name="highlightNode()" classname="animations.Visual_partTest" time="0.004"/>
+  <testcase name="makearcvisible()" classname="animations.Visual_partTest" time="0.011"/>
+  <testcase name="makeallofgraphvisible()" classname="animations.Visual_partTest" time="0.001"/>
+  <testcase name="make_edge_invisible()" classname="animations.Visual_partTest" time="0.007"/>
   <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[Mar 26, 2026 3:02:51 PM com.sun.javafx.application.PlatformImpl startup
-WARNING: Unsupported JavaFX configuration: classes were loaded from 'unnamed module @1649b0e6'
+  <system-err><![CDATA[Apr 10, 2026 12:33:22 PM com.sun.javafx.application.PlatformImpl startup
+WARNING: Unsupported JavaFX configuration: classes were loaded from 'unnamed module @2b4d4327'
 ]]></system-err>
 </testsuite>

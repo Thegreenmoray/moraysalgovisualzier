@@ -18,7 +18,7 @@ public class AlgorithmCompiler {
 //to ensure this works on any computer
     static {
         try {
-            //Any of your own classes will work fine I just used Graph
+            //Any of your own classes (on a different project) will work fine I just used Graph
             modulePath = String.valueOf(Paths.get(Graph.class
                     .getProtectionDomain()
                     .getCodeSource()
@@ -42,6 +42,7 @@ public class AlgorithmCompiler {
         /*These comments are mostly here for myself and my fellow
          programmers, just to save you a few hours*/
         int result = compiler.run(
+                //these dont really matter too much
                 null, null, null,
                 //the -classpath lets the compiler know where to look
                 // for classes and jar files

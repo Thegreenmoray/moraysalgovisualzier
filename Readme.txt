@@ -99,6 +99,7 @@ add_to_heap-adds an edge to the set given and returns the new one (requires an e
 
 extract_from_heap- extracts cheapest edge from edgelist given (requires List of edges)
 
+Other graph tools-
 Adjacency Matrix Generator
 
 Arc-Incident Matrix Generator

@@ -25,7 +25,7 @@ Perhaps sometime in the future this may become a suggestion board
 -Highlight code as it's selecting it
 -ability to Run algothrims side by side (will likely be race condition hell here)
 -connected to proir one use bsort and qsort and nn vs tsp as the lessons
--Maybe more unit tests/coverage?(90%+?)
+
 
 //1.2+
 -inclusive features (color blindness accommodation, other things)

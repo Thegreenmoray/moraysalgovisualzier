@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="runner.User_safe_interface_apiTest" tests="35" skipped="0" failures="0" errors="0" timestamp="2026-03-26T19:02:53.913Z" hostname="JUSTIN-WORK-SCH" time="0.087">
+<testsuite name="runner.User_safe_interface_apiTest" tests="35" skipped="0" failures="0" errors="0" timestamp="2026-04-10T16:33:29.274Z" hostname="JUSTIN-WORK-SCH" time="0.188">
   <properties/>
-  <testcase name="graphtools()" classname="runner.User_safe_interface_apiTest" time="0.011"/>
-  <testcase name="graphthings()" classname="runner.User_safe_interface_apiTest" time="0.003"/>
-  <testcase name="onEdgesearched()" classname="runner.User_safe_interface_apiTest" time="0.002"/>
+  <testcase name="graphtools()" classname="runner.User_safe_interface_apiTest" time="0.024"/>
+  <testcase name="graphthings()" classname="runner.User_safe_interface_apiTest" time="0.004"/>
+  <testcase name="onEdgesearched()" classname="runner.User_safe_interface_apiTest" time="0.004"/>
   <testcase name="delight_node()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="add_arc()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="makegraphvisible()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="arc_visiblility()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="disable_edge()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="testSafely_add_arc()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="clearGraph()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="remove_edge()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="remove_node()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="makegraphinvisible()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="light_node()" classname="runner.User_safe_interface_apiTest" time="0.002"/>
-  <testcase name="pause()" classname="runner.User_safe_interface_apiTest" time="0.002"/>
+  <testcase name="add_arc()" classname="runner.User_safe_interface_apiTest" time="0.003"/>
+  <testcase name="makegraphvisible()" classname="runner.User_safe_interface_apiTest" time="0.002"/>
+  <testcase name="arc_visiblility()" classname="runner.User_safe_interface_apiTest" time="0.002"/>
+  <testcase name="disable_edge()" classname="runner.User_safe_interface_apiTest" time="0.006"/>
+  <testcase name="testSafely_add_arc()" classname="runner.User_safe_interface_apiTest" time="0.005"/>
+  <testcase name="clearGraph()" classname="runner.User_safe_interface_apiTest" time="0.003"/>
+  <testcase name="remove_edge()" classname="runner.User_safe_interface_apiTest" time="0.004"/>
+  <testcase name="remove_node()" classname="runner.User_safe_interface_apiTest" time="0.004"/>
+  <testcase name="makegraphinvisible()" classname="runner.User_safe_interface_apiTest" time="0.002"/>
+  <testcase name="light_node()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
+  <testcase name="pause()" classname="runner.User_safe_interface_apiTest" time="0.003"/>
   <testcase name="heapstuff()" classname="runner.User_safe_interface_apiTest" time="0.002"/>
-  <testcase name="safely_add_arc()" classname="runner.User_safe_interface_apiTest" time="0.002"/>
+  <testcase name="safely_add_arc()" classname="runner.User_safe_interface_apiTest" time="0.003"/>
   <testcase name="squarestuff()" classname="runner.User_safe_interface_apiTest" time="0.002"/>
   <testcase name="get_speficedge()" classname="runner.User_safe_interface_apiTest" time="0.002"/>
-  <testcase name="highlight_node()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="begin_animations()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="getspeficarc()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="testSafelyadd_edge()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="makeedge_visible()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="remove_arc()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
+  <testcase name="highlight_node()" classname="runner.User_safe_interface_apiTest" time="0.002"/>
+  <testcase name="begin_animations()" classname="runner.User_safe_interface_apiTest" time="0.005"/>
+  <testcase name="getspeficarc()" classname="runner.User_safe_interface_apiTest" time="0.002"/>
+  <testcase name="testSafelyadd_edge()" classname="runner.User_safe_interface_apiTest" time="0.002"/>
+  <testcase name="makeedge_visible()" classname="runner.User_safe_interface_apiTest" time="0.002"/>
+  <testcase name="remove_arc()" classname="runner.User_safe_interface_apiTest" time="0.002"/>
   <testcase name="color_node()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="establishgraph()" classname="runner.User_safe_interface_apiTest" time="0.0"/>
-  <testcase name="makeedge_invisible()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="setthoery()" classname="runner.User_safe_interface_apiTest" time="0.002"/>
-  <testcase name="highlightedge()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="make_arc_invisible()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="makenode_invisible()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="make_node_visible()" classname="runner.User_safe_interface_apiTest" time="0.003"/>
-  <testcase name="graph_random()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
-  <testcase name="safelyadd_edge()" classname="runner.User_safe_interface_apiTest" time="0.0"/>
+  <testcase name="establishgraph()" classname="runner.User_safe_interface_apiTest" time="0.003"/>
+  <testcase name="makeedge_invisible()" classname="runner.User_safe_interface_apiTest" time="0.002"/>
+  <testcase name="setthoery()" classname="runner.User_safe_interface_apiTest" time="0.009"/>
+  <testcase name="highlightedge()" classname="runner.User_safe_interface_apiTest" time="0.002"/>
+  <testcase name="make_arc_invisible()" classname="runner.User_safe_interface_apiTest" time="0.003"/>
+  <testcase name="makenode_invisible()" classname="runner.User_safe_interface_apiTest" time="0.003"/>
+  <testcase name="make_node_visible()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
+  <testcase name="graph_random()" classname="runner.User_safe_interface_apiTest" time="0.002"/>
+  <testcase name="safelyadd_edge()" classname="runner.User_safe_interface_apiTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
