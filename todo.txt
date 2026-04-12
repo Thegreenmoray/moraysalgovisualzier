@@ -14,20 +14,22 @@ Perhaps sometime in the future this may become a suggestion board
  ̶-̶t̶h̶i̶r̶d̶ ̶r̶o̶u̶n̶d̶ ̶u̶n̶i̶t̶ ̶t̶e̶s̶t̶s̶(̶ ̶a̶c̶h̶i̶e̶v̶e̶ ̶7̶5̶%̶ ̶o̶r̶ ̶h̶i̶g̶h̶e̶r̶ ̶c̶o̶d̶e̶ ̶c̶o̶v̶e̶r̶a̶g̶e̶,̶n̶e̶w̶ ̶s̶t̶u̶f̶f̶)̶
  ̶-̶f̶i̶n̶a̶l̶ ̶c̶h̶e̶c̶k̶s̶ ̶/̶/̶i̶n̶t̶i̶a̶l̶ ̶r̶e̶l̶e̶a̶s̶e̶
 
--note to self learn about CI/CD pipeline (github actions, learning now just trying to get it to work)
+ ̶-̶n̶o̶t̶e̶ ̶t̶o̶ ̶s̶e̶l̶f̶ ̶l̶e̶a̶r̶n̶ ̶a̶b̶o̶u̶t̶ ̶C̶I̶/̶C̶D̶ ̶p̶i̶p̶e̶l̶i̶n̶e̶ ̶(̶g̶i̶t̶h̶u̶b̶ ̶a̶c̶t̶i̶o̶n̶s̶,̶ ̶l̶e̶a̶r̶n̶i̶n̶g̶ ̶n̶o̶w̶ ̶j̶u̶s̶t̶ ̶t̶r̶y̶i̶n̶g̶ ̶t̶o̶ ̶g̶e̶t̶ ̶i̶t̶ ̶t̶o̶ ̶w̶o̶r̶k̶)̶
+ -Done now on to docker
 
 -convert remaining unit tested algorithms to js //1.0+
 -Matrix plus recursion example
--fix overlapping issues
+ ̶-̶f̶i̶x̶ ̶o̶v̶e̶r̶l̶a̶p̶p̶i̶n̶g̶ ̶i̶s̶s̶u̶e̶s̶
 -Improve background more instead just being a white screen
 
 //1.1+
 -Highlight code as it's selecting it
 -ability to Run algothrims side by side (will likely be race condition hell here)
--connected to proir one use bsort and qsort and nn vs tsp (or maybe greedy vs domset) as the lessons
-
+-connected to proir one use bsort and qsort and nn vs tsp as the lessons
 
 //1.2+
 -inclusive features (color blindness accommodation, other things)
 
 -something else? (might post this to issues/pull requests) //will likely stop here unless i get requests to add things or major bug pops up, may make this a pull request
+-add a challenge list
+(greedy domset will likely be with the challenge list with the idea being to improve it (and pre and post processing)

@@ -617,7 +617,7 @@ private <E> E[][] deepCopyMatrix(E[][] original) {
     }
 
 public void highlight_list_square(int index,int id){
-    if (index <=-1||index>=lists.size()){
+    if (index <=-1||id>=lists.size()){
         return;
     }
         List_setup<?> list =  lists.get(id);
@@ -634,7 +634,7 @@ public void highlight_list_square(int index,int id){
 }
 
 public <E>void edit_list_square_value(int index,int id,E value) {
-   if (index <=-1||index>=lists.size()){
+   if (index <=-1||id>=lists.size()){
        return;
    }
 

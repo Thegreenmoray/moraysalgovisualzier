@@ -10,7 +10,7 @@ public class Example_problems {
     public static  List<Integer> quicksort(List<Integer> e,int low,int high){
 
 //how to deal with sets with recursion
-        if (low > high) return e;
+        if (low >= high) return e;
 
 
         int partition = partition(e, low, high);

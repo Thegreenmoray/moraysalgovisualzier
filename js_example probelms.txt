@@ -1,24 +1,28 @@
-function bubble_sort(arr) {
-    // for sanitation
-    var e = arr.slice();
-var key=User_safe_interface_api.establishlist(e);
-    for (var i = 0; i < e.length; i++) {
-        for (var j = 0; j < e.length - 1; j++) {
-            if (e[j] >= e[j + 1]) {
-                var hold = e[j];
-               User_safe_interface_api.highlight_list_square(j,key);
-                e[j] = e[j + 1];
-                User_safe_interface_api.edit_list_square_value(j,key,e[j + 1]);
-                User_safe_interface_api.highlight_list_square(j+1,key);
-                e[j + 1] = hold;
-                 User_safe_interface_api.edit_list_square_value(j+1,key,hold);
 
+function bubble_sort(e) {
+     key = User_safe_interface_api.establishlist(e);
+for ( i = 0; i < e.length; i++) {
+        for ( j = 0; j < e.length - 1; j++) {
+
+            if (e[j] >= e[j + 1]) {
+                 hold = e[j];
+
+                User_safe_interface_api.highlight_list_square(j, key);
+                e[j] = e[j + 1];
+                User_safe_interface_api.edit_list_square_value(j, key, e[j]);
+
+                User_safe_interface_api.highlight_list_square(j + 1, key);
+                e[j + 1] = hold;
+                User_safe_interface_api.edit_list_square_value(j + 1, key, hold);
             }
         }
     }
-User_safe_interface_api.begin_animations();
+
+    User_safe_interface_api.begin_animations();
     return e;
 }
+be = [10, 40, 30];
+bubble_sort(be);
 
 
 function bfs(start, visited) {
