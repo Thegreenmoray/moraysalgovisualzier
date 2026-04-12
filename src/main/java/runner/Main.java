@@ -42,16 +42,16 @@ User_safe_interface_api.obtain_existing_node(j));
 }
 }
 
-var setkey=User_safe_interface_api.establishlist([10, 20, 30]);
-var matrixkey=User_safe_interface_api.establishmatrix([[10, 20, 30],[1,4,46]]);
-var matrixkey2=User_safe_interface_api.establishmatrix([[11, 67, 30],[134,4,46]]);
-var nope=User_safe_interface_api.obtain_existing_node(0);
+setkey=User_safe_interface_api.establishlist([10, 20, 30]);
+ matrixkey=User_safe_interface_api.establishmatrix([[10, 20, 30],[1,4,46]]);
+ matrixkey2=User_safe_interface_api.establishmatrix([[67, 30],[4,46],[5,8]]);
+ nope=User_safe_interface_api.obtain_existing_node(0);
 User_safe_interface_api.remove_node(nope);
 
 """
 );
 
-              codeInput.setLayoutX(300);
+              codeInput.setLayoutX(700);
               codeInput.setLayoutY(300);
         codeInput.setFont(Font.font("Consolas", 16)); // readable monospaced font
         codeInput.setWrapText(true);

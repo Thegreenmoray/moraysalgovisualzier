@@ -8,10 +8,7 @@ import javafx.animation.Timeline;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -36,12 +33,26 @@ public class Visual_part {
     private int matrixnextID=0;
     private Map<Integer, List_setup> list_visuals = new HashMap<>();
     private Map<Integer,Matrix_setup> matrix_visuals = new HashMap<>();
+    private VBox listStorage = new VBox(20);
+    private VBox matrixStorage = new VBox(20);
     private Pane root;
    private static ArrayList<Point2D> mina_distance=new ArrayList<>();
   private static double minDist = 40;
 
     public Visual_part(Pane root) {
         this.root = root;
+
+        Squarevisuallayer.add(listStorage, 0, 0);   // column 0
+        Squarevisuallayer.add(matrixStorage, 1, 0); // column 1
+
+        if (!root.getChildren().contains(Squarevisuallayer)){
+            root.getChildren().add(Squarevisuallayer);}
+
+        if (!root.getChildren().contains(edgeLayer))
+            root.getChildren().addAll(edgeLayer, nodeLayer, textLayer);
+
+
+
     }
 
     public Graph visualizegraph( Graph graph,boolean isweighted, boolean isdirected) {
@@ -144,9 +155,14 @@ arrow.end((float) (c.getMinX() +c.getWidth()/2), (float) (c.getMinY() +c.getHeig
 
    //int size,E itemused
     public <E> int establishset(List<E> list) {
-        if (!root.getChildren().contains(Squarevisuallayer)) {
+        if (!Squarevisuallayer.getChildren().contains(listStorage)&&!Squarevisuallayer.getChildren().contains(matrixStorage)){
+            Squarevisuallayer.add(listStorage, 0, 0);   // column 0
+            Squarevisuallayer.add(matrixStorage, 1, 0); // column 1
+            }
+        if (!root.getChildren().contains(Squarevisuallayer)){
             root.getChildren().add(Squarevisuallayer);
         }
+
         List_setup<E> listSetup=new List_setup<>(list,setnextID);
 
 
@@ -165,11 +181,8 @@ listSetup.getCells().put(pointer,cell);
 pointer++;
 
         }
-//not at all efficient but good for now
-        if (!Squarevisuallayer.getChildren().contains(listSetup.getRoot())) {
-            listSetup.getRoot().setLayoutX(80*(matrix_visuals.size()+1));
-            Squarevisuallayer.getChildren().add(listSetup.getRoot());
-        }
+
+        listStorage.getChildren().add(listSetup.getRoot());
 
         list_visuals.put(setnextID,listSetup);
       int to_be_returned=setnextID;
@@ -180,9 +193,14 @@ pointer++;
 
 
     public <E> int establishmatrix(E[][] matrix) {
-        if (!root.getChildren().contains(Squarevisuallayer)) {
+        if (!Squarevisuallayer.getChildren().contains(matrixStorage)&&!Squarevisuallayer.getChildren().contains(listStorage)){
+            Squarevisuallayer.add(listStorage, 0, 0);   // column 0
+            Squarevisuallayer.add(matrixStorage, 1, 0); // column 1
+            }
+        if (!root.getChildren().contains(Squarevisuallayer)){
             root.getChildren().add(Squarevisuallayer);
         }
+
 
         Matrix_setup<E> martixSetup=new Matrix_setup<>(matrix,setnextID);
         martixSetup.getRoot().setHgap(1);
@@ -204,11 +222,8 @@ pointer++;
             }
 
         }
-        //not at all efficient but good for now
-        if (!Squarevisuallayer.getChildren().contains(martixSetup.getRoot())) {
-            martixSetup.getRoot().setLayoutY(80*(matrix_visuals.size()+1));
-            Squarevisuallayer.getChildren().add(martixSetup.getRoot());
-        }
+
+        matrixStorage.getChildren().add(martixSetup.getRoot());
 
 
 
@@ -268,14 +283,11 @@ pointer++;
 
     public Graph establish() {
 
-
-            if (!root.getChildren().contains(edgeLayer)) {
-                root.getChildren().addAll(edgeLayer, nodeLayer, textLayer);
-            }
-
             edgeLayer.setMouseTransparent(true);
             nodeLayer.setMouseTransparent(true);
             textLayer.setMouseTransparent(true);
+            matrixStorage.setMouseTransparent(true);
+            listStorage.setMouseTransparent(true);
 
         return new Graph(new ArrayList<>(),new ArrayList<>());
     }
@@ -638,6 +650,8 @@ pointer++;
    Squarevisuallayer.getChildren().clear();
    matrix_visuals.clear();
    list_visuals.clear();
+  matrixStorage.getChildren().clear();
+  listStorage.getChildren().clear();
   setnextID=0;
   matrixnextID=0;
     }
@@ -797,7 +811,6 @@ pointer++;
                         }));
         return new EdgeAnimation(timeline);
     }
-
 
     public SetAnimation listsquarehighlight(List_setup<?> list, int index) {
 

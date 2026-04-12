@@ -119,7 +119,38 @@ User_safe_interface_api.begin_animations();
 }
 
 
+function naivematrixmultiplication() {
+  m1= [[10, 20, 30],[1,4,46]]
+  m2=[[67, 30],[4,46],[5,8]]
+    r1 = m1.length;
+    c1 = m1[0].length;
+     r2 = m2.length;
+     c2 = m2[0].length;
 
+    // Rule: Columns of m1 must match Rows of m2
+    if (c1 !== r2) {throw new Error("Incompatible dimensions");}
+        key1 =User_safe_interface_api.establishmatrix(m1);
+        key2 =User_safe_interface_api.establishmatrix(m2);
+
+    // Initialize the result matrix with zeros
+     result = Array(r1).fill().map(() => Array(c2).fill(0));
+ key3 =User_safe_interface_api.establishmatrix(result);
+    for (let i = 0; i < r1; i++) {
+        for (let j = 0; j < c2; j++) {
+            for (let k = 0; k < c1; k++) {
+
+               User_safe_interface_api.highlight_matrix_square(i,k,key1);
+                User_safe_interface_api.highlight_matrix_square(k,j,key2);
+                 User_safe_interface_api.highlight_matrix_square(i,j,key3);
+                result[i][j] += m1[i][k] * m2[k][j];
+                User_safe_interface_api.edit_matrix_square_value(i,j,key3,result[i][j]);
+            }
+
+        }
+    }
+  User_safe_interface_api.begin_animations();
+    return result;
+}
 
 
 

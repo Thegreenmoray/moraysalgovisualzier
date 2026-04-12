@@ -24,7 +24,7 @@ Perhaps sometime in the future this may become a suggestion board
 //1.1+
 -Highlight code as it's selecting it
 -ability to Run algothrims side by side (will likely be race condition hell here)
--connected to proir one use bsort and qsort and nn vs tsp as the lessons
+-connected to proir one use bsort and qsort and nn vs tsp (or maybe greedy vs domset) as the lessons
 
 
 //1.2+

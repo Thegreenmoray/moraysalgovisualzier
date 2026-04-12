@@ -655,7 +655,6 @@ public <E>void edit_list_square_value(int index,int id,E value) {
     });
 }
 
-
 public void highlight_matrix_square(int row,int col,int id){
      if (id>=matrices.size()||id<-1){
          return;
@@ -664,7 +663,7 @@ public void highlight_matrix_square(int row,int col,int id){
 
     int rows=matrixSetup.getmatrix().length;
    int cols=matrixSetup.getmatrix()[0].length;
-   if (rows <= row || cols <= col|| row <= 0 || col <= 0){
+   if (rows < row || cols < col|| row < 0 || col < 0){
        return ;
    }
     Platform.runLater(() -> {
@@ -682,7 +681,7 @@ public <E>void edit_matrix_square_value(int row,int col,int id,E value) {
 
         int rows=matrixSetup.getmatrix().length;
         int cols=matrixSetup.getmatrix()[0].length;
-        if (rows <= row || cols <= col|| row <= 0 || col <= 0){
+        if (rows < row || cols < col|| row < 0 || col < 0){
             return ;
         }
 
