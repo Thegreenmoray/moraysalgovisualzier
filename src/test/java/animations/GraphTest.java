@@ -1,6 +1,7 @@
 package animations;
 
 import graph_theory.Edge;
+import graph_theory.Graph;
 import graph_theory.Node;
 import org.junit.jupiter.api.Test;
 import tests.data_structure.Graph_tools;

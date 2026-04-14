@@ -1,7 +1,7 @@
 package tests.data_structure;
 
 import graph_theory.Edge;
-import animations.Graph;
+import graph_theory.Graph;
 import graph_theory.Node;
 import org.junit.jupiter.api.Test;
 

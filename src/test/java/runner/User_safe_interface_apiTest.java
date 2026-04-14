@@ -1,6 +1,6 @@
 package runner;
 
-import animations.Graph;
+import graph_theory.Graph;
 import graph_theory.Edge;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +9,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static animations.Visual_partTest.visualPart;
-import static org.junit.jupiter.api.Assertions.*;
 
 class User_safe_interface_apiTest {
 

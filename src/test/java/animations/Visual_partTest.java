@@ -1,8 +1,8 @@
 package animations;
 
 import graph_theory.Edge;
+import graph_theory.Graph;
 import graph_theory.Node;
-import javafx.animation.Animation;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import org.junit.jupiter.api.Test;

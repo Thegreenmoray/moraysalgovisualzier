@@ -2,18 +2,60 @@ plugins {
    id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.14'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
+
+shadowJar {
+    archiveBaseName.set('moraysalgovisualizer')
+    archiveClassifier.set('')
+    archiveVersion.set('')
+    mergeServiceFiles()
+
+}
+
 
 repositories {
     mavenCentral()
+}
+tasks.startShadowScripts.enabled = false
+tasks.shadowDistZip.enabled = false
+tasks.shadowDistTar.enabled = false
+tasks.distZip.enabled = false
+tasks.distTar.enabled = false
+tasks.startScripts.enabled = false
+
+application {
+    mainClass = 'runner.Servermain'
+}
+
+
+tasks.jar {
+    manifest {
+        attributes(
+                'Main-Class': application.mainClass.get()
+        )
+    }
+}
+
+
+sourceSets {
+    main {
+        java {
+            exclude 'runner/Main.java'
+            exclude 'animations/**'
+            include 'Math.java'
+            include 'Pair.java'
+            exclude 'runner/User_safe_interface_api.java'
+        }
+    }
 }
 
 
 // Configure Java compilation to use the toolchain
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(24)
-    }
+  //  toolchain {
+ //       languageVersion = JavaLanguageVersion.of(24)
+  //  }
 }
 
 
@@ -24,17 +66,17 @@ javafx {
 }
 
 dependencies {
+    implementation "org.graalvm.sdk:graal-sdk:24.2.2"
+   // implementation "org.graalvm.truffle:truffle-api:24.2.2"
+  //  implementation "org.graalvm.js:js-engine:24.2.2"
+
+   // implementation "org.graalvm.js:js:24.2.2"
+    //implementation "org.graalvm.js:js-scriptengine:24.2.2"
+
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    implementation "org.graalvm.sdk:graal-sdk:24.2.2"
-    // Core polyglot API
-    implementation 'org.graalvm.polyglot:polyglot:24.2.2'
-    implementation 'org.graalvm.truffle:truffle-enterprise:24.2.2'
-    implementation 'org.graalvm.polyglot:js:24.2.2'        // JavaScript
-
-
-    implementation 'org.graalvm.polyglot:tools:24.2.2'
 
 }
 
@@ -51,11 +93,6 @@ test {
     }
 }
 
-
-
-application {
-   mainClass = 'runner.Main'
-}
 
 
 

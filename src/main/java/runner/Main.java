@@ -20,9 +20,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 
-public class Main extends Application {
+public class Main //extends Application
+{
   protected   static Pane root = new Pane();
-    @Override
+
     public void start(Stage stage) {
             stage.setTitle("Moray's Algo visualizer");
 
@@ -111,8 +112,11 @@ User_safe_interface_api.remove_node(nope);
         stage.show();
     }
 
-    static void main(String[] args) {
-        launch(args);
+    static void notmain(String[] args) throws Exception {
+        //launch(args);
+        AlgorithmRunner runner = new AlgorithmRunner();
+        Server.start(runner);
+
     }
 
 

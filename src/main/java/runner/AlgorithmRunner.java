@@ -1,15 +1,14 @@
 package runner;
 
-import animations.*;
+//import animations.*;
 
-import javafx.application.Platform;
+//import javafx.application.Platform;
+import graph_theory.Graph;
 import org.graalvm.polyglot.*;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
+import java.util.stream.Collectors;
 
 public class AlgorithmRunner {
 
@@ -31,8 +30,7 @@ public class AlgorithmRunner {
             .option("sandbox.MaxCPUTime", "30s")           // Prevents infinite loops
             .option("sandbox.MaxStatements", "50000")     // Prevents algorithmic attack
             //50k otherwise,100,000 for debugging
-    .option("engine.WarnInterpreterOnly", "false")
-    .build();
+    .option("engine.WarnInterpreterOnly", "false").build();
 
 
     public static boolean isSafeClass(String className) {
@@ -81,7 +79,7 @@ String currentAlgorithm;
         this.currentAlgorithm = code;
     }
 
-    public void run(Visual_part part) {
+    public void run() {
         if (currentAlgorithm == null) {
             throw new IllegalStateException("No algorithm loaded. Call setup() first.");
         }
@@ -89,10 +87,10 @@ String currentAlgorithm;
 
         CountDownLatch latch = new CountDownLatch(1);
 
-        Platform.runLater(() -> {
-            graphHolder[0] = part.establish();
+        //Platform.runLater(() -> {
+       //     graphHolder[0] = part.establish();
             latch.countDown();
-        });
+      //  });
 
         try {
             latch.await(); // Wait until graph is created
@@ -103,19 +101,59 @@ String currentAlgorithm;
         Graph graph = graphHolder[0];
 
 
-        User_safe_interface_api userSafeInterfaceApi =
-                new User_safe_interface_api(graph,new LinkedList<Animations>(),part);
+       // User_safe_interface_api userSafeInterfaceApi = new User_safe_interface_api(graph,new LinkedList<Animations>(),part);
 
 
 
+        sandbox.getBindings("js");
+                //.putMember("User_safe_interface_api", userSafeInterfaceApi);
 
-        sandbox.getBindings("js")
-                .putMember("User_safe_interface_api", userSafeInterfaceApi);
-
+        String user = currentAlgorithm;
+        String instrumented = Arrays.stream(user.split("\n"))
+                .map(line -> {
+                    String trimmed = line.trim();
+                    if (trimmed.endsWith(";")) {
+                        return line + " yield;";
+                    } else {
+                        return line;
+                    }
+                })
+                .collect(Collectors.joining("\n"));
+        String wrapped =
+                "function* run() {\n" +
+                        instrumented +
+                        "\n}";
         // Now you can safely evaluate the user code
-        sandbox.eval("js", currentAlgorithm);
-    }
+        sandbox.eval("js", wrapped);
 
+
+        Value generator = sandbox.eval("js", "run()");
+
+// 3. Schedule execution slices
+        new Thread(() -> {
+            try {
+                while (true) {
+                    // Run one slice
+                    generator.invokeMember("next");
+
+                    // Allow UI to update
+                    Thread.sleep(1);
+                }
+            } catch (Exception e) {
+                System.out.println("Execution finished or stopped.");
+            }
+        }).start();
+
+
+
+    }
+    public void runHeadless() throws Exception {
+        Value generator = sandbox.eval("js", "run()");
+        while (true) {
+            Value result = generator.invokeMember("next");
+            if (result.getMember("done").asBoolean()) break;
+        }
+    }
 
 }
 

@@ -1,6 +1,6 @@
 package tests.data_structure;
 
-import animations.Graph;
+import graph_theory.Graph;
 import graph_theory.*;
 
 import java.util.*;

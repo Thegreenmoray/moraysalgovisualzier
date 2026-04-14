@@ -1,6 +1,5 @@
 package graph_theory;
 
-import animations.Graph;
 import org.junit.jupiter.api.Test;
 import tests.data_structure.Graph_tools;
 

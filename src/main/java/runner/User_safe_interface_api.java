@@ -2,6 +2,7 @@ package runner;
 
 import animations.*;
 import graph_theory.Edge;
+import graph_theory.Graph;
 import graph_theory.Min_heap;
 import graph_theory.Node;
 import javafx.application.Platform;

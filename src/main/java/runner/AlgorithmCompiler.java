@@ -1,6 +1,8 @@
 package runner;
 
-import animations.Graph;
+
+
+import graph_theory.Graph;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
