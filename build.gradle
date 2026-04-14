@@ -1,7 +1,11 @@
+
+
 plugins {
    id 'java'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.14'
+
+   // id 'org.openjfx.javafxplugin' version '0.0.14'
+
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
@@ -10,9 +14,10 @@ shadowJar {
     archiveClassifier.set('')
     archiveVersion.set('')
     mergeServiceFiles()
-
+    manifest {
+        attributes 'Main-Class': 'runner.Servermain'
+    }
 }
-
 
 repositories {
     mavenCentral()
@@ -43,8 +48,6 @@ sourceSets {
         java {
             exclude 'runner/Main.java'
             exclude 'animations/**'
-            include 'Math.java'
-            include 'Pair.java'
             exclude 'runner/User_safe_interface_api.java'
         }
     }
@@ -60,10 +63,7 @@ java {
 
 
 
-javafx {
-    version = "25"
-    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics' ]
-}
+//javafx {version = "25"modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics' ]}
 
 dependencies {
     implementation "org.graalvm.sdk:graal-sdk:24.2.2"
@@ -91,6 +91,8 @@ test {
         exclude '**/User_safe_interface_apiTest*'
         exclude '**/AlgorithmRunnerTest*'
     }
+
+
 }
 
 

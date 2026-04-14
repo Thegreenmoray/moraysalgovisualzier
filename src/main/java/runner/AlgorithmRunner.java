@@ -26,9 +26,9 @@ public class AlgorithmRunner {
     .allowCreateThread(false)
     .allowNativeAccess(false)
    .allowAllAccess(false)
-            .option("sandbox.MaxHeapMemory", "128MB")     // Prevents memory bombs
-            .option("sandbox.MaxCPUTime", "30s")           // Prevents infinite loops
-            .option("sandbox.MaxStatements", "50000")     // Prevents algorithmic attack
+            //.option("sandbox.MaxHeapMemory", "128MB")     // Prevents memory bombs
+           // .option("sandbox.MaxCPUTime", "30s")           // Prevents infinite loops
+           // .option("sandbox.MaxStatements", "50000")     // Prevents algorithmic attack
             //50k otherwise,100,000 for debugging
     .option("engine.WarnInterpreterOnly", "false").build();
 

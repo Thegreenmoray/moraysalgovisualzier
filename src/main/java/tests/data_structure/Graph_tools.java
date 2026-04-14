@@ -78,7 +78,7 @@ public static boolean is_tree(Graph graph){
     //run a modifed dfs
    boolean istree=true;
    //assume graph is connected
-       istree= dfs_treechecker(graph,graph.getVertices().getFirst(),null,new boolean[graph.getVertices().size()],istree);
+       istree= dfs_treechecker(graph,graph.getVertices().get(0),null,new boolean[graph.getVertices().size()],istree);
 
 
 
@@ -242,7 +242,7 @@ boolean isconnected=true;
 
 boolean[] isvisited=new boolean[graph.getVertices().size()];
 
- isvisited=dfs(isvisited,graph,graph.getVertices().getFirst().getNumber());
+ isvisited=dfs(isvisited,graph,graph.getVertices().get(0).getNumber());
 
  for (boolean b:isvisited) {
      if(!b){
@@ -280,7 +280,7 @@ private static boolean[] dfs(boolean[] visted,Graph graph,int node_number) {
         }
 
 
-        edge_chance = Math.clamp(edge_chance,0,1);
+        edge_chance = Math.max(0, Math.min(1, edge_chance));
 
 
         Random rand = new Random();
@@ -317,7 +317,7 @@ private static boolean[] dfs(boolean[] visted,Graph graph,int node_number) {
         LinkedList<Edge> edges = new LinkedList<>();
 
 
-        edge_chance =Math.clamp(edge_chance,0,1);
+        edge_chance= Math.max(0, Math.min(1, edge_chance));
 
         Random rand = new Random();
 

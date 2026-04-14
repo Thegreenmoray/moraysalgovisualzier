@@ -1,7 +1,5 @@
 package set_theory;
 
-import javafx.util.Pair;
-
 import java.util.*;
 
 public class Set_theory_items {
@@ -14,8 +12,8 @@ private Set_theory_items(){}
     public static <T> boolean isProperSubset(List<T> A, List<T> B) {
         return new HashSet<>(B).containsAll(A) && A.size() < B.size();
     }
-
-    public static <T,K> List<Pair<T,K>> cartesian_product(List<T> tList,List<K> kList){
+/*
+    public static <T,K> List<Pair<T,K>> cartesian_product(List<T> tList, List<K> kList){
         List<Pair<T,K>> result = new ArrayList<>();
        
        for (T t:tList){
@@ -26,7 +24,7 @@ private Set_theory_items(){}
 
         return result;
     }
-
+*/
     public static <T> List<T> union(List<T> list1,List<T> list2){
 
 
