@@ -1,5 +1,6 @@
 package runner;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,9 +14,20 @@ import org.springframework.web.bind.annotation.RestController;
             this.runner = runner;
         }
 
+
+        @GetMapping("/")
+        public String home() {
+            return "This does indeed work.";
+        }
+
         @PostMapping("/run")
         public String run(@RequestBody String code) {
-            return runner.run(code);
+            try {
+                return runner.run(code);
+            } catch (Exception e) {
+                e.printStackTrace(); // TEMP: print to console
+                return "Error: " + e.getMessage();
+            }
         }
     }
 
