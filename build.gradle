@@ -3,9 +3,7 @@
 plugins {
    id 'java'
     id 'application'
-
-   // id 'org.openjfx.javafxplugin' version '0.0.14'
-
+    id 'org.springframework.boot' version '4.0.5'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
@@ -63,16 +61,10 @@ java {
 
 
 
-//javafx {version = "25"modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics' ]}
-
 dependencies {
     implementation "org.graalvm.sdk:graal-sdk:24.2.2"
-   // implementation "org.graalvm.truffle:truffle-api:24.2.2"
-  //  implementation "org.graalvm.js:js-engine:24.2.2"
 
-   // implementation "org.graalvm.js:js:24.2.2"
-    //implementation "org.graalvm.js:js-scriptengine:24.2.2"
-
+    implementation 'org.springframework.boot:spring-boot-starter-web:4.0.5'
 
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'

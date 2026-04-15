@@ -3,18 +3,17 @@ package runner;
 //import animations.*;
 
 //import javafx.application.Platform;
-import graph_theory.Graph;
 import org.graalvm.polyglot.*;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.concurrent.CountDownLatch;
-import java.util.stream.Collectors;
 
+@Component
 public class AlgorithmRunner {
 
 
-
-    Context sandbox =  Context.newBuilder("js")
+    private Context newSandbox() {
+   return   Context.newBuilder("js")
     .allowHostAccess(HostAccess.newBuilder(HostAccess.EXPLICIT)
             .allowPublicAccess(true)
         .allowAccessInheritance(true)
@@ -30,7 +29,7 @@ public class AlgorithmRunner {
            // .option("sandbox.MaxCPUTime", "30s")           // Prevents infinite loops
            // .option("sandbox.MaxStatements", "50000")     // Prevents algorithmic attack
             //50k otherwise,100,000 for debugging
-    .option("engine.WarnInterpreterOnly", "false").build();
+    .option("engine.WarnInterpreterOnly", "false").build();}
 
 
     public static boolean isSafeClass(String className) {
@@ -72,88 +71,27 @@ public class AlgorithmRunner {
     }
 
 
+    public String run(String currentAlgorithm) {
 
-String currentAlgorithm;
-    public void setup(String code) {
-        // Here you should parse, compile, or store the user code
-        this.currentAlgorithm = code;
-    }
-
-    public void run() {
         if (currentAlgorithm == null) {
-            throw new IllegalStateException("No algorithm loaded. Call setup() first.");
-        }
-        final Graph[] graphHolder = new Graph[1];
-
-        CountDownLatch latch = new CountDownLatch(1);
-
-        //Platform.runLater(() -> {
-       //     graphHolder[0] = part.establish();
-            latch.countDown();
-      //  });
-
-        try {
-            latch.await(); // Wait until graph is created
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("No algorithm provided.");
         }
 
-        Graph graph = graphHolder[0];
-
-
-       // User_safe_interface_api userSafeInterfaceApi = new User_safe_interface_api(graph,new LinkedList<Animations>(),part);
-
-
-
-        sandbox.getBindings("js");
-                //.putMember("User_safe_interface_api", userSafeInterfaceApi);
-
-        String user = currentAlgorithm;
-        String instrumented = Arrays.stream(user.split("\n"))
-                .map(line -> {
-                    String trimmed = line.trim();
-                    if (trimmed.endsWith(";")) {
-                        return line + " yield;";
-                    } else {
-                        return line;
-                    }
-                })
-                .collect(Collectors.joining("\n"));
+        // Wrap user code in a function
         String wrapped =
-                "function* run() {\n" +
-                        instrumented +
+                "function run() {\n" +
+                        currentAlgorithm +
                         "\n}";
-        // Now you can safely evaluate the user code
+        Context sandbox = newSandbox();
+        // Evaluate the code
         sandbox.eval("js", wrapped);
 
+        // Call the function and get the result
+        Value result = sandbox.eval("js", "run()");
 
-        Value generator = sandbox.eval("js", "run()");
-
-// 3. Schedule execution slices
-        new Thread(() -> {
-            try {
-                while (true) {
-                    // Run one slice
-                    generator.invokeMember("next");
-
-                    // Allow UI to update
-                    Thread.sleep(1);
-                }
-            } catch (Exception e) {
-                System.out.println("Execution finished or stopped.");
-            }
-        }).start();
-
-
-
+        return result.toString();
     }
-    public void runHeadless() throws Exception {
-        Value generator = sandbox.eval("js", "run()");
-        while (true) {
-            Value result = generator.invokeMember("next");
-            if (result.getMember("done").asBoolean()) break;
-        }
-    }
+
 
 }
 
