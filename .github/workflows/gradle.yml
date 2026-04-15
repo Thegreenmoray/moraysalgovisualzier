@@ -15,7 +15,7 @@ jobs:
       - name: Set up GraalVM
         uses: graalvm/setup-graalvm@v1
         with:
-          version: '23.1.2'
+          version: 'latest'
           java-version: '21'
           components: 'js'
 
@@ -29,4 +29,4 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew shadowJar --no-daemon -x test
