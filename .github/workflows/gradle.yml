@@ -15,9 +15,9 @@ jobs:
       - name: Set up GraalVM
         uses: graalvm/setup-graalvm@v1
         with:
-            version: '22.3.2'
-            java-version: '21'
-            components: 'js'
+          version: '22.3.2'
+          java-version: '21'
+          components: 'js'
 
       - name: Verify Java
         run: java -version
