@@ -3,7 +3,10 @@ package runner;
 //import animations.*;
 
 //import javafx.application.Platform;
+import graph_theory.Graph;
+import graph_theory.Node;
 import org.graalvm.polyglot.*;
+import org.graalvm.polyglot.proxy.ProxyExecutable;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -20,15 +23,11 @@ public class AlgorithmRunner {
         .allowListAccess(true)
         .allowMapAccess(true)
         .build())
-            .allowHostClassLookup(AlgorithmRunner::isSafeClass)
-            .allowIO(false)
+      .allowHostClassLookup(AlgorithmRunner::isSafeClass)
+      .allowIO(false)
     .allowCreateThread(false)
     .allowNativeAccess(false)
    .allowAllAccess(false)
-            //.option("sandbox.MaxHeapMemory", "128MB")     // Prevents memory bombs
-           // .option("sandbox.MaxCPUTime", "30s")           // Prevents infinite loops
-           // .option("sandbox.MaxStatements", "50000")     // Prevents algorithmic attack
-            //50k otherwise,100,000 for debugging
     .option("engine.WarnInterpreterOnly", "false").build();}
 
 
@@ -91,6 +90,64 @@ public class AlgorithmRunner {
 
         return result.toString();
     }
+
+
+    public List<AnimationInstruction> runUserCode(String algorithm, Graph graph) {
+        List<AnimationInstruction> animations = new ArrayList<>();
+
+        Context sandbox = newSandbox();
+
+        // 1. Expose animation functions to JS
+        exposeAnimationAPI(sandbox, animations,graph);
+
+
+
+        // 3. Wrap user code in a function
+        String wrapped = "function run() {\n" + algorithm + "\n}";
+
+        // 4. Evaluate and execute
+        sandbox.eval("js", wrapped);
+        sandbox.eval("js", "run()");
+
+        return animations;
+    }
+    private void exposeAnimationAPI(Context sandbox, List<AnimationInstruction> animations,Graph graph) {
+
+        sandbox.getBindings("js").putMember("highlightNode", (ProxyExecutable) args -> {
+            AnimationInstruction instr = new AnimationInstruction();
+            instr.type = "highlightNode";
+            instr.node = args[0].asInt();
+            animations.add(instr);
+            return null;
+        });
+
+        sandbox.getBindings("js").putMember("pause", (ProxyExecutable) args -> {
+            AnimationInstruction instr = new AnimationInstruction();
+            instr.type = "pause";
+            instr.ms = args[0].asInt();
+            animations.add(instr);
+            return null;
+        });
+
+        sandbox.getBindings("js").putMember("neighbors", (ProxyExecutable) args -> {
+            int nodeId = args[0].asInt();
+            List<Integer> neigh =  new ArrayList<>();
+
+            for (Node node : graph.neighbors(graph.getVertices().get(nodeId))) {
+                neigh.add(node.getNumber());
+            }
+
+            return neigh.toArray();
+        });
+
+
+        // Add more animation functions here...
+    }
+
+
+
+
+
 
 
 }

@@ -1,6 +1,6 @@
 package runner;
 
-import animations.Visual_partTest;
+
 import org.junit.jupiter.api.Test;
 
 class AlgorithmRunnerTest {

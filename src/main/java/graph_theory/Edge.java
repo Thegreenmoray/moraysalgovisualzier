@@ -25,7 +25,6 @@ private float weight;
     }
 
 
-
     public Node getV1() {
         return v1;
     }

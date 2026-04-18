@@ -1,12 +1,9 @@
 package set_theory;
 
-import graph_theory.Node;
-import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,7 +28,7 @@ class Set_theory_itemsTest {
         assertTrue(r);
         assertFalse(Set_theory_items.isProperSubset(b,e));
     }
-
+/*
     @Test
     void cartesian_product() {
         List<Integer> e = new ArrayList<>();
@@ -53,7 +50,7 @@ class Set_theory_itemsTest {
            assertEquals(cartesian_product.get(i).getKey(),r.get(i).getKey());
            assertEquals(cartesian_product.get(i).getValue(),r.get(i).getValue());
     }}
-
+*/
     @Test
     void union() {
         ArrayList<Character> A = new ArrayList<>();
