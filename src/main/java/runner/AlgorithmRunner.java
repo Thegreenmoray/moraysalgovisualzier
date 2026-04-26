@@ -70,27 +70,6 @@ public class AlgorithmRunner {
     }
 
 
-    public String run(String currentAlgorithm) {
-
-        if (currentAlgorithm == null) {
-            throw new IllegalStateException("No algorithm provided.");
-        }
-
-        // Wrap user code in a function
-        String wrapped =
-                "function run() {\n" +
-                        currentAlgorithm +
-                        "\n}";
-        Context sandbox = newSandbox();
-        // Evaluate the code
-        sandbox.eval("js", wrapped);
-
-        // Call the function and get the result
-        Value result = sandbox.eval("js", "run()");
-
-        return result.toString();
-    }
-
 
     public List<AnimationInstruction> runUserCode(String algorithm, Graph graph) {
         List<AnimationInstruction> animations = new ArrayList<>();

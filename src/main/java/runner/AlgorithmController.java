@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import tests.data_structure.Graph_tools;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
     public class AlgorithmController {
 
         private final AlgorithmRunner runner;
@@ -18,7 +20,7 @@ import java.util.List;
             this.runner = runner;
         }
 
-   //     @DeleteMapping("/lk")
+   //     @PutMapping("/lk")
      //   public VisualizationResponse cleargraph(@RequestBody AlgothrimRequest){}
 
 
@@ -27,7 +29,7 @@ import java.util.List;
     //@GetMapping:  retrieving data from server.
     //@PutMapping:  for updating existing resources.
    // @DeleteMapping: removing resources.
-   // @PatchMapping:  partial updates to a resource (such as a spefiec field).
+   // @PatchMapping:  partial updates to a resource (such as a specific field).
 
     //since we are creating new visuals each time we need to add data
     @PostMapping("/run")
@@ -40,6 +42,13 @@ import java.util.List;
 
             return new VisualizationResponse(graph, animations);
         }
+
+    @PostMapping("/generate")
+    public VisualizationResponse generategraph(@RequestBody GraphRequest req) {
+     Graph graph=Graph_tools.randomgraph(req.number_of_nodes, req.edge_chance, req.isweighted,req.canbenegative,req.isdirected);
+        return new VisualizationResponse(graph,null);
+    }
+
 
     private Graph buildGraph(AlgothrimRequest req) {
        Graph graph= Graph_tools.empty_graph();
@@ -56,6 +65,9 @@ import java.util.List;
            //add a thing to check if edges are directed or not
             graph.addEdge(new Edge(from,to,e.weight));
         }
+
+
+
         return graph;
     }
 }
