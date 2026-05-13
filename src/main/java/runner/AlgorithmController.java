@@ -35,15 +35,23 @@ import java.util.List;
     @PostMapping("/run")
         public VisualizationResponse runAlgorithm(@RequestBody AlgothrimRequest req) {
 
+        System.out.println("Lists: " + req.lists);
+        System.out.println("Matrices: " + req.matrices);
+        System.out.println("Algorithm: " + req.algorithm);
+
+
             Graph graph = buildGraph(req);
 
             // run user JS and collect animations
-            List<AnimationInstruction> animations = runner.runUserCode(req.algorithm, graph);
+            List<AnimationInstruction> animations = runner.runUserCode(req.algorithm, graph,req.lists,req.matrices);
 
             return new VisualizationResponse(graph, animations);
         }
 
-    @PostMapping("/generate")
+
+
+
+    @PostMapping("/generategraph")
     public VisualizationResponse generategraph(@RequestBody GraphRequest req) {
      Graph graph=Graph_tools.randomgraph(req.number_of_nodes, req.edge_chance, req.isweighted,req.canbenegative,req.isdirected);
         return new VisualizationResponse(graph,null);
@@ -61,7 +69,7 @@ import java.util.List;
         // add edges
         for (DTOS.EdgeDTO e : req.edges) {
             Node from = graph.getVertices().get(e.from);
-            Node to   = graph.getVertices().get(e.to);
+            Node to  = graph.getVertices().get(e.to);
            //add a thing to check if edges are directed or not
             graph.addEdge(new Edge(from,to,e.weight));
         }

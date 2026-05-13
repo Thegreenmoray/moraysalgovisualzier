@@ -11,7 +11,13 @@ public class VisualizationResponse {
        this.graph = graph;
        this.animations = animations;
    }
+    public Graph getGraph() {
+        return graph;
+    }
 
+    public List<AnimationInstruction> getAnimations() {
+        return animations;
+    }
 
     }
 
