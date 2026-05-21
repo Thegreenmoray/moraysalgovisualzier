@@ -38,6 +38,8 @@ import java.util.List;
         System.out.println("Lists: " + req.lists);
         System.out.println("Matrices: " + req.matrices);
         System.out.println("Algorithm: " + req.algorithm);
+        System.out.println("Nodes: " + req.nodes);
+        System.out.println("Edges: " + req.edges);
 
 
             Graph graph = buildGraph(req);
@@ -63,15 +65,17 @@ import java.util.List;
 
         // add nodes
         for (DTOS.NodeDTO n : req.nodes) {
-            graph.addVertex(new Node(n.id));
+            graph.addVertex(new Node(n.label));
         }
 
         // add edges
         for (DTOS.EdgeDTO e : req.edges) {
-            Node from = graph.getVertices().get(e.from);
-            Node to  = graph.getVertices().get(e.to);
+            Node from = graph.getVertices().get(e.fromlabel);
+            Node to  = graph.getVertices().get(e.tolabel);
            //add a thing to check if edges are directed or not
-            graph.addEdge(new Edge(from,to,e.weight));
+          if (!e.directed){
+            graph.addEdge(new Edge(from,to,e.weight));}else {
+            graph.addarc(new Edge(from,to,e.weight));}
         }
 
 

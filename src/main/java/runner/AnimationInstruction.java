@@ -1,7 +1,7 @@
 package runner;
 
 public class AnimationInstruction {
-    public String type;   // e.g. "highlightNode", "travelEdge", "pause"
+    public String type;
 
     // optional fields depending on type
     public Integer node;
@@ -9,6 +9,7 @@ public class AnimationInstruction {
     public Integer to;
     public String color;
 
+    public Integer edge;
     public Integer list;
     public Integer index;
     public Object value;
@@ -88,7 +89,7 @@ public class AnimationInstruction {
 
     public static AnimationInstruction disableNode(int nodeId) {
         AnimationInstruction a = new AnimationInstruction();
-        a.type = "disableNode";
+        a.type = "delightNode";
         a.node = nodeId;
         return a;
     }
@@ -104,23 +105,21 @@ public class AnimationInstruction {
         AnimationInstruction a = new AnimationInstruction();
         a.type = "colorNode";
         a.node = nodeId;
-        a.value = color;
+        a.color = color;
         return a;
     }
 
-    public static AnimationInstruction highlightEdge(int from, int to) {
+    public static AnimationInstruction highlightEdge(int id) {
         AnimationInstruction a = new AnimationInstruction();
         a.type = "highlightEdge";
-        a.from = from;
-        a.to = to;
+        a.edge = id;
         return a;
     }
 
-    public static AnimationInstruction disableEdge(int from, int to) {
+    public static AnimationInstruction disableEdge(int id) {
         AnimationInstruction a = new AnimationInstruction();
         a.type = "disableEdge";
-        a.from = from;
-        a.to = to;
+        a.edge = id;
         return a;
     }
 
@@ -130,27 +129,19 @@ public class AnimationInstruction {
         a.node = nodeId;
         return a;
     }
-    public static AnimationInstruction arcInvisible(int from, int to) {
-        AnimationInstruction a = new AnimationInstruction();
-        a.type = "arcInvisible";
-        a.from = from;
-        a.to = to;
-        return a;
-    }
 
-    public static AnimationInstruction edgeVisible(int from, int to) {
+
+    public static AnimationInstruction edgeVisible(int id) {
         AnimationInstruction a = new AnimationInstruction();
         a.type = "edgeVisible";
-        a.from = from;
-        a.to = to;
+        a.edge = id;
         return a;
     }
 
-    public static AnimationInstruction edgeInvisible(int from, int to) {
+    public static AnimationInstruction edgeInvisible(int id) {
         AnimationInstruction a = new AnimationInstruction();
         a.type = "edgeInvisible";
-        a.from = from;
-        a.to = to;
+        a.edge = id;
         return a;
     }
 

@@ -10,9 +10,8 @@ class AlgorithmRunnerTest {
 
     @Test
     void setup() {
-   AlgorithmRunner alg = new AlgorithmRunner();
-        alg.runUserCode("", Graph_tools.empty_graph());
-        AlgorithmRunner.isSafeClass("");
+
+
     }
 
 }

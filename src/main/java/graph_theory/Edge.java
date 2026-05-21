@@ -6,13 +6,13 @@ public class Edge {
   private final Node v1;
  private final Node v2;
 private float weight;
-
-
+private int id=0;
+ private static int NEXT_ID = 0;
     public Edge(Node v1, Node v2) {
         this.v1 = v1;
         this.v2 = v2;
         this.weight = 1;
-
+        this.id = NEXT_ID++;
 
     }
 
@@ -20,10 +20,14 @@ private float weight;
         this.v1 = v1;
         this.v2 = v2;
         this.weight = weight;
-
+        this.id = NEXT_ID++;
 
     }
 
+
+    public int getId() {
+        return id;
+    }
 
     public Node getV1() {
         return v1;

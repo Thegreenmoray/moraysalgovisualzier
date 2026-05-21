@@ -114,10 +114,20 @@ public void removearc(Edge e){
         return adjacencyList.getOrDefault(v,Collections.emptyList());
     }
 
+    public List<Node> neighbors(int i){
+
+        return adjacencyList.getOrDefault(getVertices().get(i),Collections.emptyList());
+    }
+
 public List<Edge> indenctedges(Node v){
 
     return indencent_list.getOrDefault(v,Collections.emptyList());
 }
+
+    public List<Edge> indenctedges(int i){
+
+        return indencent_list.getOrDefault(getVertices().get(i),Collections.emptyList());
+    }
 
 public void addEdge(Edge e){
 

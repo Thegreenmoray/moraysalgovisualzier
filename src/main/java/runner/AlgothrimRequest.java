@@ -8,7 +8,7 @@ public class AlgothrimRequest {
         public List<DTOS.NodeDTO> nodes;
         public List<DTOS.EdgeDTO> edges;
         public String algorithm;
-        public Map<Integer, List<Integer>> lists;
-        public Map<Integer, int[][]> matrices;
+        public Map<Integer, List<Object>> lists;
+        public Map<Integer, Object[][]> matrices;
 
 }
