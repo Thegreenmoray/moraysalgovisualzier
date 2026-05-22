@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Moray Visualizer</title>
+    <style>
+        /* Make the textbox bigger */
+        #codeInput {
+            width: 600px;
+            height: 300px;
+            font-size: 16px;
+            font-family: Consolas, monospace;
+            padding: 8px;
+        }
+
+        #runButton {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        #resetButton {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        #graphCanvas {
+            border: 1px solid black;
+            margin-top: 20px;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<button id="runButton">Run Algorithm</button>
+<button id="edgemode">Edge mode</button>
+<button id="nodemode">Node mode</button>
+<button onclick="clearResult()">Clear</button>
+<button onclick="createList()">Create List</button>
+<button onclick="createMatrix()">Create Matrix</button>
+<br>
+<textarea id="codeInput"></textarea>
+<br>
+<canvas id="graphCanvas" width="600" height="600"></canvas>
+<script type="module" src="main.js"></script>
+
+</body>
+</html>

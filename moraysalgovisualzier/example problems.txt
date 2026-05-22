@@ -1,0 +1,320 @@
+
+/*just
+here to show how to visualize your code with the compiler.
+will be converted to js  remaining: 7
+*/
+/*
+public class Example_problems {
+
+    //round two
+    public static  List<Integer> quicksort(List<Integer> e,int low,int high){
+
+//how to deal with sets with recursion
+        if (low >= high) return e;
+
+
+        int partition = partition(e, low, high);
+
+        quicksort(e, low, partition-1);
+        quicksort(e, partition+1, high);
+
+
+        return e;
+    }
+
+
+
+
+/*
+    private static int partition(List<Integer> e,int low,int high){
+
+        int pivot=e.get(high);
+        int pivotpoint=low-1;
+
+        for (int i=low;i<=high;i++){
+            if (e.get(i)<=pivot){
+                pivotpoint++;
+                int temp= e.get(pivotpoint);
+                e.set(pivotpoint,e.get(i));
+                e.set(i,temp);
+            }
+        }
+
+
+        return pivotpoint;
+    };
+
+
+    public static int unbounded_knapsack(int[] values,int[] weights,int weight){
+    //mainpate arrays beyond swapping
+        int[] unbounded_knapsack_array=new int[weight+1];
+        int n=values.length;
+        for(int i=1;i<=weight;i++){
+            for(int j=0;j<n;j++){
+
+                if(weights[j]<=i){
+                    unbounded_knapsack_array[i]=Math.max(unbounded_knapsack_array[i],
+                            unbounded_knapsack_array[i-weights[j]]+values[j]);
+                }
+
+            }
+        }
+
+
+        return unbounded_knapsack_array[weight];
+    }
+
+//matrices and lists
+    public  static int binary_knapsack(int[] values,int[] weights,int weight){
+      //manipulate matrices
+        int n = weights.length;
+        int[][] binary_knapsack_matrix=new int[n+1][weight+1];
+
+        for(int i=1;i<=n;i++){
+            // n is the number of items in weights
+            for (int w=1;w<=weight;w++){
+
+                if(weights[i-1]>w){ //if an item is too heavy, revert to previous.
+                    binary_knapsack_matrix[i][w]=binary_knapsack_matrix[i-1][w];
+                }else { //take it or leave it
+                    binary_knapsack_matrix[i][w]=Math.max(binary_knapsack_matrix[i-1][w],binary_knapsack_matrix[i-1][w-weights[i-1]]+values[i-1]);
+                }
+            }
+        }
+
+
+        return binary_knapsack_matrix[n][weight];
+    }
+
+
+
+
+*/
+//--------------------------Graph problems----------------------------
+
+public static boolean Willcreateacycle( Node n, Node m){
+
+     ???
+        return (!mst.containsnode(n)&&!mst.containsnode(m));
+    }
+    public static Graph Prim(){
+       //shows how to use other functions
+        Queue<EdgeAnimation> timelineQueue=new LinkedList<>();
+        ArrayList<Edge> heap=new ArrayList<>();
+        Graph mst=Graph_tools.empty_graph();
+        for(Edge e:graph.indenctedges(graph.getVertices().getFirst())){
+            Min_heap.add_to_heap(e,heap);
+        }
+
+
+        mst.addVertex(graph.getVertices().getFirst());
+
+        while(!heap.isEmpty()&&mst.getVertices().size()<graph.getVertices().size()){
+            Edge other_edges=Min_heap.extract_from_heap(heap);
+
+            if (Graph_tools.Willcreateacycle(mst,other_edges.getV1(),other_edges.getV2())) {
+                continue;
+            }
+
+
+            if (mst.containsnode(other_edges.getV1())&&mst.containsnode(other_edges.getV2())) {
+                continue;
+            }
+
+              if (!mst.containsnode(other_edges.getV2())) {
+                  mst.addVertex(other_edges.getV2());
+
+                      mst.addarc(other_edges,other_edges.getWeight());
+
+
+
+                  for (Edge e:graph.indenctedges(other_edges.getV2())) {
+                      Min_heap.add_to_heap(e,heap); }} }
+
+        return mst;
+    }
+
+    private static boolean[] dfs(Graph graph, int node_number, boolean[] visted, GUI_interface graphTheoryInterface, Queue<EdgeAnimation> timelineQueue) {
+       visted[node_number]=true;
+//how to deal with recursion on graphs
+        for(Node n:graph.neighbors(graph.getVertices().get(node_number))){
+            if(!visted[n.getNumber()]){
+                if (graphTheoryInterface !=null){
+                Edge edge=graph.getEdge(graph.getVertices().get(node_number),n);
+                    timelineQueue.add(graphTheoryInterface.pause(200));
+                timelineQueue.add(graphTheoryInterface.onEdgesearched(edge));
+                timelineQueue.add(graphTheoryInterface.highlightNode(n));
+                graphTheoryInterface.onEdgesearched(edge);}
+
+                dfs(graph,n.getNumber(),visted,graphTheoryInterface,timelineQueue);
+            }
+        }
+
+
+        return visted;
+    }
+
+    public static float[][] Floyd_Warshall(float[][] adjacency_matrix, Graph graph, GUI_interface graphTheoryInterface, Visual_part visualPart){
+// searching the all pairs of shortest paths,
+// good for finding the diameter on smaller graphs
+        //matrices and graphs
+        Queue<EdgeAnimation> timelineQueue = new LinkedList<>();
+        for (int k = 0; k < graph.getVertices().size(); k++) {
+            for (int i = 0; i < graph.getVertices().size(); i++) {
+                for (int j = 0; j < graph.getVertices().size(); j++) {
+                //these parts only exist for unit tests ignore these
+                  if (visualPart !=null&&graphTheoryInterface!=null){
+                    Node node1=graph.getVertices().get(i);
+                    Node node2=graph.getVertices().get(j);
+                    Node node3=graph.getVertices().get(k);
+
+                      Edge edgeij=graph.getEdge(node1,node2);
+                    Edge edgeik=graph.getEdge(node1,node3);
+                    Edge edgekj=graph.getEdge(node3,node2);
+
+                    if (edgeij!=null){
+                    timelineQueue.add(graphTheoryInterface.onEdgesearched(edgeij));
+                      timelineQueue.add(graphTheoryInterface.pause(200));}
+                    if (edgeik!=null){
+                    timelineQueue.add(graphTheoryInterface.onEdgesearched(edgeik));
+                      timelineQueue.add(graphTheoryInterface.pause(200));}
+                    if (edgekj!=null){
+                    timelineQueue.add(graphTheoryInterface.onEdgesearched(edgekj));
+                      timelineQueue.add(graphTheoryInterface.pause(200));}
+                  }
+
+                    adjacency_matrix[i][j] = Math.min(adjacency_matrix[i][j], adjacency_matrix[i][k]+adjacency_matrix[k][j]);
+                }
+            }
+        }//these parts only exist for unit tests ignore these
+        if (visualPart !=null&&graphTheoryInterface!=null){
+        visualPart.playNext((LinkedList<EdgeAnimation>) timelineQueue);}
+
+
+        return adjacency_matrix;
+    }
+
+    public static boolean[] component_analysis(Graph graph, GUI_interface graphTheoryInterface, boolean[] visted, Visual_part visualPart, boolean b_or_d)  {
+        ArrayList<Node> node= new ArrayList<>( graph.getVertices());
+        Queue<EdgeAnimation> timelineQueue = new LinkedList<>();//only if dfs
+
+        for(int i=0;i<node.size();i++){
+            if(!visted[node.get(i).getNumber()]){
+
+              visted= b_or_d ? bfs(graph,i,visted,graphTheoryInterface,visualPart):
+                      dfs(graph,i,visted,graphTheoryInterface,timelineQueue);
+            }
+        }
+       if(!b_or_d){ //dfs
+           if (graphTheoryInterface !=null&&visualPart!=null) {
+               visualPart.playNext((LinkedList<EdgeAnimation>) timelineQueue);
+           }
+       }
+        return visted;
+    }
+
+//stress test
+ public static List<Node> independent_set() {
+
+
+   List<Node> list= independent_set_calculation(graph,new ArrayList<>(),
+             new ArrayList<>(),new ArrayList<>());
+
+     if (edgeInterface !=null&&part!=null) {
+         for (Node node : list) {
+
+             timelineQueue.add(edgeInterface.highlight_semi_permant(node, part));
+         }
+     }
+     if (edgeInterface !=null&&part!=null) {
+         part.playNext(timelineQueue);
+     }
+
+     return list;
+ }
+
+
+
+    private static List<Node> independent_set_calculation( List<Node> best_set,
+                                                          List<Node> current_set, List<Node> candidates){
+
+//other features such as permantly lighting nodes
+
+
+        if(current_set.isEmpty()){
+            candidates=  graph.getVertices();
+        }
+        // if our current size and our candidate size is smaller than
+        //the best we've found so far, don't even bother searching further.
+
+        if(current_set.size() + candidates.size() <= best_set.size()){
+            if (part != null&&edgeInterface!=null) {
+                    timelineQueue.add(edgeInterface.pause(1));
+            }
+
+            return best_set;
+        }
+
+
+
+
+
+        for(int i=0;i<candidates.size();i++){
+        Node candidate=candidates.get(i);
+
+  current_set.add(candidate);
+            if (part != null&&edgeInterface!=null) {
+            timelineQueue.add(edgeInterface.highlight_semi_permant(candidate,part));}
+
+
+           if (current_set.size()>best_set.size()) {
+                //prevents contamination
+                best_set= new ArrayList<>(current_set);
+            }
+            List<Node> nextCandidates = new ArrayList<>();
+
+ /*in clique its much easier since a node cannot be adjacent to itself
+ or at least you cannot form an edge between itself
+  however thats a problem for independent set since
+ this is examining nodes not adjacent to each other
+ and a node can never be adjacent to itself so unless
+ you do something like this it will never stop.*/
+
+/*
+         for (int j=i+1;j<candidates.size();j++){
+             //^ this forces you to look at other nodes
+             //and prevent an infinite loop
+             //this also stops you from looking at other
+             //permutations, which would waste more time
+
+                 Node c = candidates.get(j);
+               //now you conduct the check
+                 boolean vaild_candidate = true;
+                 for (Node u : current_set) {
+                     if (graph.isadjacent(u, c)) {
+                         vaild_candidate = false;
+                         break;
+                     }
+                 }
+
+                 if (vaild_candidate) nextCandidates.add(c);
+
+         }
+
+            best_set=independent_set_calculation(graph,best_set,current_set,nextCandidates,part,edgeInterface,timelineQueue);
+            current_set.remove(candidate);
+         if (part != null&&edgeInterface!=null) {
+            timelineQueue.add( edgeInterface.disable_highlights(candidate,part));}
+
+        }
+/* honestly you are better off taking the G^c of the intinal graph
+then running clique, no need to worry about ordering.
+this may not be great for sparse graphs though because the complement will be dense
+But that's debatable*/
+/*
+        return best_set;
+    }
+/*
+
+
+}*/

@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./moraysalgovisualzier
+    container_name: visualizer-backend
+    ports:
+      - "8082:8081"
+    networks:
+      - visualnet
+
+  frontend:
+    build: ./algothrimvisualizerfrontend
+    container_name: visualizer-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - visualnet
+
+networks:
+  visualnet:
