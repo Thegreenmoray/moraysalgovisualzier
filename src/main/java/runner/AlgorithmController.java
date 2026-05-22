@@ -3,6 +3,7 @@ package runner;
 import graph_theory.Edge;
 import graph_theory.Graph;
 import graph_theory.Node;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 import tests.data_structure.Graph_tools;
 
@@ -20,10 +21,6 @@ import java.util.List;
             this.runner = runner;
         }
 
-   //     @PutMapping("/lk")
-     //   public VisualizationResponse cleargraph(@RequestBody AlgothrimRequest){}
-
-
     //just for future reference
     //@PostMapping: adds data to server
     //@GetMapping:  retrieving data from server.
@@ -31,9 +28,26 @@ import java.util.List;
    // @DeleteMapping: removing resources.
    // @PatchMapping:  partial updates to a resource (such as a specific field).
 
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/run", method = RequestMethod.OPTIONS)
+    public void corsHeaders(HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Headers", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+    }
+
+
+
     //since we are creating new visuals each time we need to add data
     @PostMapping("/run")
-        public VisualizationResponse runAlgorithm(@RequestBody AlgothrimRequest req) {
+        public VisualizationResponse runAlgorithm(@RequestBody AlgothrimRequest req, HttpServletResponse response) {
+
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Headers", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+
+
 
         System.out.println("Lists: " + req.lists);
         System.out.println("Matrices: " + req.matrices);

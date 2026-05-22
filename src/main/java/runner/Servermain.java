@@ -9,7 +9,4 @@ public class Servermain {
 
         public static void main(String[] args) {
             SpringApplication.run(Servermain.class, args);
-
         }}
-
-
