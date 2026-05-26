@@ -2,7 +2,7 @@ package graph_theory;
 
 public class Node {
 private final int number;
-
+private boolean isVisible;
 
 private String hexcode_color;
 
@@ -16,7 +16,7 @@ private String hexcode_color;
 
     public Node(int number) {
     this.number = number;
-
+this.isVisible = true;
     hexcode_color=null;
 
 }
@@ -24,8 +24,15 @@ private String hexcode_color;
     public Node(int number,String hexcode_color) {
         this.number = number;
         this.hexcode_color = hexcode_color;
+        this.isVisible = true;
     }
 
+    public boolean isVisible() {
+        return isVisible;
+    }
+    public void setIsVisible(boolean isVisible) {
+        this.isVisible = isVisible;
+    }
     //wip, if it is invalid default to black and alert user
    // private boolean isvaildhexcode(String hexcode_color) {
     //    return false;}

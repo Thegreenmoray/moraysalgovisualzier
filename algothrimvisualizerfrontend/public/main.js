@@ -1,89 +1,9 @@
 // Global graph state
-import Visualfront from "./Visualfront.js";
-
-window.Api = {
-    getNodes(){
-        return nodes.values();
-    },getEdges(){
-        return edges.values();
-    },
-    add_to_heap(edgelabel,heap){
-       return add_to_heap(edgelabel,heap);
-    },
-    extract_from_heap(heap){
-        return extract_from_heap(heap).visual;
-    },
-    matrixplacer(matrix){
-        Visualfront.establishmatrx(matrix)
-    }
-
-};
-
-
-function add_to_heap(edge, heap) {
-    const edgeid = edgeLabelToId.get(edge);
-    heap.push(edgeid);
-    form_heap(heap);
-    return heap;
-}
-
-function form_heap(heap) {
-    let child = heap.length - 1;
-
-    while (child > 0) {
-        let parent = Math.floor((child - 1) / 2);
-
-        if (heap[child].weight < heap[parent].weight) {
-            [heap[child], heap[parent]] = [heap[parent], heap[child]];
-            child = parent;
-        } else {
-            return;
-        }
-    }
-}
-
-function extract_from_heap(heap) {
-    if (heap.length === 0) return null;
-
-    const min = heap[0];
-
-    // Move last element to root
-    heap[0] = heap[heap.length - 1];
-    heap.pop();
-
-    fix_heap(heap, 0);
-
-    return min;
-}
-
-function fix_heap(heap, index) {
-    const n = heap.length;
-
-    while (true) {
-        let left = 2 * index + 1;
-        let right = 2 * index + 2;
-        let smallest = index;
-
-        if (left < n && heap[left].weight < heap[smallest].weight) {
-            smallest = left;
-        }
-
-        if (right < n && heap[right].weight < heap[smallest].weight) {
-            smallest = right;
-        }
-
-        if (smallest !== index) {
-            [heap[index], heap[smallest]] = [heap[smallest], heap[index]];
-            index = smallest;
-        } else {
-            return;
-        }
-    }
-}
-
-
+console.log("MAIN JS START");
+import Visualfront from "./visualfront.js";
 
 const edgeLabelToId = new Map();
+const nodeLabelToId = new Map();
 let mode = "node";
 let selectedNodeA = null;
 let selectedNodeB = null;
@@ -94,6 +14,17 @@ let lists = {};
 let matrices = {};
 let nextListID=0;
 let nextMatrixID=0;
+
+
+       /*
+        async matrixplacer(matrix) {
+            await new Promise(resolve => {
+                Visualfront.establishmatrx(matrix)
+                resolve();
+            });
+        },
+        */
+
 
 
 window.spawnNode = function(x, y) {
@@ -109,9 +40,8 @@ window.spawnNode = function(x, y) {
     };
 
     nodes.set(node.id, node);
+    nodeLabelToId.set(node.visual,node.id);
     Visualfront.addnode(node);
-
-
 };
 
 window.createEdge = function(node1, node2) {
@@ -140,7 +70,7 @@ let weight=1;
     }
 
     const edge = {
-        visual: Visualfront.nextedgeId(),
+        visual: Visualfront.nextedgelabelId(),
         id: Visualfront.nextEdgeId(),
         from: node1.id,
         to: node2.id,
@@ -151,8 +81,8 @@ let weight=1;
         weight: weight,
         visible:true
     };
-    edgeLabelToId.set(edge.visual,edge.id);
     edges.set(edge.id,edge);
+    edgeLabelToId.set(edge.visual,edge.id);
     Visualfront.addedge(edge);
 };
 
@@ -231,7 +161,6 @@ window.createMatrix = function() {
     Visualfront.establishmatrx(matrix);
 };
 
-
 async function playAnimations(anims) {
     for (const anim of anims) {
         console.log("ANIM:", anim.type);
@@ -253,41 +182,63 @@ async function playAnimations(anims) {
               await  Visualfront.listpostionhighlight(anim.list, anim.index);
                 break;
             case "highlightNode":
-                Visualfront.highlightNode(anim.node);
+                let fs = nodeLabelToId.get(anim.node);
+              await  Visualfront.highlightNode(fs);
                 break;
             case "travelEdge":
-                await Visualfront.animateEdge(anim.to, anim.from);
+                let fd = nodeLabelToId.get(anim.node);
+                let fg = nodeLabelToId.get(anim.node);
+                await Visualfront.animateEdge(fd, fg);
                 break;
             case "lightNode":
-               await Visualfront.highlightNodeInstant(anim.node);
+                let fff = nodeLabelToId.get(anim.node);
+               await Visualfront.highlightNodeInstant(fff);
                 break;
             case "delightNode":
-               await Visualfront.disableNode(anim.node);
+                let ff = nodeLabelToId.get(anim.node);
+               await Visualfront.disableNode(ff);
                 break;
             case "pause":
               await  Visualfront.pause(anim.ms);
                 break;
             case "colorNode":
-                await Visualfront.colorNode(anim.node,anim.color);
+                let id = nodeLabelToId.get(anim.node);
+                await Visualfront.colorNode(id,anim.color);
                 break;
             case "highlightEdge":
-               await Visualfront.highlightEdge(anim.edge);
+                let ea=edgeLabelToId.get(anim.edge);
+               await Visualfront.highlightEdge(ea);
                 break;
             case "disableEdge":
-               await Visualfront.disableEdge(anim.edge);
+                let ww=edgeLabelToId.get(anim.edge);
+               await Visualfront.disableEdge(ww);
                 break;
             case "nodeVisible":
-               await Visualfront.make_node_Visible(anim.node);
+                let df = nodeLabelToId.get(anim.node);
+               await Visualfront.make_node_Visible(df);
                 break;
             case "edgeVisible":
-            await Visualfront.make_edge_visible(anim.edge);
+                let e=edgeLabelToId.get(anim.edge);
+            await Visualfront.make_edge_visible(e);
                 break;
             case "edgeInvisible":
-              await  Visualfront.make_edge_invisible(anim.edge);
+                let es=edgeLabelToId.get(anim.edge);
+              await  Visualfront.make_edge_invisible(es);
                 break;
             case "nodeInvisible":
-              await  Visualfront.make_node_invisible(anim.node);
-                break
+              let f = nodeLabelToId.get(anim.node);
+              await  Visualfront.make_node_invisible(f);
+                break;
+            case "creatematrix":
+                matrices.push(anim.mat);
+                Visualfront.establishmatrx(anim.mat);
+                break;
+            case "makeinvis":
+               await Visualfront.makeAllGraphInvisible();
+               break;
+            case "makevis":
+                await Visualfront.makeAllGraphVisible();
+                break;
 
 
 
@@ -307,6 +258,7 @@ async function playAnimations(anims) {
 function getNodeAtPosition(x, y) {
     return Visualfront.getpostion(x,y);
 }
+
 document.getElementById("edgemode").onclick = () => {
     mode = "edge";
 };
@@ -324,7 +276,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const ctx = canvas.getContext("2d");
 
     Visualfront.init(canvas, ctx);
-
     canvas.addEventListener("contextmenu", (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -415,6 +366,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (edge&&mode==="edge") {
             edges.delete(edge.id);
+            edgeLabelToId.delete(edge.visual);
             Visualfront.remove_edge(edge);
 
         }
@@ -445,9 +397,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function runAlgorithm() {
         const payload = {
-            nodes: Array.from(nodes.values()).map(n => ({ id: n.visual })),
+            nodes: Array.from(nodes.values()).map(n => ({ id: n.visual})),
             edges: Array.from(edges.values()).map(e => ({
-                edge:e.id,
+                edge:e.visual,
                 from: e.from,
                 to: e.to,
                 directed: e.directed,
@@ -457,7 +409,7 @@ document.addEventListener("DOMContentLoaded", () => {
             matrices: matrices,  // <--- AND THIS
             algorithm: codeInput.value
         };
-
+//should be 8082, but for testing use 8081
         const response = await fetch("http://localhost:8082/run", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -466,10 +418,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         return await response.json();
     }
-
-
-
-
 
     runButton.onclick = async () => {
         console.log("Run button clicked");
@@ -480,5 +428,3 @@ document.addEventListener("DOMContentLoaded", () => {
         await playAnimations(result.animations);
     };
 });
-
-

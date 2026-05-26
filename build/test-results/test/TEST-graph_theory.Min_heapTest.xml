@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="graph_theory.Min_heapTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-04-20T13:55:06.943Z" hostname="JUSTIN-WORK-SCH" time="0.053">
-  <properties/>
-  <testcase name="add_to_heap()" classname="graph_theory.Min_heapTest" time="0.049"/>
-  <testcase name="extract_from_heap()" classname="graph_theory.Min_heapTest" time="0.002"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="runner.AlgorithmRunnerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-04-20T13:55:07.941Z" hostname="JUSTIN-WORK-SCH" time="6.777">
-  <properties/>
-  <testcase name="setup()" classname="runner.AlgorithmRunnerTest" time="6.777"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

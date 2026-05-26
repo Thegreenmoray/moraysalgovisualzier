@@ -15,6 +15,14 @@ public class UlitiltyAPI {
         this.graph = graph;
     }
 
+
+    public AnimationInstruction creatematrix(Object[][] f){
+        AnimationInstruction instruction = new AnimationInstruction();
+        instruction.type = "creatematrix";
+        instruction.mat=f;
+        return instruction;
+    }
+
     @HostAccess.Export
     public <E> List<E> complement(List<E> univerisal_set, List<E> list){
 
@@ -27,8 +35,6 @@ public class UlitiltyAPI {
     }
     @HostAccess.Export
     public <E> List<E> intersection(List<E> list,List<E> list1){
-
-
         return Set_theory_items.intersection(list, list1);
     }
     @HostAccess.Export

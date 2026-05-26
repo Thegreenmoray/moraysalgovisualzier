@@ -39,6 +39,46 @@ public class GraphAPI {
 
 
     @HostAccess.Export
+    public void makegraphinvisible() {
+
+        for(Node n : graph.getVertices()) {
+            n.setIsVisible(false);
+        }
+        for(Edge e : graph.getEdges()) {
+            e.setIsVisible(false);
+        }
+
+
+        animations.add(AnimationInstruction.makeinvis());
+    }
+
+    @HostAccess.Export
+    public boolean isnodevisible(int id) {
+     return graph.getVertices().get(id).isVisible();
+    }
+
+    @HostAccess.Export
+    public boolean isedgevisible(int id) {
+        return graph.getEdges().get(id).isVisible();
+    }
+
+
+
+    @HostAccess.Export
+    public void makegraphvisible() {
+
+        for(Node n : graph.getVertices()) {
+            n.setIsVisible(true);
+        }
+        for(Edge e : graph.getEdges()) {
+            e.setIsVisible(true);
+        }
+
+
+        animations.add(AnimationInstruction.makevis());
+    }
+
+    @HostAccess.Export
     public void delightNode(int id) {
         animations.add(AnimationInstruction.disableNode(id));
     }
@@ -57,18 +97,29 @@ public class GraphAPI {
     }
     @HostAccess.Export
     public void makeNodeVisible(int id) {
+
+        graph.getVertices().get(id).setIsVisible(true);
         animations.add(AnimationInstruction.nodeVisible(id));
     }
     @HostAccess.Export
     public void makeNodeInvisible(int id) {
+
+        graph.getVertices().get(id).setIsVisible(false);
+
         animations.add(AnimationInstruction.nodeInvisible(id));
     }
     @HostAccess.Export
     public void makeEdgeInvisible(int id) {
+
+        graph.getEdges().get(id).setIsVisible(false);
+
         animations.add(AnimationInstruction.edgeInvisible(id));
     }
     @HostAccess.Export
     public void makeEdgeVisible(int id) {
+
+        graph.getEdges().get(id).setIsVisible(true);
+
         animations.add(AnimationInstruction.edgeVisible(id));
     }
 
@@ -83,6 +134,25 @@ public class GraphAPI {
 
         return result;
     }
+
+    @HostAccess.Export
+    public List<Integer> getnodes() {
+        List<Integer> result = new ArrayList<>();
+        for (Node n : graph.getVertices()) {
+            result.add(n.getNumber());
+        }
+        return result;
+    }
+
+    @HostAccess.Export
+    public List<Integer> getedges() {
+        List<Integer> result = new ArrayList<>();
+        for (Edge n : graph.getEdges()) {
+            result.add(n.getId());
+        }
+        return result;
+    }
+
 
     @HostAccess.Export
     public boolean isAdjacent(int a, int b) {

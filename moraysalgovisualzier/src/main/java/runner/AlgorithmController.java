@@ -43,10 +43,11 @@ import java.util.List;
     @PostMapping("/run")
         public VisualizationResponse runAlgorithm(@RequestBody AlgothrimRequest req, HttpServletResponse response) {
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Headers", "*");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
-
+            if(response!=null) {
+                response.setHeader("Access-Control-Allow-Origin", "*");
+                response.setHeader("Access-Control-Allow-Headers", "*");
+                response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+            }
 
 
         System.out.println("Lists: " + req.lists);

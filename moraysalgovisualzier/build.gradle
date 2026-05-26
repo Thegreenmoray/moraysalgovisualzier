@@ -63,16 +63,19 @@ java {
 
 dependencies {
     // Core GraalVM SDK for Java 21
-    implementation "org.graalvm.sdk:graal-sdk:23.1.2"
+   // implementation "org.graalvm.sdk:graal-sdk:23.1.2"
 
     // Required Polyglot API and JavaScript language support
-    implementation 'org.graalvm.polyglot:polyglot:23.1.2'
-    implementation 'org.graalvm.polyglot:js:23.1.2'
+  //  implementation 'org.graalvm.polyglot:polyglot:23.1.2'
+  //  implementation 'org.graalvm.polyglot:js:23.1.2'
 
     // JavaScript ScriptEngine support (optional, but likely needed for your endpoints)
-    implementation 'org.graalvm.js:js-scriptengine:23.1.2'
+  //  implementation 'org.graalvm.js:js-scriptengine:23.1.2'
     implementation 'org.springframework.boot:spring-boot-starter-web:4.0.5'
-
+    implementation "org.graalvm.polyglot:polyglot:24.2.2"
+    implementation "org.graalvm.polyglot:js:24.2.2"
+    implementation "org.graalvm.truffle:truffle-api:24.2.2"
+    implementation "org.graalvm.polyglot:tools:24.2.2"
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

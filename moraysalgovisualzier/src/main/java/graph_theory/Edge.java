@@ -8,11 +8,13 @@ public class Edge {
 private float weight;
 private int id=0;
  private static int NEXT_ID = 0;
+ private boolean isvisible;
     public Edge(Node v1, Node v2) {
         this.v1 = v1;
         this.v2 = v2;
         this.weight = 1;
         this.id = NEXT_ID++;
+        this.isvisible = true;
 
     }
 
@@ -21,9 +23,16 @@ private int id=0;
         this.v2 = v2;
         this.weight = weight;
         this.id = NEXT_ID++;
+        this.isvisible = true;
 
     }
 
+    public boolean isVisible() {
+        return isvisible;
+    }
+    public void setIsVisible(boolean isVisible) {
+        this.isvisible = isVisible;
+    }
 
     public int getId() {
         return id;

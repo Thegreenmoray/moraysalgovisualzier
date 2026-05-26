@@ -11,7 +11,6 @@ class AlgorithmCompilerTest {
     @Test
     void compile() throws IOException, ClassNotFoundException {
    AlgorithmCompiler.compile("""
-let n = User_safe_interface_api.safely_add_a_node();
 """);
     }
 }

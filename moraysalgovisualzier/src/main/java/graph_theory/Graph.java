@@ -82,14 +82,6 @@ public void addarc(Edge e){
 
 }
 
-
-public void removearc(Edge e){
-
-    this.edges.remove(e);
-    updateincidentedges();
-    updateadjencylist();
-}
-
     public void addarc(Edge e,float weight){
     if (!edges.contains(e)){
        e.setWeight(weight);
@@ -114,20 +106,13 @@ public void removearc(Edge e){
         return adjacencyList.getOrDefault(v,Collections.emptyList());
     }
 
-    public List<Node> neighbors(int i){
 
-        return adjacencyList.getOrDefault(getVertices().get(i),Collections.emptyList());
-    }
 
 public List<Edge> indenctedges(Node v){
 
     return indencent_list.getOrDefault(v,Collections.emptyList());
 }
 
-    public List<Edge> indenctedges(int i){
-
-        return indencent_list.getOrDefault(getVertices().get(i),Collections.emptyList());
-    }
 
 public void addEdge(Edge e){
 
@@ -177,35 +162,15 @@ public void addEdge(Edge e){
 
     }
 
-
+/*
 private void deletednodesedges(Node v){
     for(Edge e:indenctedges(v)){
         edges.remove(e);
     }
 
-}
+}*/
 
-    public int nextAvailableNodeNumber() {
-        boolean[] used = new boolean[vertices.size() + 1];
 
-        for (Node n : vertices) {
-            if (n.getNumber() >= 0 && n.getNumber() < used.length) {
-                used[n.getNumber()] = true;
-            }
-        }
-
-        for (int i = 0; i < used.length; i++) {
-            if (!used[i]) return i;
-        }
-
-        return used.length; // append at end
-    }
-
-    public Node addVertexWithNumber(int number) {
-        Node v = new Node(number);
-        addVertex(v); // your existing method
-        return v;
-    }
 
 
     private void updateadjencylist() {
@@ -228,7 +193,7 @@ private void deletednodesedges(Node v){
     }
 
 }
-
+/*
 public void removeEdge(Edge e){
     Node e1 = e.getV1();
     Node e2 = e.getV2();
@@ -245,7 +210,7 @@ public void removeVertex(Node v){
   updateadjencylist();
   updateincidentedges();
 }
-
+*/
  public  int degree(Node v){
      return indenctedges(v).size();
  }

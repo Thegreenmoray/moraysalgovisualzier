@@ -18,6 +18,8 @@ public class AnimationInstruction {
     public Integer row;
     public Integer col;
 
+    public Object[][] mat;
+
 
     public Integer ms; // for pause
 
@@ -150,6 +152,18 @@ public class AnimationInstruction {
         AnimationInstruction a = new AnimationInstruction();
         a.type = "nodeInvisible";
         a.node = nodeId;
+        return a;
+    }
+
+    public static AnimationInstruction makeinvis() {
+        AnimationInstruction a = new AnimationInstruction();
+        a.type = "makeinvis";
+        return a;
+    }
+
+    public static AnimationInstruction makevis() {
+        AnimationInstruction a = new AnimationInstruction();
+        a.type = "makevis";
         return a;
     }
 }

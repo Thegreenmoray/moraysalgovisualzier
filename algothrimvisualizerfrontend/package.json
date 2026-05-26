@@ -1,16 +1,20 @@
 {
   "name": "algothrimvisualizerfrontend",
   "version": "1.0.0",
+  "description": "Algorithm Visualizer Frontend",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-
-  "type": "module",
   "keywords": [],
-  "author": "Moray",
+  "author": "",
   "license": "ISC",
-  "description": "",
+  "type": "module",
+  "scripts": {
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.1.7",
+    "jsdom": "^29.1.1",
+    "vitest": "^4.1.7"
+  },
   "dependencies": {
     "express": "^5.2.1"
   }
