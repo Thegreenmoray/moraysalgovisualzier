@@ -28,5 +28,5 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Build with Gradle
-        run: ./gradlew shadowJar --no-daemon -x test
+     # - name: Build with Gradle
+      #  run: ./gradlew shadowJar --no-daemon -x test
