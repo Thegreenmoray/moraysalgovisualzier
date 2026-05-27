@@ -1,4 +1,4 @@
-
+package out.production.connector
 
 plugins {
    id 'java'
