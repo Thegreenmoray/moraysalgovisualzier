@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/connector.iml" filepath="$PROJECT_DIR$/.idea/connector.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/moraysalgovisualizer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/moraysalgovisualizer.main.iml" />
     </modules>
   </component>
 </project>

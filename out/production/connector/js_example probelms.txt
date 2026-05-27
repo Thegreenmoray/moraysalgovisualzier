@@ -1,0 +1,162 @@
+
+function bubble_sort(e) {
+     key = User_safe_interface_api.establishlist(e);
+for ( i = 0; i < e.length; i++) {
+        for ( j = 0; j < e.length - 1; j++) {
+
+            if (e[j] >= e[j + 1]) {
+                 hold = e[j];
+
+                User_safe_interface_api.highlight_list_square(j, key);
+                e[j] = e[j + 1];
+                User_safe_interface_api.edit_list_square_value(j, key, e[j]);
+
+                User_safe_interface_api.highlight_list_square(j + 1, key);
+                e[j + 1] = hold;
+                User_safe_interface_api.edit_list_square_value(j + 1, key, hold);
+            }
+        }
+    }
+
+    User_safe_interface_api.begin_animations();
+    return e;
+}
+be = [10, 40, 30];
+bubble_sort(be);
+
+
+function bfs(start, visited) {
+
+    var q = [];
+
+    // mark start visited
+
+    visited[start] = true;
+
+    // highlight start node
+    User_safe_interface_api.light_node(
+        User_safe_interface_api.obtain_existing_node(start)
+    );
+
+    // enqueue start node
+    q.push(User_safe_interface_api.obtain_existing_node(start));
+
+    while (q.length > 0) {
+
+        var polled = q.shift();
+
+        // get neighbors of the polled node
+        var neighbors = User_safe_interface_api.neighbors(polled);
+
+        for (var i = 0; i < neighbors.length; i++) {
+
+            var n = neighbors[i];   // this is a node object
+
+            var id = User_safe_interface_api.obtain_node_number(n);
+
+            if (!visited[id]) {
+
+                visited[id] = true;
+
+                // highlight neighbor
+                User_safe_interface_api.light_node(n);
+
+                // enqueue neighbor
+                q.push(n);
+            }
+        }
+    }
+
+    User_safe_interface_api.begin_animations();
+    return visited;
+}
+
+
+//later
+function greedy_coloring() {
+
+
+var result = {}; // nodeId → color
+
+    // generate color palette
+    var colorList = User_safe_interface_api.generate_colors();
+
+    // get all node objects
+    var nodes = User_safe_interface_api.getnodes();
+
+    // initialize all nodes as uncolored
+    for (var i = 0; i < nodes.length; i++) {
+        var id = User_safe_interface_api.obtain_node_number(nodes[i]);
+        result[id] = null;
+    }
+
+    // iterate through nodes in given order
+    for (var i = 0; i < nodes.length; i++) {
+
+        var node = nodes[i];
+        var id = User_safe_interface_api.obtain_node_number(node);
+
+        // collect forbidden colors from neighbors
+        var forbidden = new Set();
+        var neighbors = User_safe_interface_api.neighbors(node);
+
+        for (var j = 0; j < neighbors.length; j++) {
+            var n = neighbors[j];
+            var nid = User_safe_interface_api.obtain_node_number(n);
+
+            if (result[nid] !== null) {
+                forbidden.add(result[nid]);
+            }
+        }
+
+        // pick the first available color
+        for (var c = 0; c < colorList.length; c++) {
+            var color = colorList[c];
+            if (!forbidden.has(color)) {
+                result[id] = color;
+               User_safe_interface_api.color_node(nodes[i],color);
+                break;
+            }
+        }
+    }
+User_safe_interface_api.begin_animations();
+    return result;
+}
+
+
+function naivematrixmultiplication() {
+  m1= [[10, 20, 30],[1,4,46]]
+  m2=[[67, 30],[4,46],[5,8]]
+    r1 = m1.length;
+    c1 = m1[0].length;
+     r2 = m2.length;
+     c2 = m2[0].length;
+
+    // Rule: Columns of m1 must match Rows of m2
+    if (c1 !== r2) {throw new Error("Incompatible dimensions");}
+        key1 =User_safe_interface_api.establishmatrix(m1);
+        key2 =User_safe_interface_api.establishmatrix(m2);
+
+    // Initialize the result matrix with zeros
+     result = Array(r1).fill().map(() => Array(c2).fill(0));
+ key3 =User_safe_interface_api.establishmatrix(result);
+    for (let i = 0; i < r1; i++) {
+        for (let j = 0; j < c2; j++) {
+            for (let k = 0; k < c1; k++) {
+
+               User_safe_interface_api.highlight_matrix_square(i,k,key1);
+                User_safe_interface_api.highlight_matrix_square(k,j,key2);
+                 User_safe_interface_api.highlight_matrix_square(i,j,key3);
+                result[i][j] += m1[i][k] * m2[k][j];
+                User_safe_interface_api.edit_matrix_square_value(i,j,key3,result[i][j]);
+            }
+
+        }
+    }
+  User_safe_interface_api.begin_animations();
+    return result;
+}
+
+
+
+
