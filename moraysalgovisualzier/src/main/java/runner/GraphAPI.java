@@ -153,6 +153,8 @@ public class GraphAPI {
         return result;
     }
 
+    @HostAccess.Export
+    public float edgeweight(int i) { return graph.getEdges().get(i).getWeight(); }
 
     @HostAccess.Export
     public boolean isAdjacent(int a, int b) {
