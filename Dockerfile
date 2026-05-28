@@ -5,6 +5,7 @@ WORKDIR /src
 #the directory you'll use
 COPY . .
 # first . is where build is, second . is your workdir location
+RUN ls -R /src
 RUN chmod +x gradlew
 RUN ./gradlew bootJar --no-daemon -x test
 #RUN ./gradlew shadowJar --no-daemon -x test
