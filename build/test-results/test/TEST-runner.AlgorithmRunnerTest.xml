@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="runner.AlgorithmRunnerTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2026-05-24T00:10:47.382Z" hostname="JUSTIN-WORK-SCH" time="4.888">
+  <properties/>
+  <testcase name="setup()" classname="runner.AlgorithmRunnerTest" time="4.888">
+    <failure message="java.lang.NullPointerException: Cannot invoke &quot;java.util.List.iterator()&quot; because &quot;req.nodes&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke &quot;java.util.List.iterator()&quot; because &quot;req.nodes&quot; is null
+	at runner.AlgorithmController.buildGraph(AlgorithmController.java:82)
+	at runner.AlgorithmController.runAlgorithm(AlgorithmController.java:60)
+	at runner.AlgorithmRunnerTest.setup(AlgorithmRunnerTest.java:27)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+</failure>
+  </testcase>
+  <system-out><![CDATA[Lists: null
+Matrices: null
+Algorithm: null
+Nodes: null
+Edges: null
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

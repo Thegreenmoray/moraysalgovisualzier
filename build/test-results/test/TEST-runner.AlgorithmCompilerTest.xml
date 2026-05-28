@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="runner.AlgorithmCompilerTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2026-05-24T00:10:45.870Z" hostname="JUSTIN-WORK-SCH" time="1.505">
+  <properties/>
+  <testcase name="compile()" classname="runner.AlgorithmCompilerTest" time="1.505">
+    <failure message="java.lang.ClassNotFoundException: UserAlgorithm" type="java.lang.ClassNotFoundException">java.lang.ClassNotFoundException: UserAlgorithm
+	at java.base/java.net.URLClassLoader.findClass(URLClassLoader.java:349)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:557)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:490)
+	at runner.AlgorithmCompiler.compile(AlgorithmCompiler.java:73)
+	at runner.AlgorithmCompilerTest.compile(AlgorithmCompilerTest.java:13)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+</failure>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

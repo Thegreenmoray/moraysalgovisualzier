@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="set_theory.Set_theory_itemsTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-05-24T00:10:52.412Z" hostname="JUSTIN-WORK-SCH" time="0.04">
+  <properties/>
+  <testcase name="complement()" classname="set_theory.Set_theory_itemsTest" time="0.005"/>
+  <testcase name="isSubset()" classname="set_theory.Set_theory_itemsTest" time="0.001"/>
+  <testcase name="union()" classname="set_theory.Set_theory_itemsTest" time="0.001"/>
+  <testcase name="intersection()" classname="set_theory.Set_theory_itemsTest" time="0.002"/>
+  <testcase name="symmetric_difference()" classname="set_theory.Set_theory_itemsTest" time="0.002"/>
+  <testcase name="powerset()" classname="set_theory.Set_theory_itemsTest" time="0.006"/>
+  <testcase name="isProperSubset()" classname="set_theory.Set_theory_itemsTest" time="0.001"/>
+  <testcase name="difference()" classname="set_theory.Set_theory_itemsTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
