@@ -17,7 +17,7 @@ RUN gu install js
 WORKDIR /app
 COPY --from=build /src/build/libs/moraysalgovisualizer.jar moraysalgovisualizer.jar
 
-EXPOSE 8082
+EXPOSE 8080
 #what port you want to run this to
 CMD ["java", "-jar", "moraysalgovisualizer.jar"]
 #command to excute the code
