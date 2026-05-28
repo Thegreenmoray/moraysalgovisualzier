@@ -1,6 +1,6 @@
 How to interact with api with your (yes yours) code
 
-
+//Outdated: will be updated shortly after depolyment
 Call like this User_safe_interface_api.method();
 ex: User_safe_interface_api.safelyaddnode();
 
