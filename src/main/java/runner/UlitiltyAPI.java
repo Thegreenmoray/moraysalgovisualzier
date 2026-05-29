@@ -15,7 +15,7 @@ public class UlitiltyAPI {
         this.graph = graph;
     }
 
-
+    @HostAccess.Export
     public AnimationInstruction creatematrix(Object[][] f){
         AnimationInstruction instruction = new AnimationInstruction();
         instruction.type = "creatematrix";

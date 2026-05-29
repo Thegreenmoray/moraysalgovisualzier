@@ -20,15 +20,28 @@ public class GraphAPI {
 
     @HostAccess.Export
     public void highlightNode(int id) {
+        if(!graph.containsnode(id)){
+            return;
+        }
+
         animations.add(AnimationInstruction.highlightNode(id));
     }
     @HostAccess.Export
     public void lightNode(int id) {
+        if(!graph.containsnode(id)){
+            return;
+        }
+
         animations.add(AnimationInstruction.lightNode(id));
     }
 
     @HostAccess.Export
     public void travelEdge(int from, int to) {
+        if(!graph.containsnode(from) || !graph.containsnode(to)){
+            return;
+        }
+
+
         animations.add(AnimationInstruction.travelEdge(from, to, false));
     }
 
@@ -54,11 +67,21 @@ public class GraphAPI {
 
     @HostAccess.Export
     public boolean isnodevisible(int id) {
-     return graph.getVertices().get(id).isVisible();
+
+        if(!graph.containsnode(id)){
+            return false;
+        }
+
+        return graph.getVertices().get(id).isVisible();
     }
 
     @HostAccess.Export
     public boolean isedgevisible(int id) {
+
+        if(id>=graph.getEdges().size()){
+            return false;
+        }
+
         return graph.getEdges().get(id).isVisible();
     }
 
@@ -80,44 +103,69 @@ public class GraphAPI {
 
     @HostAccess.Export
     public void delightNode(int id) {
+
+        if(!graph.containsnode(id)){
+            return;
+        }
+
         animations.add(AnimationInstruction.disableNode(id));
     }
     @HostAccess.Export
     public void colorNode(int id, String color) {
+
+        if(!graph.containsnode(id)){
+            return;
+        }
+
         animations.add(AnimationInstruction.colorNode(id, color));
     }
 
     @HostAccess.Export
     public void highlightEdge(int id) {
+        if(id>=graph.getEdges().size()){
+            return;
+        }
         animations.add(AnimationInstruction.highlightEdge(id));
     }
     @HostAccess.Export
     public void disableEdge(int id) {
+        if(id>=graph.getEdges().size()){
+            return;
+        }
+
         animations.add(AnimationInstruction.disableEdge(id));
     }
     @HostAccess.Export
     public void makeNodeVisible(int id) {
-
+        if(!graph.containsnode(id)){
+            return;
+        }
         graph.getVertices().get(id).setIsVisible(true);
         animations.add(AnimationInstruction.nodeVisible(id));
     }
     @HostAccess.Export
     public void makeNodeInvisible(int id) {
-
+        if(!graph.containsnode(id)){
+            return;
+        }
         graph.getVertices().get(id).setIsVisible(false);
 
         animations.add(AnimationInstruction.nodeInvisible(id));
     }
     @HostAccess.Export
     public void makeEdgeInvisible(int id) {
-
+        if(id>=graph.getEdges().size()){
+            return;
+        }
         graph.getEdges().get(id).setIsVisible(false);
 
         animations.add(AnimationInstruction.edgeInvisible(id));
     }
     @HostAccess.Export
     public void makeEdgeVisible(int id) {
-
+        if(id>=graph.getEdges().size()){
+            return;
+        }
         graph.getEdges().get(id).setIsVisible(true);
 
         animations.add(AnimationInstruction.edgeVisible(id));
@@ -125,6 +173,9 @@ public class GraphAPI {
 
     @HostAccess.Export
     public List<Integer> incidentEdges(int id) {
+
+
+
         List<Integer> result = new ArrayList<>();
         Node node = graph.getVertices().get(id);
 
@@ -154,10 +205,20 @@ public class GraphAPI {
     }
 
     @HostAccess.Export
-    public float edgeweight(int i) { return graph.getEdges().get(i).getWeight(); }
+    public float edgeweight(int i) {
+        if(i>=graph.getEdges().size()){
+            return 0;
+        }
+
+        return graph.getEdges().get(i).getWeight(); }
 
     @HostAccess.Export
     public boolean isAdjacent(int a, int b) {
+        if(!graph.containsnode(a)||!graph.containsnode(b)){
+            return false;
+        }
+
+
         if (!graph.containsnode(graph.getVertices().get(a)) ||
                 !graph.containsnode(graph.getVertices().get(b))) {
             return false;
@@ -166,6 +227,10 @@ public class GraphAPI {
     }
     @HostAccess.Export
     public boolean isIncident(int a, int b) {
+        if(!graph.containsnode(a)||!graph.containsnode(b)){
+            return false;
+        }
+
         if (!graph.containsnode(graph.getVertices().get(a)) ||
                 !graph.containsedge(graph.getEdge(graph.getVertices().get(a), graph.getVertices().get(b)))) {
             return false;
@@ -187,6 +252,9 @@ public class GraphAPI {
     public boolean isConnected() { return Graph_tools.is_connected(graph); }
     @HostAccess.Export
     public List<Integer> neighbors(int id) {
+
+
+
         List<Integer> neigh = new ArrayList<>();
         for (Node node : graph.neighbors(graph.getVertices().get(id))) {
             neigh.add(node.getNumber());
@@ -197,6 +265,7 @@ public class GraphAPI {
 
     @HostAccess.Export
     public int degree(int id) {
+
         return graph.degree(graph.getVertices().get(id));
     }
     // --- Matrices ---

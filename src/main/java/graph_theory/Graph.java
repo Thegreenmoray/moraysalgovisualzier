@@ -244,9 +244,20 @@ for(Node node:this.vertices){
 }
 
 
+    public boolean containsnode(int v1){
+        for(Node node:this.vertices){
+            if (node.getNumber()==v1){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public boolean containsedge(Edge e) {
         return getEdge(e.getV1(), e.getV2())!=null;
     }
+
 
 
 }
