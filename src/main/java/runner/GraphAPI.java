@@ -37,9 +37,11 @@ public class GraphAPI {
 
     @HostAccess.Export
     public void travelEdge(int from, int to) {
-        if(!graph.containsnode(from) || !graph.containsnode(to)){
-            return;
-        }
+       if(!graph.containsnode(from) || !graph.containsnode(to)){
+          return;
+       }
+
+
 
 
         animations.add(AnimationInstruction.travelEdge(from, to, false));

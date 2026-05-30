@@ -35,7 +35,7 @@ public class UserAPI {
         if(lists.get(listName) == null|| matrices.get(listName).length>=index) {
             return;
         }
-        lists.get(listName).set(index, (Integer) value);
+        lists.get(listName).set(index, value);
         animations.add(AnimationInstruction.listUpdate(listName, index, value));
     }
     @HostAccess.Export

@@ -47,7 +47,7 @@ import java.util.List;
                 response.setHeader("Access-Control-Allow-Origin", "*");
                 response.setHeader("Access-Control-Allow-Headers", "*");
                 response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
-            }
+           }
 
 
         System.out.println("Lists: " + req.lists);
@@ -58,7 +58,8 @@ import java.util.List;
 
 
             Graph graph = buildGraph(req);
-
+        System.out.println("Graph Nodes: " + graph.getVertices());
+        System.out.println("Graph Edges: " + graph.getEdges());
             // run user JS and collect animations
             List<AnimationInstruction> animations = runner.runUserCode(req.algorithm, graph,req.lists,req.matrices);
 
@@ -80,17 +81,29 @@ import java.util.List;
 
         // add nodes
         for (DTOS.NodeDTO n : req.nodes) {
-            graph.addVertex(new Node(n.label));
+            System.out.println(n.id);
+            System.out.println("Graph Nodes user: " + graph.getVertices());
+            graph.addVertex(new Node(n.id));
         }
 
         // add edges
         for (DTOS.EdgeDTO e : req.edges) {
-            Node from = graph.getVertices().get(e.fromlabel);
-            Node to  = graph.getVertices().get(e.tolabel);
-           //add a thing to check if edges are directed or not
-          if (!e.directed){
-            graph.addEdge(new Edge(from,to,e.weight));}else {
-            graph.addarc(new Edge(from,to,e.weight));}
+            System.out.println(e.from);
+            System.out.println(e.to);
+
+            Node from = graph.getVertexnum(e.from);
+            Node to = graph.getVertexnum(e.to);
+            //add a thing to check if edges are directed or not
+            System.out.println("Graph Edges user: " + graph.getEdges());
+            if(from == null || to==null){
+                continue;
+            }
+
+            if (!e.directed) {
+                graph.addEdge(new Edge(from, to, e.weight));
+            } else {
+                graph.addarc(new Edge(from, to, e.weight));
+            }
         }
 
 

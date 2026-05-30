@@ -259,5 +259,13 @@ for(Node node:this.vertices){
     }
 
 
+    public Node getVertexnum(int id) {
+      for(Node node:this.vertices){
+          if (node.getNumber()==id){
+              return node;
+          }
+      }
 
+        return null;
+    }
 }

@@ -89,6 +89,8 @@ public class AlgorithmRunner {
         String wrapped = "function run() {\n" + algorithm + "\n}";
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
+
+
         Future<?> future = executor.submit(() -> {
             try {
                 sandbox.eval("js", wrapped);
