@@ -2,9 +2,8 @@ name: Build
 
 on:
   push:
-    branches: [ master, shifting_awayfrom_javafx ]
-  pull_request:
-    branches: [ master, shifting_awayfrom_javafx ]
+    tags:
+      - 'v*'
 
 jobs:
   build:
