@@ -99,4 +99,4 @@ Keep to this version other versions are unsecure!
 
 Although this is coded in Java, You need to code in javascript
 
-Press right click the square below on node mode to generate a node, switch to edge mode and select two different nodes to form an edge, you may speficy weight and if its directed or not. Delete a node/ edge on left click with the respective modes.
+Press right click the square below on node mode to generate a node, switch to edge mode and select two different nodes to form an edge, you may specify weight and if its directed or not. Delete a node/ edge on left click with the respective modes.
